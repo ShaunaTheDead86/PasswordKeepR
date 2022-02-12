@@ -2,19 +2,150 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
+  <title>PasswordKeepR</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Press+Start+2P&family=Racing+Sans+One&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- cdnjs assets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
+  />
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/control_bar.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/categories.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/footer.css" type="text/css" />
 
+  <!-- Javascript -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
+  <main>
+    <nav class="nav-component">
+      <a class="logo-container" href="">
+        PasswordKeepR
+      </a>
+      <a class="account" href="">
+        user@gmail.com
+        <i class="fa-solid fa-caret-down drop-down-caret"></i>
+      </a>
+    </nav>
+
+    <header class="control-bar">
+      <a class="text-dropdown no-background-button" href="">
+        Organize by:
+      </a>
+      <div class="filters">
+        <span class="icons-display">
+          <a href="">
+            <i class="fa-solid fa-folder filter-icons"></i>
+          </a>
+          <a href="">
+            <i class="fa-solid fa-table-cells-large filter-icons"></i>
+          </a>
+          <a href="">
+            <i class="fa-solid fa-bars filter-icons"></i>
+          </a>
+        </span>
+      </div>
+    </header>
+
+    <section class="category-list">
+      <a class="category-header-open" href="">
+        <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
+        <div class="category-label text-default-dark">Lighthouse Labs</div>
+        <i class="fa-solid fa-pen-to-square category-icon"></i>
+        <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+      </a>
+      <article id="category-passwords">
+        <div class="password-box-display">
+          <a class="password-box" href="">
+            <i class="fa-solid fa-key password-icon"></i>
+            <div class="password-label text-default-dark">Compass</div>
+            <i class="fa-solid fa-pen-to-square category-icon"></i>
+            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+          </a>
+        </div>
+      </article>
+      <article id="category-passwords">
+        <div class="password-box-display">
+          <a class="password-box" href="">
+            <i class="fa-solid fa-key password-icon"></i>
+            <div class="password-label text-default-dark">Lighthouse Labs</div>
+            <i class="fa-solid fa-pen-to-square category-icon"></i>
+            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+          </a>
+        </div>
+      </article>
+      <article id="category-passwords">
+        <div class="password-box-display">
+          <a class="password-box" href="">
+            <i class="fa-solid fa-key password-icon"></i>
+            <div class="password-label text-default-dark">Compass for Teachers</div>
+            <i class="fa-solid fa-pen-to-square category-icon"></i>
+            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+          </a>
+        </div>
+      </article>
+      <article id="category-passwords">
+        <div class="password-box-display">
+          <a class="password-box" href="">
+            <i class="fa-solid fa-key password-icon"></i>
+            <div class="password-label text-default-dark">Compass for Mentors</div>
+            <i class="fa-solid fa-pen-to-square category-icon"></i>
+            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+          </a>
+        </div>
+      </article>
+    </section>
+    <section class="category-list">
+      <a class="category-header" href="">
+        <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
+        <div class="category-label text-default-dark">Social Media</div>
+        <i class="fa-solid fa-pen-to-square category-icon"></i>
+        <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+      </a>
+    </section>
+    <section class="category-list">
+      <a class="category-header" href="">
+        <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
+        <div class="category-label text-default-dark">Learning</div>
+        <i class="fa-solid fa-pen-to-square category-icon"></i>
+        <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+      </a>
+    </section>
+    <section class="category-list">
+      <a class="category-header" href="">
+        <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
+        <div class="category-label text-default-dark">Work Related</div>
+        <i class="fa-solid fa-pen-to-square category-icon"></i>
+        <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a href="">
+      <div class="console-text">Encryption: ON</div>
+    </a>
+    <div class="right-footer">
+      <a class="text-default" href="">
+        Help
+      </a>
+      <a class="text-default" href="">
+        Privacy Policy
+      </a>
+    </div>
+  </footer>
 </body>
 
 </html>
