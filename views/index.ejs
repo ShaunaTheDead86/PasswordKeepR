@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+
+
   <title>PasswordKeepR</title>
 
   <!-- Google Fonts -->
@@ -12,14 +14,24 @@
   <!-- cdnjs assets -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
   />
+<<<<<<< Updated upstream
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   
   <!-- Bulma CSS library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css" integrity="sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
+=======
+
+  <!-- Bulma imports -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <script src="/node_modules/@creativebulma/bulma-collapsible/dist/js/bulma-collapsible.min.js" />
+
+>>>>>>> Stashed changes
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/mystyles.scss" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
@@ -35,6 +47,7 @@
 </head>
 
 <body>
+<<<<<<< Updated upstream
   <main>
     
     <nav class="nav-component">
@@ -63,13 +76,66 @@
           </a>
           <a href="">
             <i class="fa-solid fa-table-cells-large filter-icons"></i>
+=======
+  <script>
+    var accordions = bulmaAccordion.attach()
+  </script>
+
+  <main>
+    <section class="section">
+      <nav class="navbar is-fixed-top is-spaced has-shadow has-background-primary-dark">
+        <div class="navbar-brand">
+          <a class="navbar-link" href=" ">
+          PasswordKeepR
+        </a>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+>>>>>>> Stashed changes
           </a>
-          <a href="">
-            <i class="fa-solid fa-bars filter-icons"></i>
+        </div>
+        <div class="navbar-menu">
+          <div class="navbar-start">
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link" href=" ">
+              user@gmail.com
+            </a>
+              <div class="navbar-dropdown is-boxed">
+                <a class="navbar-item">
+                Login
+              </a>
+                <a class="navbar-item">
+                Register
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </section>
+
+    <header class="level">
+      <div class="level-left mx-5">
+        <a class="text-dropdown no-background-button" href=" ">Organize by:</a>
+      </div>
+      <div class="filters level-right mx-5">
+        <span class="icons-display ">
+          <a href=" ">
+            <i class="fa-solid fa-folder filter-icons "></i>
           </a>
-        </span>
+          <a href=" ">
+              <i class="fa-solid fa-table-cells-large filter-icons "></i>
+            </a>
+            <a href=" ">
+              <i class="fa-solid fa-bars filter-icons "></i>
+            </a>
+          </span>
       </div>
     </header>
+<<<<<<< Updated upstream
     
     <section class="category-list">
       <a class="category-header-open" href="">
@@ -85,80 +151,220 @@
             <div class="password-label text-default-dark">Compass</div>
             <i class="fa-solid fa-pen-to-square category-icon"></i>
             <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-          </a>
-        </div>
-      </article>
-      <article id="category-passwords">
-        <div class="password-box-display">
-          <a class="password-box" href="">
-            <i class="fa-solid fa-key password-icon"></i>
-            <div class="password-label text-default-dark">Lighthouse Labs</div>
-            <i class="fa-solid fa-pen-to-square category-icon"></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-          </a>
-        </div>
-      </article>
-      <article id="category-passwords">
-        <div class="password-box-display">
-          <a class="password-box" href="">
-            <i class="fa-solid fa-key password-icon"></i>
-            <div class="password-label text-default-dark">Compass for Teachers</div>
-            <i class="fa-solid fa-pen-to-square category-icon"></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-          </a>
-        </div>
-      </article>
-      <article id="category-passwords">
-        <div class="password-box-display">
-          <a class="password-box" href="">
-            <i class="fa-solid fa-key password-icon"></i>
-            <div class="password-label text-default-dark">Compass for Mentors</div>
-            <i class="fa-solid fa-pen-to-square category-icon"></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-          </a>
-        </div>
-      </article>
-    </section>
-    <section class="category-list">
-      <a class="category-header" href="">
-        <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
-        <div class="category-label text-default-dark">Social Media</div>
-        <i class="fa-solid fa-pen-to-square category-icon"></i>
-        <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-      </a>
-    </section>
-    <section class="category-list">
-      <a class="category-header" href="">
-        <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
-        <div class="category-label text-default-dark">Learning</div>
-        <i class="fa-solid fa-pen-to-square category-icon"></i>
-        <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-      </a>
-    </section>
-    <section class="category-list">
-      <a class="category-header" href="">
-        <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
-        <div class="category-label text-default-dark">Work Related</div>
-        <i class="fa-solid fa-pen-to-square category-icon"></i>
-        <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-      </a>
-    </section>
-  </main>
+=======
 
-  <footer class="footer">
-    <a href="">
-      <div class="console-text">Encryption: ON</div>
-    </a>
-    <div class="right-footer">
-      <a class="text-default" href="">
-        Help
-      </a>
-      <a class="text-default" href="">
-        Privacy Policy
-      </a>
+    <div id="accordion_first">
+      <article class="message">
+        <div class="message-header has-background-primary">
+          <a href="#collapsible-message-accordion-1" data-action="collapse">
+            <p class="title is-size-4">
+              <i class="fa-solid fa-vault mx-2"></i> Lighthouse Labs
+              <i class="fa-solid fa-pen-to-square mx-2"></i>
+              <i class="fa-solid fa-rectangle-xmark mx-2"></i>
+            </p>
+>>>>>>> Stashed changes
+          </a>
+        </div>
+        <div id="collapsible-message-accordion-1" class="message-body has-background-primary-light is-collapsible" data-parent="#accordion_first">
+          <div class="message-body-content">
+            <div class="is-flex is-flex-direction-column">
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon "></i> Compass
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark"></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon "></i> Lighthouse Labs
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon "></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon "></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon "></i> Compass for Teachers
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon "></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon "></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon "></i> Compass for Mentors
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon "></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon "></i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="message">
+        <a href="#collapsible-message-accordion-2" data-action="collapse">
+          <div class="message-header has-background-primary">
+            <p class="title is-size-4">
+              <i class="fa-solid fa-vault mx-2"></i> Social Media
+              <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
+              <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
+            </p>
+          </div>
+        </a>
+        <div id="collapsible-message-accordion-2" class="message-body is-collapsible" data-parent="accordion_first">
+          <div class="message-body-content has-background-primary-light">
+            <div class="is-flex is-flex-direction-column">
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon mx-2"></i> Facebook
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square mx-2"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark mx-2"></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon mx-2"></i> Instagram
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon mx-2"></i> Reddit
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon mx-2"></i> Twitter
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="message">
+        <a href="#collapsible-message-accordion-3" data-action="collapse">
+          <div class="message-header has-background-primary">
+            <p class="title is-size-4">
+              <i class="fa-solid fa-vault "></i> Learning
+              <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
+              <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
+            </p>
+          </div>
+        </a>
+        <div id="collapsible-message-accordion-2" class="message-body is-collapsible" data-parent="accordion_first">
+          <div class="message-body-content has-background-primary-light">
+            <div class="is-flex is-flex-direction-column">
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon mx-2"></i> FreeCodeCamp
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square mx-2"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark mx-2"></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon mx-2"></i> Udemy
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon mx-2"></i> Codecademy
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
+                </a>
+              </p>
+              <p class="title is-size-6 has-text-grey-darker">
+                <a href="">
+                  <i class="fa-solid fa-key password-icon mx-2"></i> CodeWars
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
+                </a>
+                <a href="">
+                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
+<<<<<<< Updated upstream
   </footer>
   <%- include('partials/_newItemModal') %>
+=======
+
+    <i class="fa-solid fa-vault "></i> Work Related
+    <i class="fa-solid fa-pen-to-square category-icon "></i>
+    <i class="fa-solid fa-rectangle-xmark category-icon "></i>
+
+    <footer class="navbar is-fixed-bottom is-dark">
+      <div class="navbar-start">
+        <div class="navbar-item">
+          Encryption: ON
+        </div>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          Help
+        </div>
+        <div class="navbar-item">
+          Privacy Policy
+        </div>
+      </div>
+    </footer>
+  </main>
+>>>>>>> Stashed changes
 </body>
 
 </html>
