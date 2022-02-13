@@ -12,7 +12,11 @@
   <!-- cdnjs assets -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
   />
-
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  
+  <!-- Bulma CSS library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css" integrity="sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -22,24 +26,32 @@
   <link rel="stylesheet" href="/styles/control_bar.css" type="text/css" />
   <link rel="stylesheet" href="/styles/categories.css" type="text/css" />
   <link rel="stylesheet" href="/styles/footer.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/modal.css" type="text/css" />
 
   <!-- Javascript -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/modalHandler.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
 
 <body>
   <main>
+    
     <nav class="nav-component">
       <a class="logo-container" href="">
         PasswordKeepR
       </a>
+      <button class="js-modal-trigger new-item-button" data-target="new-item-modal">New Item</button>
       <a class="account" href="">
         user@gmail.com
         <i class="fa-solid fa-caret-down drop-down-caret"></i>
       </a>
+      
+      
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
     </nav>
-
+    
     <header class="control-bar">
       <a class="text-dropdown no-background-button" href="">
         Organize by:
@@ -58,7 +70,7 @@
         </span>
       </div>
     </header>
-
+    
     <section class="category-list">
       <a class="category-header-open" href="">
         <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
@@ -146,6 +158,7 @@
       </a>
     </div>
   </footer>
+  <%- include('partials/_newItemModal') %>
 </body>
 
 </html>

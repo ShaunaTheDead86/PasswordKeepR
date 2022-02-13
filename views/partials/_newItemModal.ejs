@@ -1,0 +1,38 @@
+<div id="new-item-modal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box">
+      <p id="error-message"></p>
+      <form id="create-credential-form" action="/api/credentials" method="POST">
+        <table>
+          <tbody>
+            <tr>
+              <td>Account name</td>
+              <td><input type="text" id="account-name" name="accountName" required></td>
+            </tr>
+            <tr>
+              <td>URL</td>
+              <td><input type="text" id="url" name="url" required></td>
+            </tr>
+            <tr>
+              <td>Username</td>
+              <td><input type="text" id="username" name="username" required></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><input type="password" id="password" name="password" required></td>
+            </tr>
+            <tr>
+              <td>Category</td>
+              <td>
+                <select name="categoryId" id="category"></select>
+              </td>
+            </tr>
+            <tr>
+              <td></td><td><button type="submit" id="create-credential">Create</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+</div>

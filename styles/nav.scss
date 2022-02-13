@@ -20,14 +20,28 @@ $white: #FFFFFF;
 
 .logo-container {
   font-size: 2.5rem;
-  font-family: $logo-font;
+  font-family: $standard-font;
   color: white;
+}
+
+// .new-item-form {
+  
+// }
+.new-item-button {
+  margin-left: auto;
+  border: none;
+  padding: 0.3rem 1rem;
+  font-size: 1.8rem;
+  font-family: $logo-font;
+  background-color: #FFC600;
+  border-radius: 1rem;
 }
 
 .account {
   font-size: 1.5rem;
   font-family: $standard-font;
   color: white;
+  margin-left: 3rem; 
 }
 
 .drop-down-caret {
