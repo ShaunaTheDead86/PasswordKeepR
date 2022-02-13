@@ -4,35 +4,45 @@
     <div class="box">
       <p id="error-message"></p>
       <form id="create-credential-form" action="/api/credentials" method="POST">
-        <table>
-          <tbody>
-            <tr>
-              <td><label class="label">Account name</label></td>
-              <td><input class="input is-primary" type="text" id="account-name" name="accountName" required></td>
-            </tr>
-            <tr>
-              <td><label class="label">URL</label></td>
-              <td><input class="input is-primary" type="text" id="url" name="url" required></td>
-            </tr>
-            <tr>
-              <td><label class="label">Username</label></td>
-              <td><input class="input is-primary" type="text" id="username" name="username" required></td>
-            </tr>
-            <tr>
-              <td><label class="label">Password</label></td>
-              <td><input class="input is-primary" type="password" id="password" name="password" required></td>
-            </tr>
-            <tr>
-              <td><label class="label">Category</label></td>
-              <td>
-                <select class="select is-success" name="categoryId" id="category"></select>
-              </td>
-            </tr>
-            <tr>
-              <td></td><td><button type="submit" id="create-credential">Create</button></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="field">
+          <label class="label">Account name</label>
+          <div class="control">
+            <input class="input is-primary" type="text" id="account-name" name="accountName" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">URL</label>
+          <div class="control">
+            <input class="input is-primary" type="text" id="url" name="url" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Username</label>
+          <div class="control">
+            <input class="input is-primary" type="text" id="username" name="username" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input class="input is-primary" type="password" id="password" name="password" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Category</label>
+          <p class="control">
+            <span class="select is-primary">
+              <select>
+                <option selected>Country</option>
+                <option>Select dropdown</option>
+                <option>With options</option>
+              </select>
+            </span>
+          </p>
+        </div>
+        <div class="control">
+          <button class="button is-primary" type="submit" id="create-credential">Create</button>
+        </div>
       </form>
     </div>
 </div>
