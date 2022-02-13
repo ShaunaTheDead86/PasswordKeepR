@@ -1,0 +1,44 @@
+$logo-font: "Racing Sans One",
+cursive;
+$standard-font: "Roboto",
+sans-serif;
+$color-dark: #026670;
+$color-light: #9FEDD7;
+$highlight-light: #FEF9C7;
+$highlight-dark: #FCE181;
+$grey-light: #EDEAE5;
+$light-grey: #EEEEEE;
+$dark-grey: #353535;
+.control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $light-grey;
+  padding: 1rem;
+  height: 2.5rem;
+}
+
+.text-dropdown {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $dark-grey;
+}
+
+.no-background-button {
+  font-family: $standard-font;
+  color: $dark-grey;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-icons {
+  color: $color-dark;
+  padding: 0.5rem;
+}
+
+.filter-icons:hover {
+  color: $highlight-dark;
+}
