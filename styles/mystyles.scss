@@ -1,21 +1,11 @@
 @charset "utf-8";
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Press+Start+2P&family=Racing+Sans+One&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
-// Import Bulma
-@import '../node_modules/bulma/bulma.sass';
 // Set your brand colors
-$primary-yellow: #FFCE00;
-$primary-blue: #0375B4;
-$primary-green: #007849;
-$primery-grey: #262228;
-$primary: $primary-green;
-$link: $primary-blue;
-$info: $cyan;
-$success: $green;
-$warning: $primary-yellow;
-$danger: $red;
-$dark: $primary-grey;
-$text: $grey-dark;
+$primary: #007849;
+$link: #0375B4;
+$warning: #FFCE00;
+$text: #262228;
 // Set fonts
 $family-monospace: 'Press Start 2P',
 cursive;
@@ -25,9 +15,8 @@ $family-secondary: 'Racing Sans One',
 cursive;
 // Update some of Bulma's component variables
 $body-overflow-y: scroll;
-$control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
+// Import Bulma
+@import '../node_modules/bulma/bulma.sass';
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
