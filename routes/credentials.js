@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 module.exports = (db) => {
   // GET /credentials - get all credentials
@@ -29,25 +29,24 @@ module.exports = (db) => {
     // to be replaced when session userid is available
     const userId = 1;
 
-    // prepare first query to get organization_id 
+    // prepare first query to get organization_id
     const queryString = `
       SELECT * FROM users
       WHERE id = $1;
     `;
     db.query(queryString, [userId])
       .then(data => {
-
         //prepare 2nd query for insert new credential
         const insertParams = [
-          req.body.username, 
-          req.body.password, 
-          req.body.url, 
-          req.body.name, 
+          req.body.username,
+          req.body.password,
+          req.body.url,
+          req.body.name,
           userId,
           data.rows[0].organization_id,
           req.body.categoryId
         ];
-        
+
         const insertQueryString = `
           INSERT INTO credentials (username, password, url, name, creator_id, organization_id, category_id)
           VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -56,8 +55,8 @@ module.exports = (db) => {
         return db.query(insertQueryString, insertParams);
       })
       .then(data => {
-        credential = data.rows[0] ;
-        templateVars = {credential}
+        credential = data.rows[0];
+        templateVars = { credential }
         res.render("index", templateVars);
       })
       .catch(err => {
@@ -69,4 +68,4 @@ module.exports = (db) => {
   });
 
   return router;
-};
+}

@@ -35,9 +35,9 @@ const createNewItemOnSubmit = function(str) {
 };
 
 const generatePassOnEvents = function() {
-  
+
   $('#incl-upper').on('change', (evt) => {
-    
+
     generateNewPass();
   });
   $('#incl-number').on('change', (evt) => {
@@ -73,7 +73,7 @@ const generateNewPass = function() {
   }
   let password = "";
   const poolLength = characterPool.length;
-  for (let i = 0; i < passLength; i++ ) {
+  for (let i = 0; i < passLength; i++) {
     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
   }
   $("#password").val(password);
@@ -92,10 +92,10 @@ const editItemOnSubmit = function(str) {
     $.post('/credentials', params).then((credential) => {
       muteErrorMessage();
       // close popup
-      $("username").val("");
-      $("password").val("");
-      $("name").val("");
-      $("url").val("");
+      $(".edit-username").val("");
+      $(".edit-password").val("");
+      $(".edit-name").val("");
+      $(".edit-url").val("");
       $("#edit-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
@@ -224,5 +224,5 @@ $(() => {
   createNewItemOnSubmit();
   generatePassOnEvents();
   loadCategories();
-  
+
 });
