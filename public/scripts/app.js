@@ -89,30 +89,31 @@ const togglePassword = function() {
   })
 };
 
-// Shauna
-const editItemOnSubmit = function(str) {
-  $('#edit-credential-form').on('submit', (evt) => {
-    evt.preventDefault();
-    const params = $("#edit-credential-form").serialize();
+const makeSerializedArrayObject = function(SerArr) {
+  const results = {};
+  for (const object of SerArr) {
+    results[object.name] = object.value;
+  }
+  return results;
+};
+
+const updateTable = function(query, params) {
+
+};
+
+$(document).ready(() => {
+  $('#edit-credential-form').on('submit', (event) => {
+    event.preventDefault();
+    const params = $("#create-credential-form").serializeArray();
     const password = escapeScript($("#password").val());
     if (password.length < 6) {
       showErrorMessage("Password is not strong enough!");
       return;
     };
-    $.post('/credentials', params).then((credential) => {
-      muteErrorMessage();
-      // close popup
-      $(".edit-username").val("");
-      $(".edit-password").val("");
-      $(".edit-name").val("");
-      $(".edit-url").val("");
-      $("#edit-password-modal").removeClass('is-active');
 
-      // Inject new credential code goes here
-      loadCategories();
-    })
+    console.log(params);
   });
-};
+});
 
 // helper to prevent Cross Site Scripting
 const escapeScript = function(str) {
@@ -123,14 +124,14 @@ const escapeScript = function(str) {
 
 // helper to show the error message
 const showErrorMessage = function(errorMessage) {
-  $("#error-message").html(errorMessage);
-  $("#error-message").slideDown("slow");
+  $(".error-message").html(errorMessage);
+  $(".error-message").slideDown("slow");
 }
 
 // helper to clear the error message
 const muteErrorMessage = function() {
-  $("#error-message").slideUp()
-  $("#error-message").html("");
+  $(".error-message").slideUp()
+  $(".error-message").html("");
 }
 
 
