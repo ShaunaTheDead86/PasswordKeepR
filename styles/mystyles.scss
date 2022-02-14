@@ -4,20 +4,17 @@
 // Import Bulma
 @import '../node_modules/bulma/bulma.sass';
 // Set your brand colors
-$purple: #8A4D76;
-$pink: #FA7C91;
-$brown: #757763;
-$beige-light: #D0D1CD;
-$beige-lighter: #EFF0EB;
-// Update Bulma's global variables
-$family-sans-serif: "Nunito",
+$primary-yellow: #FFCE00;
+$primary-blue: #0375B4;
+$primary-green: #007849;
+$primery-grey: #262228;
+// Set fonts
+$family-sans-serif: 'Roboto',
 sans-serif;
-$grey-dark: $brown;
-$grey-light: $beige-light;
-$primary: $purple;
-$link: $pink;
-$widescreen-enabled: false;
-$fullhd-enabled: false;
+$logo-font: 'Racing Sans One',
+cursive;
+$console-font: 'Press Start 2P',
+cursive;
 // Update some of Bulma's component variables
 $body-background-color: $beige-lighter;
 $body-overflow-y: scroll;
