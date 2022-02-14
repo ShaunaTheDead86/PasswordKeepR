@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+const reloadEventListeners = function() {
   // Functions to open and close a modal
   function openModal($el) {
     $el.classList.add('is-active');
@@ -44,18 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
       closeAllModals();
     }
   });
-  
-  const loadCreateNewPasswordForm = function () {
+
+  const loadCreateNewPasswordForm = function() {
     $("#password").val("");
+    
     $.get('/categories').then((categories) => {
       let $dropdown = $("#category");
+      alert(categories.length)
       $dropdown.empty();
       $.each(categories, function() {
         $dropdown.append($("<option />").val(this.id).text(this.name));
       });
     });
   };
-});
+};
 
 function updateSlider(slideAmount) {
   if (slideAmount != undefined) {
