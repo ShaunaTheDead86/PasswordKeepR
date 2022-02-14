@@ -31,6 +31,7 @@
   <!-- Javascript -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/modalHandler.js"></script>
+  <script type="text/javascript" src="/scripts/modalHandlerWithoutIDs.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
 
 </head>
@@ -59,7 +60,7 @@
           </a>
           <div class="navbar-dropdown">
             <a class="navbar-item">Login</a>
-            <a class="navbar-item">Register</a>
+            <button class="button js-modal-trigger" data-target="registration-modal">Register</button>
           </div>
         </div>
       </div>
@@ -120,6 +121,11 @@
     <%- include('partials/_editPasswordModal'); -%>
       <%- include('partials/_newPasswordModal'); -%>
   </main>
+<<<<<<< HEAD
+  <%- include('partials/_newPasswordModal') %>
+  <%- include('partials/_registerModal') %>
+=======
+>>>>>>> master
 </body>
 
 </html>

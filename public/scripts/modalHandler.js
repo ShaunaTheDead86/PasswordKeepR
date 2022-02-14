@@ -22,6 +22,7 @@ const reloadEventListeners = function() {
     const modal = $trigger.dataset.target;
     const $target = document.getElementById(modal);
 
+
     $trigger.addEventListener('click', () => {
       openModal($target);
     });
@@ -47,7 +48,7 @@ const reloadEventListeners = function() {
 
   const loadCreateNewPasswordForm = function() {
     $("#password").val("");
-    
+
     $.get('/categories').then((categories) => {
       let $dropdown = $("#category");
       $dropdown.empty();
