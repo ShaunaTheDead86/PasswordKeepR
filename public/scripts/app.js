@@ -34,6 +34,16 @@ const createNewItemOnSubmit = function(str) {
   });
 };
 
+const generatePassOnEvents = function(str) {
+  $('#incl-upper').on('change', (evt) => {
+    
+  });
+};
+
+// incl-number
+// incl-special-char
+// password-length
+
 // Shauna
 const editItemOnSubmit = function(str) {
   $('#edit-credential-form').on('submit', (evt) => {
@@ -177,5 +187,7 @@ const createPswdLayout = (passwordName) => {
 $(() => {
   // render category and corresponding pswd which are already in db
   createNewItemOnSubmit();
+  generatePassOnEvents();
   loadCategories();
+  
 });
