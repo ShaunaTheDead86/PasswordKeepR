@@ -13,24 +13,12 @@ sans-serif;
 $family-secondary: 'Racing Sans One',
 cursive;
 // Update some of Bulma's component variables
-$dropdown-item-color: $primary;
-$dropdown-item-hover-color: $warning;
-$dropdown-item-hover-background-color: $text;
-$dropdown-item-active-color: $warning;
-$dropdown-item-active-background-color: $primary;
-$dropdown-content-offset: -5px;
-$dropdown-content-padding-bottom: 0px;
-$dropdown-content-padding-top: 0px;
 $link: $primary;
 $link-light: white;
 $link-dark: $primary;
 $link-visited: $primary;
 $link-hover: $warning;
-$link-hover-border: none;
 $link-focus: $primary;
-$link-focus-border: none;
-$link-active: none;
-$link-active-border: none;
 // Import Bulma
 @import '../node_modules/bulma/bulma.sass';
 // Import only what you need from Bulma
@@ -51,15 +39,6 @@ a:hover {
   text-decoration: none;
 }
 
-.is-link-primary {
-  text-decoration: none;
-}
-
-.is-link-primary:hover {
-  text-decoration: none;
-  color: $warning;
-}
-
 .is-link-light {
   text-decoration: none;
   color: white;
@@ -68,14 +47,4 @@ a:hover {
 .is-link-light:hover {
   text-decoration: none;
   color: white;
-}
-
-.navbar-link {
-  text-decoration: none;
-  color: white;
-}
-
-.navbar-link:hover {
-  text-decoration: none;
-  color: $warning;
 }

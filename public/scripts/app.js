@@ -4,13 +4,13 @@ const loadCategories = () => {
 
   // fetch obj with db data from server
   $.get("/api/categories")
-  .then((data) => {
-    renderCategories(data);
-  })
+    .then((data) => {
+      renderCategories(data);
+    })
 };
 
 // Le Minh
-const createNewItemOnSubmit = function (str) {
+const createNewItemOnSubmit = function(str) {
   $('#create-credential-form').on('submit', (evt) => {
     evt.preventDefault();
     const params = $("#create-credential-form").serialize();
@@ -36,7 +36,7 @@ const createNewItemOnSubmit = function (str) {
 };
 
 // helper to prevent Cross Site Scripting
-const escapeScript = function (str) {
+const escapeScript = function(str) {
   let div = document.createElement("div");
   div.appendChild(document.createTextNode(str));
   return div.innerHTML;
@@ -85,57 +85,59 @@ const renderCategories = (obj) => {
 
   const categoryArr = Object.keys(categoryWithPassword);
 
-    for (let category of categoryArr) {
-      let categoryLayout = createCategoryLayout(category);
-      $(".category-container").append(categoryLayout);
+  for (let category of categoryArr) {
+    let categoryLayout = createCategoryLayout(category);
+    $(".category-container").append(categoryLayout);
 
-      let pswdArr = categoryWithPassword[category]
+    let pswdArr = categoryWithPassword[category]
 
-      for (let pswd of pswdArr) {
+    for (let pswd of pswdArr) {
 
 
-        let pswdLayout = createPswdLayout(pswd);
-        $(`#${category}-pswd`).append(pswdLayout);
-      }
+      let pswdLayout = createPswdLayout(pswd);
+      $(`#${category}-pswd`).append(pswdLayout);
     }
+  }
 }
 
 const createCategoryLayout = (category) => {
   const categoryLayout = `
-
-  <summary class="message-header has-background-primary">
-          <p class="title is-size-4">
-            <i class="fa-solid fa-vault mx-2"></i> ${category}
-            <i class="fa-solid fa-pen-to-square mx-2"></i>
-            <i class="fa-solid fa-rectangle-xmark mx-2"></i>
-          </p>
-  </summary>
-
-  <div class="message-body has-background-primary-light">
-      <div class="message-body-content">
-        <div id="${category}-pswd" class="is-flex is-flex-direction-column">
-        </div>
+  <details>
+    <summary class="has-background-primary">
+      <div class="is-size-5 has-text-white mx-2">
+        <i class="fa-solid fa-vault mx-2"></i> ${category}
+        <a href=" " class="has-text-white mx-2">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+        <a href=" " class="has-text-white mx-2">
+          <i class="fa-solid fa-rectangle-xmark"></i>
+        </a>
       </div>
-    </div>
+    </summary>
+    <p id="${category}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
+
+    </p>
+  </details>
   `
   return categoryLayout;
 }
 
 const createPswdLayout = (passwordName) => {
   const passwordLayout = `
-
-        <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon "></i> ${passwordName}
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark"></i>
-                </a>
-        </p>
-
+  <div class="is-flex flex-direction-row">
+    <a href="" class="mx-2">
+      <i class="fa-solid fa-key password-icon "></i> ${passwordName}
+    </a>
+    <a href=" " class="mx-2">
+      <i class="fa-solid fa-copy"></i>
+    </a>
+    <a href="" class="mx-2">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </a>
+    <a href="" class="mx-2">
+      <i class="fa-solid fa-rectangle-xmark"></i>
+    </a>
+  </div>
   `
   return passwordLayout;
 }
@@ -149,5 +151,3 @@ $(() => {
   createNewItemOnSubmit();
   loadCategories();
 });
-
-
