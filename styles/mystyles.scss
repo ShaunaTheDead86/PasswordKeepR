@@ -14,12 +14,30 @@ $family-secondary: 'Racing Sans One',
 cursive;
 // Update some of Bulma's component variables
 $body-overflow-y: scroll;
-.is-link {
+.is-link-primary {
   text-decoration: none;
   color: $primary;
 }
 
-.is-link:hover {
+.is-link-primary:hover {
+  color: $warning;
+}
+
+.is-link-light {
+  text-decoration: none;
+  color: white;
+}
+
+.is-link-light:hover {
+  color: $text;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-link:hover {
   color: $warning;
 }
 
