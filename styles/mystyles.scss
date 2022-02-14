@@ -5,7 +5,6 @@
 $primary: #14213d;
 $warning: #fca311;
 $text: #262228;
-$link: white;
 // Set fonts
 $family-monospace: 'Press Start 2P',
 cursive;
@@ -15,6 +14,15 @@ $family-secondary: 'Racing Sans One',
 cursive;
 // Update some of Bulma's component variables
 $body-overflow-y: scroll;
+.is-link {
+  text-decoration: none;
+  color: $primary;
+}
+
+.is-link:hover {
+  color: $warning;
+}
+
 // Import Bulma
 @import '../node_modules/bulma/bulma.sass';
 // Import only what you need from Bulma
@@ -27,6 +35,3 @@ $body-overflow-y: scroll;
 @import "../node_modules/bulma/sass/components/navbar.sass";
 @import "../node_modules/bulma/sass/layout/hero.sass";
 @import "../node_modules/bulma/sass/layout/section.sass";
-a:hover {
-  text-decoration: none;
-}
