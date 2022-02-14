@@ -56,3 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 });
+
+function updateSlider(slideAmount) {
+  if (slideAmount != undefined) {
+    document.getElementById("password-length").innerHTML = slideAmount;
+  }
+}
