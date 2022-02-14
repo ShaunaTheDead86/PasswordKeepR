@@ -8,15 +8,22 @@ $primary-yellow: #FFCE00;
 $primary-blue: #0375B4;
 $primary-green: #007849;
 $primery-grey: #262228;
+$primary: $primary-green;
+$link: $primary-blue;
+$info: $cyan;
+$success: $green;
+$warning: $primary-yellow;
+$danger: $red;
+$dark: $primary-grey;
+$text: $grey-dark;
 // Set fonts
-$family-sans-serif: 'Roboto',
-sans-serif;
-$logo-font: 'Racing Sans One',
+$family-monospace: 'Press Start 2P',
 cursive;
-$console-font: 'Press Start 2P',
+$family-primary: 'Roboto',
+sans-serif;
+$family-secondary: 'Racing Sans One',
 cursive;
 // Update some of Bulma's component variables
-$body-background-color: $beige-lighter;
 $body-overflow-y: scroll;
 $control-border-width: 2px;
 $input-border-color: transparent;
