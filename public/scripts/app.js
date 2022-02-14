@@ -78,6 +78,17 @@ const generateNewPass = function() {
   $("#password").val(password);
 }
 
+const togglePassword = function() {
+  $('#reveal').on('click', (evt) => {
+    var type = document.getElementById("password").type;
+    if(type=='password') {
+      document.getElementById("password").type = "text";
+    } else {
+      document.getElementById("password").type = "password";
+    }
+  })
+};
+
 // Shauna
 const editItemOnSubmit = function(str) {
   $('#edit-credential-form').on('submit', (evt) => {
@@ -223,5 +234,5 @@ $(() => {
   loadCategories();
   createNewItemOnSubmit();
   generatePassOnEvents();
-  
+  togglePassword()
 });
