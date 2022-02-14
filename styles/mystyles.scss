@@ -18,11 +18,7 @@ $link-light: white;
 $link-dark: $primary;
 $link-visited: $primary;
 $link-hover: $warning;
-$link-hover-border: none;
 $link-focus: $primary;
-$link-focus-border: none;
-$link-active: none;
-$link-active-border: none;
 // Import Bulma
 @import '../node_modules/bulma/bulma.sass';
 // Import only what you need from Bulma
@@ -41,33 +37,4 @@ a {
 
 a:hover {
   text-decoration: none;
-}
-
-.is-link-primary {
-  text-decoration: none;
-}
-
-.is-link-primary:hover {
-  text-decoration: none;
-  color: $warning;
-}
-
-.is-link-light {
-  text-decoration: none;
-  color: white;
-}
-
-.is-link-light:hover {
-  text-decoration: none;
-  color: white;
-}
-
-.navbar-link {
-  text-decoration: none;
-  color: white;
-}
-
-.navbar-link:hover {
-  text-decoration: none;
-  color: $warning;
 }
