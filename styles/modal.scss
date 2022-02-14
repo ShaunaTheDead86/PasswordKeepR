@@ -1,0 +1,18 @@
+$color-warning: red;
+$standard-font: "Roboto";
+$logo-font: "Racing Sans One";
+
+#error-message {
+  display: none;
+  justify-content: flex-start;
+  color: $color-warning;
+  font-weight: bold;
+  margin-bottom: 50px;
+  border: none;
+  padding: 2px 30px;
+  width: 100%
+}
+
+.field .label {
+  font-family: $standard-font;
+}

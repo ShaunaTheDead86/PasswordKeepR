@@ -7,6 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -21,6 +22,7 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(
   "/styles",
@@ -35,15 +37,21 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
+const credentialsRoutes = require("./routes/credentials");
 const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
+
 const apiRoutes = require("./routes/api");
+const cetegoriesRoutes = require("./routes/categories");
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
+app.use("/api/credentials", credentialsRoutes(db));
 app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
+
 app.use("/api", apiRoutes(db));
+app.use("/api/categories", cetegoriesRoutes(db));
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -56,5 +64,5 @@ app.get("/", (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`PasswordKeepR app listening on port ${PORT}`);
 });

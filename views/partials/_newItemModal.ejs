@@ -1,0 +1,58 @@
+<div id="new-item-modal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box">
+      <p id="error-message"></p>
+      <form id="create-credential-form" action="/api/credentials" method="POST">
+        <div class="field is-grouped is-grouped-centered">
+          <label class="label is-large">CREATE NEW PASSWORD</label>
+        </div>
+        <div class="field">
+          <label class="label is-large">Name</label>
+          <div class="control">
+            <input class="input is-primary is-large" type="text" id="account-name" name="accountName" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label is-large">URL</label>
+          <div class="control has-icons-left">
+            <input class="input is-primary is-large" type="text" id="url" name="url" required>
+            <span class="icon is-small is-left">
+              <i class="fa-solid fa-link"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label is-large">Username</label>
+          <div class="control has-icons-left">
+            <input class="input is-primary is-large" type="text" id="username" name="username" required>
+            <span class="icon is-small is-left">
+              <i class="fa-solid fa-user"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label is-large">Password</label>
+          <div class="control has-icons-left">
+            <input class="input is-primary is-large" type="password" id="password" name="password" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field is-expanded">
+          <label class="label is-large">Category</label>
+          <p class="control is-expanded">
+            <span class="select is-primary is-fullwidth is-large">
+              <select class="select is-primary" name="categoryId" id="category"></select>
+            </span>
+          </p>
+        </div>
+        <div class="field is-grouped is-grouped-right">
+          <p class="control">
+            <button class="button is-primary is-large" type="submit" id="create-credential">Create</button>
+          </p>
+        </div>
+      </form>
+    </div>
+</div>
