@@ -1,22 +1,52 @@
 // Client facing scripts here
 
-//takes in category obj and append to container
+// creates an obj with unique category having an arr of pswds
+const combineCategWithPswd = (obj) => {
+
+  const categoryWithPassword = {};
+
+  for (let item of obj.categories) {
+
+    let categoryName = item.category;
+    if (!categoryWithPassword[categoryName]) {
+      categoryWithPassword[categoryName] = []
+      categoryWithPassword[categoryName].push(item.password_name)
+    } else {
+      categoryWithPassword[categoryName].push(item.password_name)
+    }
+  }
+
+  return categoryWithPassword;
+
+}
+
+//takes in category/pswd obj and append to the main layout
 const renderCategories = (obj) => {
-  const categories = $("#category-label");
 
-    for (let category of obj.categories) {
-      // const li = `<li>${category.name}</li>`
-      // categories.text(category.name);
-      console.log(category.name)
-      let layout = createCategoryLayout(category.name)
+  const categoryWithPassword = combineCategWithPswd(obj)
 
-      $(".category-container").append(layout)
+
+  // $(".category-container").clear();
+  const categoryArr = Object.keys(categoryWithPassword);
+
+    for (let category of categoryArr) {
+      let categoryLayout = createCategoryLayout(category);
+      $(".category-container").append(categoryLayout);
+      console.log(category)
+      let pswdArr = categoryWithPassword[category]
+
+      for (let pswd of pswdArr) {
+        console.log(pswd)
+
+        let pswdLayout = createPswdLayout(pswd);
+        $(`#${category}-pswd`).append(pswdLayout);
+      }
     }
 
 }
 
 const createCategoryLayout = (category) => {
-  const layout = `
+  const categoryLayout = `
   <section class="category-list">
       <a class="category-header" href="">
         <div class="category-icon"><i class="fa-solid fa-vault"></i></div>
@@ -24,44 +54,34 @@ const createCategoryLayout = (category) => {
         <i class="fa-solid fa-pen-to-square category-icon"></i>
         <i class="fa-solid fa-rectangle-xmark category-icon"></i>
       </a>
-      <article id="category-passwords">
-        <div class="password-box-display">
-          <a class="password-box" href="">
-            <i class="fa-solid fa-key password-icon"></i>
-            <div class="password-label text-default-dark">Compass</div>
-            <i class="fa-solid fa-pen-to-square category-icon"></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-          </a>
-        </div>
-      </article>
-      <article id="category-passwords">
-        <div class="password-box-display">
-          <a class="password-box" href="">
-            <i class="fa-solid fa-key password-icon"></i>
-            <div class="password-label text-default-dark">Lighthouse Labs</div>
-            <i class="fa-solid fa-pen-to-square category-icon"></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-          </a>
-        </div>
-      </article>
-      <article id="category-passwords">
-        <div class="password-box-display">
-          <a class="password-box" href="">
-            <i class="fa-solid fa-key password-icon"></i>
-            <div class="password-label text-default-dark">Compass for Teachers</div>
-            <i class="fa-solid fa-pen-to-square category-icon"></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
-          </a>
-        </div>
-      </article>
+      <article id="${category}-pswd"></article>
+  </section>
   `
-  return layout;
+  return categoryLayout;
+}
+
+const createPswdLayout = (passwordName) => {
+  const passwordLayout = `
+
+        <div class="password-box-display">
+          <a class="password-box" href="">
+            <i class="fa-solid fa-key password-icon"></i>
+            <div class="password-label text-default-dark">${passwordName}</div>
+            <i class="fa-solid fa-pen-to-square category-icon"></i>
+            <i class="fa-solid fa-rectangle-xmark category-icon"></i>
+          </a>
+        </div>
+
+  `
+  return passwordLayout;
 }
 
 
 $(() => {
 
   const loadCategories = () => {
+
+    // fetch obj with db data from server
     $.get("/api/categories")
     .then((data) => {
 
@@ -71,7 +91,6 @@ $(() => {
     })
   };
 
-
-  // render categories which are already in db
+  // render category and corresponding pswd which are already in db
   loadCategories()
 });
