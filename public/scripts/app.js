@@ -125,14 +125,9 @@ $(() => {
   const loadCategories = () => {
 
     // fetch obj with db data from server
-    const time1 = new Date();
-    console.log(time1);
-    
     $.get("/api/categories")
     .then((data) => {
       renderCategories(data);
-      const time2 = new Date();
-      console.log(time2);
     })
   };
 
