@@ -1,12 +1,11 @@
 // Client facing scripts here
 
 const loadCategories = () => {
-
   // fetch obj with db data from server
   $.get("/api/categories")
     .then((data) => {
       renderCategories(data);
-    })
+    });
 };
 
 // Le Minh
@@ -101,6 +100,12 @@ const updateTable = function(query, params) {
 
 };
 
+const appendData = function(obj) {
+
+}
+
+
+
 $(document).ready(() => {
   $('#edit-credential-form').on('submit', (event) => {
     event.preventDefault();
@@ -134,51 +139,54 @@ const muteErrorMessage = function() {
   $(".error-message").html("");
 }
 
+const getCredentials = async function() {
+
+}
 
 /// Nastasi
-
 const combineCategWithPswd = (obj) => {
-
   const categoryWithPassword = {};
 
-  for (let item of obj.categories) {
-
+  for (const item of obj.credentials) {
     let categoryName = item.category;
     if (!categoryWithPassword[categoryName]) {
       categoryWithPassword[categoryName] = []
       categoryWithPassword[categoryName].push(item.password_name)
+      categoryWithPassword[categoryName].push(item.id)
     } else {
       categoryWithPassword[categoryName].push(item.password_name)
+      categoryWithPassword[categoryName].push(item.id)
     }
   }
 
   return categoryWithPassword;
+}
 
+const generateLayouts = function(credentials, categories) {
+  for (const category of categories) {
+    const categoryLayout = createCategoryLayout(category.name)
+    $(".category-container").append(categoryLayout)
+  }
+
+  for (const category of categories) {
+    for (const credential of credentials) {
+      if (category.id === credential.category_id) {
+        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name })
+        $(`#${category.name}-pswd`).append(passwordLayout);
+      }
+    }
+  }
 }
 
 //takes in category/pswd obj and append to the main layout
 const renderCategories = (obj) => {
-  $(".category-container").empty();
-  const categoryWithPassword = combineCategWithPswd(obj)
-
-
-
-  const categoryArr = Object.keys(categoryWithPassword);
-
-  for (let category of categoryArr) {
-    let categoryLayout = createCategoryLayout(category);
-    $(".category-container").append(categoryLayout);
-
-    let pswdArr = categoryWithPassword[category]
-
-    for (let pswd of pswdArr) {
-
-
-      let pswdLayout = createPswdLayout(pswd);
-      $(`#${category}-pswd`).append(pswdLayout);
-    }
-  }
-
+  $.get("/credentials/")
+    .then((credentials) => {
+      $.get("/categories")
+        .then((categories) => {
+          generateLayouts(credentials.credentials, categories);
+        });
+    });
   reloadEventListeners();
 }
 
@@ -204,11 +212,12 @@ const createCategoryLayout = (category) => {
   return categoryLayout;
 }
 
-const createPswdLayout = (passwordName) => {
+const createPswdLayout = (data) => {
   const passwordLayout = `
-  <div class="is-flex flex-direction-row">
+  <div class="is-flex flex-direction-row div-password">
+    <input class="is-hidden password-id ${data.id}" />
     <a href="" class="mx-2">
-      <i class="fa-solid fa-key password-icon "></i> ${passwordName}
+      <i class="fa-solid fa-key password-icon "></i> ${data.name}
     </a>
     <a href=" " class="mx-2">
       <i class="fa-solid fa-copy"></i>

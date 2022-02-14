@@ -23,6 +23,20 @@ module.exports = (db) => {
       });
   });
 
+  // GET only IDs from /credentials
+  router.get("/id", (req, res) => {
+    db.query(`SELECT id FROM credentials;`)
+      .then(data => {
+        const credentials = data.rows;
+        res.json({ credentials });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   // POST /credentials - create a new credential
   router.post("/", (req, res) => {
 

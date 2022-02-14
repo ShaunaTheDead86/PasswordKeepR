@@ -1,5 +1,5 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 module.exports = (db) => {
   router.get("/categories", (req, res) => {
@@ -18,5 +18,18 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  router.get("/credentials", (req, res) => {
+    db.query(`SELECT id FROM credentials;`)
+      .then(data => {
+        return data.rows;
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   return router;
 };
