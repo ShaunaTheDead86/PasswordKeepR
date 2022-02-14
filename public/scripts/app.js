@@ -124,6 +124,8 @@ const renderCategories = (obj) => {
       $(`#${category}-pswd`).append(pswdLayout);
     }
   }
+
+  reloadEventListeners();
 }
 
 const createCategoryLayout = (category) => {
@@ -175,8 +177,6 @@ const createPswdLayout = (passwordName) => {
 
 
 $(() => {
-
-
   // render category and corresponding pswd which are already in db
   createNewItemOnSubmit();
   loadCategories();
