@@ -47,8 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   const loadCategories = function () {
-    $.get('/api/categories').then((categories) => {
+    $.get('/categories').then((categories) => {
+
       let $dropdown = $("#category");
+      $dropdown.empty();
       $.each(categories, function() {
         $dropdown.append($("<option />").val(this.id).text(this.name));
       });

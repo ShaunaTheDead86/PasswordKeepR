@@ -11,7 +11,7 @@ const createNewItemOnSubmit = function (str) {
       showErrorMessage("Password is not strong enough!");
       return;
     };
-    $.post('/api/credentials', params).then((credential) => {
+    $.post('/credentials', params).then((credential) => {
       muteErrorMessage();
       // close popup
       $("#new-item-modal").removeClass('is-active');
@@ -118,7 +118,6 @@ const createPswdLayout = (passwordName) => {
   return passwordLayout;
 }
 
-
 $(() => {
 
   const loadCategories = () => {
@@ -126,10 +125,7 @@ $(() => {
     // fetch obj with db data from server
     $.get("/api/categories")
     .then((data) => {
-
       renderCategories(data);
-
-
     })
   };
 

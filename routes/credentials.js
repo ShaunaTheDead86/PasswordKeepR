@@ -9,7 +9,7 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  // GET /api/credentials - get all credentials
+  // GET /credentials - get all credentials
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM credentials;`)
       .then(data => {
@@ -23,7 +23,7 @@ module.exports = (db) => {
       });
   });
 
-  // POST /api/credentials - create a new credential
+  // POST /credentials - create a new credential
   router.post("/", (req, res) => {
 
     // to be replaced when session userid is available
