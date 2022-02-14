@@ -38,7 +38,6 @@ const createNewItemOnSubmit = function(str) {
 const generatePassOnEvents = function() {
   
   $('#incl-upper').on('change', (evt) => {
-    
     generateNewPass();
   });
   $('#incl-number').on('change', (evt) => {
@@ -223,8 +222,8 @@ const createPswdLayout = (passwordName) => {
 
 $(() => {
   // render category and corresponding pswd which are already in db
+  loadCategories();
   createNewItemOnSubmit();
   generatePassOnEvents();
-  loadCategories();
   
 });
