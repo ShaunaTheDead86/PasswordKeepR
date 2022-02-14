@@ -29,7 +29,6 @@ const createNewItemOnSubmit = function(str) {
       $("#new-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
-
       loadCategories();
     })
   });
@@ -52,10 +51,9 @@ const editItemOnSubmit = function(str) {
       $("password").val("");
       $("name").val("");
       $("url").val("");
-      $("edit-password-modal").removeClass('is-active');
+      $("#edit-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
-
       loadCategories();
     })
   });
@@ -161,9 +159,9 @@ const createPswdLayout = (passwordName) => {
     </a>
     <div class="field is-grouped is-grouped-right mx-2">
       <p class="control">
-        <button class="js-modal-trigger button is-white mx-2" data-target="edit-password-modal">
+        <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
           <i class="fa-solid fa-pen-to-square"></i>
-        </button>
+        </a>
       </p>
     </div>
     <a href="" class="mx-2">
