@@ -5,6 +5,7 @@
 $primary: #14213d;
 $warning: #fca311;
 $text: #262228;
+$link: white;
 // Set fonts
 $family-monospace: 'Press Start 2P',
 cursive;
@@ -26,3 +27,6 @@ $body-overflow-y: scroll;
 @import "../node_modules/bulma/sass/components/navbar.sass";
 @import "../node_modules/bulma/sass/layout/hero.sass";
 @import "../node_modules/bulma/sass/layout/section.sass";
+a:hover {
+  text-decoration: none;
+}

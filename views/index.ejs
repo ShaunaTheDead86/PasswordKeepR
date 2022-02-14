@@ -71,29 +71,47 @@
     </nav>
   </section>
 
-  <main>
-    <section>
-      <header class="level">
-        <div class="level-left mx-5">
-          <a class="text-dropdown no-background-button" href=" ">Organize by:</a>
+  <header class="section">
+    <div class="level">
+      <div class="level-left">
+        <div class="dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <a href="" class="has-text-primary">
+              <span>Sort By</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <a href="" class="dropdown-item has-text-primary">
+                Name
+                </a>
+              <a href="" class="dropdown-item has-text-primary">
+                Date
+                </a>
+            </div>
+          </div>
         </div>
-        <div class="filters level-right mx-5">
-          <span class="icons-display ">
-          <a href=" ">
+      </div>
+      <div class="level-right">
+        <div class="icons-display">
+          <a href=" " class="has-text-primary mx-1">
             <i class="fa-solid fa-folder filter-icons "></i>
           </a>
-          <a href=" ">
-              <i class="fa-solid fa-table-cells-large filter-icons "></i>
-            </a>
-            <a href=" ">
-              <i class="fa-solid fa-bars filter-icons "></i>
-            </a>
-          </span>
+          <a href=" " class="has-text-primary mx-1">
+            <i class="fa-solid fa-table-cells-large filter-icons "></i>
+          </a>
+          <a href=" " class="has-text-primary mx-1">
+            <i class="fa-solid fa-bars filter-icons "></i>
+          </a>
         </div>
-      </header>
-    </section>
+      </div>
+    </div>
+  </header>
 
-
+  <main>
     <section class="category-container">
       <!-- <details class="message">
         <summary class="message-header has-background-primary">
@@ -154,183 +172,7 @@
           </div>
         </div>
       </details>
-      <details class="message">
-        <summary class="message-header has-background-primary">
-          <p class="title is-size-4">
-            <i class="fa-solid fa-vault mx-2"></i> Social Media
-            <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-          </p>
-        </summary>
-        <div id="is-collapsible" class="message-body is-collapsible" data-parent="accordion_first">
-          <div class="message-body-content has-background-primary-light">
-            <div class="is-flex is-flex-direction-column">
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> Facebook
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> Instagram
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> Reddit
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> Twitter
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </details>
-      <details class="message">
-        <summary class="message-header has-background-primary">
-          <p class="title is-size-4">
-            <i class="fa-solid fa-vault "></i> Learning
-            <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-          </p>
-        </summary>
-        <div id="is-collapsible" class="message-body is-collapsible" data-parent="accordion_first">
-          <div class="message-body-content has-background-primary-light">
-            <div class="is-flex is-flex-direction-column">
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> FreeCodeCamp
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> Udemy
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> Codecademy
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> CodeWars
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </details>
-      <details class="message">
-        <summary class="message-header has-background-primary">
-          <p class="title is-size-4">
-            <i class="fa-solid fa-vault mx-2"></i> Work Related
-            <i class="fa-solid fa-pen-to-square category-icon "></i>
-            <i class="fa-solid fa-rectangle-xmark category-icon "></i>
-          </p>
-        </summary>
-        <div id="is-collapsible" class="message-body is-collapsible" data-parent="accordion_first">
-          <div class="message-body-content has-background-primary-light">
-            <div class="is-flex is-flex-direction-column">
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> Slack
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> Teams
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> MDN
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-              <p class="title is-size-6 has-text-grey-darker">
-                <a href="">
-                  <i class="fa-solid fa-key password-icon mx-2"></i> w3schools
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-pen-to-square category-icon mx-2"></i>
-                </a>
-                <a href="">
-                  <i class="fa-solid fa-rectangle-xmark category-icon mx-2"></i>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </details> -->
+    -->
     </section>
 
     <footer class="navbar is-fixed-bottom is-dark">
@@ -341,10 +183,14 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
+          <a href="">
           Help
+          </a>
         </div>
         <div class="navbar-item">
+          <a href="">
           Privacy Policy
+          </a>
         </div>
       </div>
     </footer>
