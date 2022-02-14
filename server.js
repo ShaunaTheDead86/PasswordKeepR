@@ -22,7 +22,7 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   "/styles",
@@ -41,7 +41,7 @@ const credentialsRoutes = require("./routes/credentials");
 const usersRoutes = require("./routes/users");
 const apiRoutes = require("./routes/api");
 const cetegoriesRoutes = require("./routes/categories");
-
+const editCredentials = require("./routes/editCredentials");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -51,6 +51,7 @@ app.use("/api", apiRoutes(db));
 app.use("/categories", cetegoriesRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
+app.use("/credentials/edit", editCredentials(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!

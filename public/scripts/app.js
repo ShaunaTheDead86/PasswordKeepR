@@ -35,7 +35,7 @@ const createNewItemOnSubmit = function(str) {
 };
 
 const generatePassOnEvents = function() {
-  
+
   $('#incl-upper').on('change', (evt) => {
     generateNewPass();
   });
@@ -72,7 +72,7 @@ const generateNewPass = function() {
   }
   let password = "";
   const poolLength = characterPool.length;
-  for (let i = 0; i < passLength; i++ ) {
+  for (let i = 0; i < passLength; i++) {
     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
   }
   $("#password").val(password);
@@ -81,7 +81,7 @@ const generateNewPass = function() {
 const togglePassword = function() {
   $('#reveal').on('click', (evt) => {
     var type = document.getElementById("password").type;
-    if(type=='password') {
+    if (type == 'password') {
       document.getElementById("password").type = "text";
     } else {
       document.getElementById("password").type = "password";
@@ -102,10 +102,10 @@ const editItemOnSubmit = function(str) {
     $.post('/credentials', params).then((credential) => {
       muteErrorMessage();
       // close popup
-      $("username").val("");
-      $("password").val("");
-      $("name").val("");
-      $("url").val("");
+      $(".edit-username").val("");
+      $(".edit-password").val("");
+      $(".edit-name").val("");
+      $(".edit-url").val("");
       $("#edit-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
