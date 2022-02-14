@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+const reloadEventListeners = function() {
   // Functions to open and close a modal
   function openModal($el) {
     $el.classList.add('is-active');
@@ -46,8 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const loadCreateNewPasswordForm = function () {
+  const loadCreateNewPasswordForm = function() {
     $("#password").val("");
+
     $.get('/categories').then((categories) => {
       let $dropdown = $("#category");
       $dropdown.empty();
@@ -56,4 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   };
-});
+};
+
+// function updateSlider(slideAmount) {
+//   if (slideAmount != undefined) {
+//     document.getElementById("password-length").innerHTML = slideAmount;
+//   }
+// }
