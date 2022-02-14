@@ -26,7 +26,7 @@ const createNewItemOnSubmit = function (str) {
       $("password").val("");
       $("name").val("");
       $("url").val("");
-      $("#new-item-modal").removeClass('is-active');
+      $("#new-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
 
