@@ -35,6 +35,32 @@ const createNewItemOnSubmit = function(str) {
   });
 };
 
+// Shauna
+const editItemOnSubmit = function(str) {
+  $('#edit-credential-form').on('submit', (evt) => {
+    evt.preventDefault();
+    const params = $("#edit-credential-form").serialize();
+    const password = escapeScript($("#password").val());
+    if (password.length < 6) {
+      showErrorMessage("Password is not strong enough!");
+      return;
+    };
+    $.post('/credentials', params).then((credential) => {
+      muteErrorMessage();
+      // close popup
+      $("username").val("");
+      $("password").val("");
+      $("name").val("");
+      $("url").val("");
+      $("edit-password-modal").removeClass('is-active');
+
+      // Inject new credential code goes here
+
+      loadCategories();
+    })
+  });
+};
+
 // helper to prevent Cross Site Scripting
 const escapeScript = function(str) {
   let div = document.createElement("div");
@@ -131,9 +157,13 @@ const createPswdLayout = (passwordName) => {
     <a href=" " class="mx-2">
       <i class="fa-solid fa-copy"></i>
     </a>
-    <a href="" class="mx-2">
-      <i class="fa-solid fa-pen-to-square"></i>
-    </a>
+    <div class="field is-grouped is-grouped-right mx-2">
+      <p class="control">
+        <button class="js-modal-trigger button is-white mx-2" data-target="edit-password-modal">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+      </p>
+    </div>
     <a href="" class="mx-2">
       <i class="fa-solid fa-rectangle-xmark"></i>
     </a>

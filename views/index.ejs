@@ -21,7 +21,6 @@
   <!-- Bulma imports -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-  <script src="/node_modules/@creativebulma/bulma-collapsible/dist/js/bulma-collapsible.min.js"></script>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
@@ -118,9 +117,9 @@
         </div>
       </div>
     </footer>
-
+    <%- include('partials/_newPasswordModal.ejs') -%>
+      <%- include('partials/_editPasswordModal.ejs') -%>
   </main>
-  <%- include('partials/_newPasswordModal') %>
 </body>
 
 </html>

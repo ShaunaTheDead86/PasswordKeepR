@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Functions to open and close a modal
   function openModal($el) {
+    console.log($el.id);
     $el.classList.add('is-active');
     if ($el.id === "new-password-modal") {
       loadCreateNewPasswordForm();
+    } else if ($el.id === "edit-password-modal") {
+      console.log($el.id);
+      loadEditPasswordForm();
     }
   }
 
@@ -21,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
     const modal = $trigger.dataset.target;
     const $target = document.getElementById(modal);
+    console.log($target);
 
     $trigger.addEventListener('click', () => {
       openModal($target);
@@ -44,9 +49,20 @@ document.addEventListener('DOMContentLoaded', () => {
       closeAllModals();
     }
   });
-  
-  const loadCreateNewPasswordForm = function () {
+
+  const loadCreateNewPasswordForm = function() {
     $("#password").val("");
+    $.get('/categories').then((categories) => {
+      let $dropdown = $("#category");
+      $dropdown.empty();
+      $.each(categories, function() {
+        $dropdown.append($("<option />").val(this.id).text(this.name));
+      });
+    });
+  };
+
+  const loadEditPasswordForm = function() {
+    $("#edit-password").val("");
     $.get('/categories').then((categories) => {
       let $dropdown = $("#category");
       $dropdown.empty();
