@@ -4,35 +4,46 @@
     <div class="box">
       <p id="error-message"></p>
       <form id="create-credential-form" action="/api/credentials" method="POST">
-        <table>
-          <tbody>
-            <tr>
-              <td>Account name</td>
-              <td><input type="text" id="account-name" name="accountName" required></td>
-            </tr>
-            <tr>
-              <td>URL</td>
-              <td><input type="text" id="url" name="url" required></td>
-            </tr>
-            <tr>
-              <td>Username</td>
-              <td><input type="text" id="username" name="username" required></td>
-            </tr>
-            <tr>
-              <td>Password</td>
-              <td><input type="password" id="password" name="password" required></td>
-            </tr>
-            <tr>
-              <td>Category</td>
-              <td>
-                <select name="categoryId" id="category"></select>
-              </td>
-            </tr>
-            <tr>
-              <td></td><td><button type="submit" id="create-credential">Create</button></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="field is-grouped is-grouped-centered">
+          <label class="label is-large">CREATE NEW PASSWORD</label>
+        </div>
+        <div class="field">
+          <label class="label is-large">Account name</label>
+          <div class="control">
+            <input class="input is-primary is-large" type="text" id="account-name" name="accountName" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label is-large">URL</label>
+          <div class="control">
+            <input class="input is-primary is-large" type="text" id="url" name="url" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label is-large">Username</label>
+          <div class="control">
+            <input class="input is-primary is-large" type="text" id="username" name="username" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label is-large">Password</label>
+          <div class="control">
+            <input class="input is-primary is-large" type="password" id="password" name="password" required>
+          </div>
+        </div>
+        <div class="field is-expanded">
+          <label class="label is-large">Category</label>
+          <p class="control is-expanded">
+            <span class="select is-primary is-fullwidth is-large">
+              <select class="select is-primary" name="categoryId" id="category"></select>
+            </span>
+          </p>
+        </div>
+        <div class="field is-grouped is-grouped-right">
+          <p class="control">
+            <button class="button is-primary is-large" type="submit" id="create-credential">Create</button>
+          </p>
+        </div>
       </form>
     </div>
 </div>

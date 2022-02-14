@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $close.addEventListener('click', () => {
       closeModal($target);
-      alert($close.id)
     });
   });
 

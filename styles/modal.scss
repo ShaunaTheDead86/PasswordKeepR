@@ -1,4 +1,6 @@
 $color-warning: red;
+$standard-font: "Roboto";
+$logo-font: "Racing Sans One";
 
 #error-message {
   display: none;
@@ -9,4 +11,8 @@ $color-warning: red;
   border: none;
   padding: 2px 30px;
   width: 100%
+}
+
+.field .label {
+  font-family: $standard-font;
 }
