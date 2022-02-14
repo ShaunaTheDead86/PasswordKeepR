@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = $trigger.dataset.target;
     const $target = document.getElementById(modal);
 
+
     $trigger.addEventListener('click', () => {
       openModal($target);
     });
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       closeAllModals();
     }
   });
-  
+
   const loadCreateNewPasswordForm = function () {
     $("#password").val("");
     $.get('/categories').then((categories) => {
