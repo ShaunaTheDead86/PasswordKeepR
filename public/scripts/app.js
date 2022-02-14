@@ -35,15 +35,50 @@ const createNewItemOnSubmit = function(str) {
   });
 };
 
-const generatePassOnEvents = function(str) {
+const generatePassOnEvents = function() {
+  
   $('#incl-upper').on('change', (evt) => {
     
+    generateNewPass();
   });
-};
+  $('#incl-number').on('change', (evt) => {
+    generateNewPass();
+  });
+  $('#incl-special').on('change', (evt) => {
+    generateNewPass();
+  });
+  $('#pass-length').on('change', (evt) => {
+    generateNewPass();
+  });
+  $('#passRange').on('change', (evt) => {
+    generateNewPass();
+    $("#pass-length").text($('#passRange').val());
+  });
+}
 
-// incl-number
-// incl-special-char
-// password-length
+const generateNewPass = function() {
+  const inclUpper = $("#incl-upper").is(":checked");
+  const inclNum = $("#incl-number").is(":checked");
+  const inclSpecial = $("#incl-special").is(":checked");
+  const passLength = $('#passRange').val();
+
+  let characterPool = "abcdefghijklmnopqrstuvxyz";
+  if (inclUpper) {
+    characterPool += "ABCDEFGHIJKLMNOPQRSTUVXYZ";
+  }
+  if (inclNum) {
+    characterPool += "0123456789";
+  }
+  if (inclSpecial) {
+    characterPool += "!@#$%^&*()[]{}";
+  }
+  let password = "";
+  const poolLength = characterPool.length;
+  for (let i = 0; i < passLength; i++ ) {
+    password += characterPool.charAt(Math.floor(Math.random() * poolLength));
+  }
+  $("#password").val(password);
+}
 
 // Shauna
 const editItemOnSubmit = function(str) {

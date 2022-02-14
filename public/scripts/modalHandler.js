@@ -50,7 +50,6 @@ const reloadEventListeners = function() {
     
     $.get('/categories').then((categories) => {
       let $dropdown = $("#category");
-      alert(categories.length)
       $dropdown.empty();
       $.each(categories, function() {
         $dropdown.append($("<option />").val(this.id).text(this.name));
@@ -59,8 +58,8 @@ const reloadEventListeners = function() {
   };
 };
 
-function updateSlider(slideAmount) {
-  if (slideAmount != undefined) {
-    document.getElementById("password-length").innerHTML = slideAmount;
-  }
-}
+// function updateSlider(slideAmount) {
+//   if (slideAmount != undefined) {
+//     document.getElementById("password-length").innerHTML = slideAmount;
+//   }
+// }
