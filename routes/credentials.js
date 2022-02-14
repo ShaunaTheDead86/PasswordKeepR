@@ -42,7 +42,7 @@ module.exports = (db) => {
           req.body.username, 
           req.body.password, 
           req.body.url, 
-          req.body.accountName, 
+          req.body.name, 
           userId,
           data.rows[0].organization_id,
           req.body.categoryId

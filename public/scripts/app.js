@@ -1,7 +1,6 @@
 // Client facing scripts here
 
-// creates an obj with unique category having an arr of pswds
-//
+// Le Minh
 const createNewItemOnSubmit = function (str) {
   $('#create-credential-form').on('submit', (evt) => {
     evt.preventDefault();
@@ -14,6 +13,10 @@ const createNewItemOnSubmit = function (str) {
     $.post('/credentials', params).then((credential) => {
       muteErrorMessage();
       // close popup
+      $("username").val("");
+      $("password").val("");
+      $("name").val("");
+      $("url").val("");
       $("#new-item-modal").removeClass('is-active');
 
       // Inject new credential code goes here
@@ -70,7 +73,7 @@ const renderCategories = (obj) => {
 
   // $(".category-container").clear();
   const categoryArr = Object.keys(categoryWithPassword);
-
+    
     for (let category of categoryArr) {
       let categoryLayout = createCategoryLayout(category);
       $(".category-container").append(categoryLayout);
@@ -84,7 +87,6 @@ const renderCategories = (obj) => {
         $(`#${category}-pswd`).append(pswdLayout);
       }
     }
-
 }
 
 const createCategoryLayout = (category) => {
@@ -123,9 +125,14 @@ $(() => {
   const loadCategories = () => {
 
     // fetch obj with db data from server
+    const time1 = new Date();
+    console.log(time1);
+    
     $.get("/api/categories")
     .then((data) => {
       renderCategories(data);
+      const time2 = new Date();
+      console.log(time2);
     })
   };
 

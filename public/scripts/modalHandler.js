@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function openModal($el) {
     $el.classList.add('is-active');
     if ($el.id === "new-item-modal") {
-      loadCategories();
+      loadCreateNewPasswordForm();
     }
   }
 
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
   (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
     const modal = $trigger.dataset.target;
     const $target = document.getElementById(modal);
-    console.log($target);
 
     $trigger.addEventListener('click', () => {
       openModal($target);
@@ -46,9 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   
-  const loadCategories = function () {
+  const loadCreateNewPasswordForm = function () {
+    $("#password").val("");
     $.get('/categories').then((categories) => {
-
       let $dropdown = $("#category");
       $dropdown.empty();
       $.each(categories, function() {
