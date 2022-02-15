@@ -116,22 +116,26 @@ const getCredentials = async function() {
 
 }
 
-/// Nastasi
-const combineCategWithPswd = (obj) => {
+// assign each pswd to corresponding website_name as an obj and add this obj to an array that assigned to corresponding category name
+const groupCategWithPswds = (obj) => {
+
   const categoryWithPassword = {};
 
-  for (const item of obj.credentials) {
+  for (let item of obj.categories) {
+    let newObj = {};
+    newObj[item.password_name] = item.password;
+
     let categoryName = item.category;
     if (!categoryWithPassword[categoryName]) {
-      categoryWithPassword[categoryName] = []
-      categoryWithPassword[categoryName].push(item.password_name)
-      categoryWithPassword[categoryName].push(item.id)
+      categoryWithPassword[categoryName] = [];
+
+
+    categoryWithPassword[categoryName].push(newObj);
     } else {
-      categoryWithPassword[categoryName].push(item.password_name)
-      categoryWithPassword[categoryName].push(item.id)
+      categoryWithPassword[categoryName].push(newObj);
     }
   }
-
+  console.log(categoryWithPassword)
   return categoryWithPassword;
 }
 
@@ -161,6 +165,9 @@ const renderCategories = () => {
         .then((categories) => {
           generateLayouts(credentials.credentials, categories.categories);
           reloadEventListeners();
+          // copy to clip
+          loadEventListenerCopyBtn();
+
         });
     });
 }
