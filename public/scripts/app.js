@@ -18,6 +18,7 @@ const login = function(str) {
       $("#login-button").hide();
       $("#login-email").text(user.email);
       $("#login-email").show();
+      $("#create-new-button").attr("hidden", false);
     })
     $("#login-modal").removeClass('is-active');
   });
