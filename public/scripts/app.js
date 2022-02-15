@@ -112,10 +112,6 @@ const muteErrorMessage = function() {
   $(".error-message").html("");
 }
 
-const getCredentials = async function() {
-
-}
-
 // assign each pswd to corresponding website_name as an obj and add this obj to an array that assigned to corresponding category name
 const groupCategWithPswds = (obj) => {
 
@@ -167,7 +163,7 @@ const renderCategories = () => {
           generateLayouts(credentials.credentials, categories.categories);
           reloadEventListeners();
           // copy to clip
-          loadEventListenerCopyBtn();
+          // loadEventListenerCopyBtn();
         });
     });
 }
