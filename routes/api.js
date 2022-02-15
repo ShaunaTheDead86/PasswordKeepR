@@ -3,14 +3,25 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/categories", (req, res) => {
-    db.query(`
-    SELECT categories.name as category, credentials.name as password_name
-    FROM categories
-    JOIN credentials ON categories.id = category_id
-    ;`)
+    db.query(`SELECT *
+    FROM categories;`)
       .then(data => {
         const categories = data.rows;
         res.json({ categories });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.get("/credentials", (req, res) => {
+    db.query(`SELECT *
+    FROM credentials;`)
+      .then(data => {
+        const credentials = data.rows;
+        res.json({ credentials });
       })
       .catch(err => {
         res
@@ -24,7 +35,7 @@ module.exports = (db) => {
     db.query(`
     SELECT *
     FROM users
-    WHERE username = $1 
+    WHERE username = $1
     AND password = $2
     ;`, params)
       .then(data => {
@@ -33,17 +44,6 @@ module.exports = (db) => {
           res.send(data.rows[0]);
         }
       })
-  });
-  router.get("/credentials", (req, res) => {
-    db.query(`SELECT id FROM credentials;`)
-      .then(data => {
-        return data.rows;
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
   });
 
   return router;

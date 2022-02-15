@@ -1,13 +1,5 @@
 // Client facing scripts here
 
-const loadCategories = () => {
-  // fetch obj with db data from server
-  $.get("/api/categories")
-    .then((data) => {
-      renderCategories(data);
-    });
-};
-
 // Le Minh
 const login = function(str) {
   $('#login-form').on('submit', (evt) => {
@@ -160,13 +152,15 @@ const generateLayouts = function(credentials, categories) {
   }
 }
 
-//takes in category/pswd obj and append to the main layout
-const renderCategories = (obj) => {
-  $.get("/credentials/")
+// gets data from the server and appends to the main layout
+const renderCategories = () => {
+  $.get("/api/credentials")
     .then((credentials) => {
-      $.get("/categories")
+      console.log(credentials);
+      $.get("/api/categories")
         .then((categories) => {
-          generateLayouts(credentials.credentials, categories);
+          console.log(categories);
+          generateLayouts(credentials.credentials, categories.categories);
           reloadEventListeners();
         });
     });
@@ -220,10 +214,9 @@ const createPswdLayout = (data) => {
 }
 
 
-
-$(() => {
+$(document).ready(function() {
   // render category and corresponding pswd which are already in db
-  loadCategories();
+  renderCategories();
   createNewItemOnSubmit();
   generatePassOnEvents();
   togglePassword();
