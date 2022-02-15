@@ -18,25 +18,25 @@ function closeAllModals() {
   });
 }
 
-const populateCategoryDropdown = function() {
+const populateCategoryDropdown = function(dropDownTarget) {
   $.get('/categories').then((categories) => {
-    let $dropdown = $(".edit-category");
+    let $dropdown = $(dropDownTarget);
     $dropdown.empty();
 
     for (const item of categories) {
-      $dropdown.append(`<option>${item.name}</option>`);
+      $dropdown.append(`<option value="${item.id}">${item.name}</option>`);
     }
   });
 }
 
 const loadCreateNewPasswordForm = function() {
   $(".new-password-password").val("");
-  populateCategoryDropdown();
+  populateCategoryDropdown("#category");
 };
 
 const loadEditPasswordForm = function() {
   $(".edit-form-password").val("");
-  populateCategoryDropdown();
+  populateCategoryDropdown(".edit-category");
 };
 
 // function updateSlider(slideAmount) {
