@@ -116,27 +116,33 @@ const getCredentials = async function() {
 
 }
 
-/// Nastasi
-const combineCategWithPswd = (obj) => {
+// assign each pswd to corresponding website_name as an obj and add this obj to an array that assigned to corresponding category name
+const groupCategWithPswds = (obj) => {
+
   const categoryWithPassword = {};
 
-  for (const item of obj.credentials) {
+  for (let item of obj.categories) {
+    let newObj = {};
+    newObj[item.password_name] = item.password;
+
     let categoryName = item.category;
     if (!categoryWithPassword[categoryName]) {
-      categoryWithPassword[categoryName] = []
-      categoryWithPassword[categoryName].push(item.password_name)
-      categoryWithPassword[categoryName].push(item.id)
+      categoryWithPassword[categoryName] = [];
+
+
+      categoryWithPassword[categoryName].push(newObj);
     } else {
-      categoryWithPassword[categoryName].push(item.password_name)
-      categoryWithPassword[categoryName].push(item.id)
+      categoryWithPassword[categoryName].push(newObj);
     }
   }
-
+  console.log(categoryWithPassword)
   return categoryWithPassword;
 }
 
 // Shauna
 const generateLayouts = function(credentials, categories) {
+  $(".category-container").empty();
+  $(`#${category.name}-pswd`).empty();
   for (const category of categories) {
     const categoryLayout = createCategoryLayout(category.name)
     $(".category-container").append(categoryLayout)
@@ -156,12 +162,12 @@ const generateLayouts = function(credentials, categories) {
 const renderCategories = () => {
   $.get("/api/credentials")
     .then((credentials) => {
-      console.log(credentials);
       $.get("/api/categories")
         .then((categories) => {
-          console.log(categories);
           generateLayouts(credentials.credentials, categories.categories);
           reloadEventListeners();
+          // copy to clip
+          loadEventListenerCopyBtn();
         });
     });
 }
@@ -200,7 +206,7 @@ const createPswdLayout = (data) => {
   <div class="field is-grouped is-grouped-right mx-2">
   <p class="control">
   <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
-    <input class="is-hidden password-id " value="${data.id}" />
+    <input class="is-hidden password-id" value="${data.id}" />
   <i class="fa-solid fa-pen-to-square"></i>
   </a>
   </p>

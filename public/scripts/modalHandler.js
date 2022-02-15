@@ -48,14 +48,9 @@ const reloadEventListeners = function() {
     const target = document.getElementById(modal);
 
     trigger.addEventListener('click', function() {
+      const passwordID = $(trigger).children(".password-id").val();
       if (modal === "edit-password-modal") {
-        const passwordID = $(this).children(".password-id").attr("value");
-        $("#edit-credential-form").append(`<div class="field">
-        <label class="label is-large edit-form-name"></label>
-        <div class="control">
-        <input type="hidden" id="password-id" type="text" name="password-id" value="${passwordID}">
-        </div>
-      </div>`);
+        $(".edit-password-id").attr("value", `${passwordID}`);
       }
       openModal(target);
     });
@@ -81,10 +76,19 @@ const reloadEventListeners = function() {
 
   $('#edit-credential-form').on('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    console.log(formData.entries(), formData.values());
-    const params = $("#create-credential-form").serializeArray();
-    const password = escapeScript($("#password").val());
-    console.log(params);
+    const data = $("#edit-credential-form").serializeArray();
+
+    $.ajax({
+      url: "/api/credentials/edit",
+      data: data,
+      type: "POST",
+      success: function(res) {
+        closeAllModals();
+        return renderCategories();
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
   });
 };
