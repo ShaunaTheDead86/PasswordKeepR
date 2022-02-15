@@ -3,8 +3,6 @@ function openModal($el) {
   $el.classList.add('is-active');
   if ($el.id === "new-password-modal") {
     loadCreateNewPasswordForm();
-  } else if ($el.id === "edit-password-modal") {
-    loadEditPasswordForm();
   } else if ($el.id === "login-modal") {
     $("#login-username").focus();
   }
@@ -20,25 +18,25 @@ function closeAllModals() {
   });
 }
 
-const populateCategoryDropdown = function(dropDownTarget) {
+const populateCategoryDropdown = function(dropDownTarget, defaultCategory) {
   $.get('/categories').then((categories) => {
     let $dropdown = $(dropDownTarget);
     $dropdown.empty();
 
     for (const item of categories) {
-      $dropdown.append(`<option value="${item.id}">${item.name}</option>`);
+      if (item.id === defaultCategory) {
+        $dropdown.append(`<option value="${item.id}" selected="selected">${item.name}</option>`);
+      } else {
+        $dropdown.append(`<option value="${item.id}">${item.name}</option>`);
+      }
     }
   });
 }
 
 const loadCreateNewPasswordForm = function() {
   $(".new-password-password").val("");
+  $("#password-strength-bar").val(0);
   populateCategoryDropdown("#category");
-};
-
-const loadEditPasswordForm = function() {
-  $(".edit-form-password").val("");
-  populateCategoryDropdown(".edit-category");
 };
 
 const reloadEventListeners = function() {
@@ -48,14 +46,25 @@ const reloadEventListeners = function() {
     const target = document.getElementById(modal);
 
     trigger.addEventListener('click', function() {
+      const passwordID = $(trigger).children(".password-id").val();
+
       if (modal === "edit-password-modal") {
-        const passwordID = $(this).children(".password-id").attr("value");
-        $("#edit-credential-form").append(`<div class="field">
-        <label class="label is-large edit-form-name"></label>
-        <div class="control">
-        <input type="hidden" id="password-id" type="text" name="password-id" value="${passwordID}">
-        </div>
-      </div>`);
+        $.ajax({
+          url: "/api/credentials/id",
+          data: { passwordID: passwordID },
+          type: "GET",
+          success: function(res) {
+            $(".edit-password-id").attr("value", `${passwordID}`);
+            $(".edit-form-name").val(res[0].name);
+            $(".edit-url").val(res[0].url);
+            $(".edit-form-username").val(res[0].username);
+            $(".edit-form-password").val(res[0].password);
+            return populateCategoryDropdown(".edit-category", res[0].category_id);
+          },
+          error: function(err) {
+            console.log(err);
+          }
+        });
       }
       openModal(target);
     });
@@ -82,6 +91,11 @@ const reloadEventListeners = function() {
   $('#edit-credential-form').on('submit', (event) => {
     event.preventDefault();
     const data = $("#edit-credential-form").serializeArray();
+    const password = escapeScript(data[4].value);
+
+    if (password.length < 6) {
+      return showErrorMessage("Password is not strong enough!");
+    }
 
     $.ajax({
       url: "/api/credentials/edit",
@@ -89,11 +103,36 @@ const reloadEventListeners = function() {
       type: "POST",
       success: function(res) {
         closeAllModals();
-        renderCategories();
+        return renderCategories();
       },
       error: function(err) {
         console.log(err);
       }
-    })
+    });
+  });
+
+  // prevent default action on all links (action will be handled in code)
+  $("a").click(function(event) {
+    event.preventDefault();
+  });
+
+  // Add a click event on buttons
+  (document.querySelectorAll(".delete-button") || []).forEach((trigger) => {
+    trigger.addEventListener('click', function(event) {
+      const deleteTarget = $(this).closest(".div-password");
+      const passwordID = deleteTarget.find(".password-id").val();
+
+      $.ajax({
+        url: "/api/credentials/delete",
+        data: { passwordID: passwordID },
+        type: "GET",
+        success: function(res) {
+          renderCategories();
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    });
   });
 };

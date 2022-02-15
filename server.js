@@ -47,6 +47,13 @@ const currentUser = (req, res, next) => {
   next();
 };
 app.use(currentUser);
+const currentOrg = (req, res, next) => {
+  if (req.session["organization_id"]) {
+    req.currentOrg = req.session["organization_id"];
+  }
+  next();
+};
+app.use(currentOrg);
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
