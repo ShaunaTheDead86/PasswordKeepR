@@ -1,12 +1,11 @@
 // Client facing scripts here
 
 const loadCategories = () => {
-
   // fetch obj with db data from server
   $.get("/api/categories")
     .then((data) => {
       renderCategories(data);
-    })
+    });
 };
 
 // Le Minh
@@ -35,7 +34,7 @@ const createNewItemOnSubmit = function(str) {
 };
 
 const generatePassOnEvents = function() {
-  
+
   $('#incl-upper').on('change', (evt) => {
     generateNewPass();
   });
@@ -72,7 +71,7 @@ const generateNewPass = function() {
   }
   let password = "";
   const poolLength = characterPool.length;
-  for (let i = 0; i < passLength; i++ ) {
+  for (let i = 0; i < passLength; i++) {
     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
   }
   $("#password").val(password);
@@ -81,7 +80,7 @@ const generateNewPass = function() {
 const togglePassword = function() {
   $('#reveal').on('click', (evt) => {
     var type = document.getElementById("password").type;
-    if(type=='password') {
+    if (type == 'password') {
       document.getElementById("password").type = "text";
     } else {
       document.getElementById("password").type = "password";
@@ -89,30 +88,37 @@ const togglePassword = function() {
   })
 };
 
-// Shauna
-const editItemOnSubmit = function(str) {
-  $('#edit-credential-form').on('submit', (evt) => {
-    evt.preventDefault();
-    const params = $("#edit-credential-form").serialize();
+const makeSerializedArrayObject = function(SerArr) {
+  const results = {};
+  for (const object of SerArr) {
+    results[object.name] = object.value;
+  }
+  return results;
+};
+
+const updateTable = function(query, params) {
+
+};
+
+const appendData = function(obj) {
+
+}
+
+
+
+$(document).ready(() => {
+  $('#edit-credential-form').on('submit', (event) => {
+    event.preventDefault();
+    const params = $("#create-credential-form").serializeArray();
     const password = escapeScript($("#password").val());
     if (password.length < 6) {
       showErrorMessage("Password is not strong enough!");
       return;
     };
-    $.post('/credentials', params).then((credential) => {
-      muteErrorMessage();
-      // close popup
-      $("username").val("");
-      $("password").val("");
-      $("name").val("");
-      $("url").val("");
-      $("#edit-password-modal").removeClass('is-active');
 
-      // Inject new credential code goes here
-      loadCategories();
-    })
+    console.log(params);
   });
-};
+});
 
 // helper to prevent Cross Site Scripting
 const escapeScript = function(str) {
@@ -123,61 +129,64 @@ const escapeScript = function(str) {
 
 // helper to show the error message
 const showErrorMessage = function(errorMessage) {
-  $("#error-message").html(errorMessage);
-  $("#error-message").slideDown("slow");
+  $(".error-message").html(errorMessage);
+  $(".error-message").slideDown("slow");
 }
 
 // helper to clear the error message
 const muteErrorMessage = function() {
-  $("#error-message").slideUp()
-  $("#error-message").html("");
+  $(".error-message").slideUp()
+  $(".error-message").html("");
 }
 
+const getCredentials = async function() {
+
+}
 
 /// Nastasi
-
 const combineCategWithPswd = (obj) => {
-
   const categoryWithPassword = {};
 
-  for (let item of obj.categories) {
-
+  for (const item of obj.credentials) {
     let categoryName = item.category;
     if (!categoryWithPassword[categoryName]) {
       categoryWithPassword[categoryName] = []
       categoryWithPassword[categoryName].push(item.password_name)
+      categoryWithPassword[categoryName].push(item.id)
     } else {
       categoryWithPassword[categoryName].push(item.password_name)
+      categoryWithPassword[categoryName].push(item.id)
     }
   }
 
   return categoryWithPassword;
+}
 
+const generateLayouts = function(credentials, categories) {
+  for (const category of categories) {
+    const categoryLayout = createCategoryLayout(category.name)
+    $(".category-container").append(categoryLayout)
+  }
+
+  for (const category of categories) {
+    for (const credential of credentials) {
+      if (category.id === credential.category_id) {
+        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name })
+        $(`#${category.name}-pswd`).append(passwordLayout);
+      }
+    }
+  }
 }
 
 //takes in category/pswd obj and append to the main layout
 const renderCategories = (obj) => {
-  $(".category-container").empty();
-  const categoryWithPassword = combineCategWithPswd(obj)
-
-
-
-  const categoryArr = Object.keys(categoryWithPassword);
-
-  for (let category of categoryArr) {
-    let categoryLayout = createCategoryLayout(category);
-    $(".category-container").append(categoryLayout);
-
-    let pswdArr = categoryWithPassword[category]
-
-    for (let pswd of pswdArr) {
-
-
-      let pswdLayout = createPswdLayout(pswd);
-      $(`#${category}-pswd`).append(pswdLayout);
-    }
-  }
-
+  $.get("/credentials/")
+    .then((credentials) => {
+      $.get("/categories")
+        .then((categories) => {
+          generateLayouts(credentials.credentials, categories);
+        });
+    });
   reloadEventListeners();
 }
 
@@ -203,11 +212,12 @@ const createCategoryLayout = (category) => {
   return categoryLayout;
 }
 
-const createPswdLayout = (passwordName) => {
+const createPswdLayout = (data) => {
   const passwordLayout = `
-  <div class="is-flex flex-direction-row">
+  <div class="is-flex flex-direction-row div-password">
+    <input class="is-hidden password-id ${data.id}" />
     <a href="" class="mx-2">
-      <i class="fa-solid fa-key password-icon "></i> ${passwordName}
+      <i class="fa-solid fa-key password-icon "></i> ${data.name}
     </a>
     <a href=" " class="mx-2">
       <i class="fa-solid fa-copy"></i>
