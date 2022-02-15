@@ -207,14 +207,13 @@ const createPswdLayout = (data) => {
   </a>
   </p>
   </div>
-  <a href="" class="mx-2">
+  <a href="" class="mx-2 delete-button">
   <i class="fa-solid fa-rectangle-xmark"></i>
   </a>
   </div>
   `
   return passwordLayout;
 }
-
 
 $(document).ready(function() {
   // render category and corresponding pswd which are already in db
@@ -223,4 +222,9 @@ $(document).ready(function() {
   generatePassOnEvents();
   togglePassword();
   login();
+
+  $(".delete-button").click(function(event) {
+    event.preventDefault();
+    console.log("click!");
+  });
 });

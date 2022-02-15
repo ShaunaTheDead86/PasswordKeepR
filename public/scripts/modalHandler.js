@@ -46,7 +46,6 @@ const reloadEventListeners = function() {
 
     trigger.addEventListener('click', function() {
       const passwordID = $(trigger).children(".password-id").val();
-      console.log(passwordID);
 
       if (modal === "edit-password-modal") {
         $.ajax({
@@ -92,7 +91,6 @@ const reloadEventListeners = function() {
     event.preventDefault();
     const data = $("#edit-credential-form").serializeArray();
     const password = escapeScript(data[4].value);
-    console.log(data);
 
     if (password.length < 6) {
       return showErrorMessage("Password is not strong enough!");

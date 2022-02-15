@@ -24,7 +24,7 @@
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/mystyles.css" type="text/css" />
   <link rel="stylesheet" href="/styles/modal.css" type="text/css" />
 
@@ -32,7 +32,6 @@
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/modalHandler.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
-
 </head>
 
 <body>
@@ -54,8 +53,8 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item is-hoverable is-size-5">
-            <label class="label has-text-white is-medium" id="login-email"></label>
-            <button class="button js-modal-trigger" id="login-button" data-target="login-modal">Login</button>
+          <label class="label has-text-white is-medium" id="login-email"></label>
+          <button class="button js-modal-trigger" id="login-button" data-target="login-modal">Login</button>
         </div>
       </div>
     </nav>
@@ -113,8 +112,8 @@
       </div>
     </footer>
     <%- include('partials/_editPasswordModal'); -%>
-    <%- include('partials/_newPasswordModal'); -%>
-    <%- include('partials/_loginModal'); -%>
+      <%- include('partials/_newPasswordModal'); -%>
+        <%- include('partials/_loginModal'); -%>
   </main>
 </body>
 

@@ -56,8 +56,6 @@ module.exports = (db) => {
     WHERE id = $6;`
     const queryParams = [req.body.username, req.body.password, req.body.url, req.body.name, req.body.categoryId, req.body['password-id']];
 
-    console.log(queryString, queryParams);
-
     db.query(queryString, queryParams)
       .then(data => {
         res.send(data);
@@ -74,8 +72,6 @@ module.exports = (db) => {
     DELETE FROM credentials
     WHERE id = $1`
     const queryParams = [req.body['password-id']];
-
-    console.log(queryString, queryParams);
 
     db.query(queryString, queryParams)
       .then(data => {
