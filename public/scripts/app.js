@@ -88,38 +88,6 @@ const togglePassword = function() {
   })
 };
 
-const makeSerializedArrayObject = function(SerArr) {
-  const results = {};
-  for (const object of SerArr) {
-    results[object.name] = object.value;
-  }
-  return results;
-};
-
-const updateTable = function(query, params) {
-
-};
-
-const appendData = function(obj) {
-
-}
-
-
-
-$(document).ready(() => {
-  $('#edit-credential-form').on('submit', (event) => {
-    event.preventDefault();
-    const params = $("#create-credential-form").serializeArray();
-    const password = escapeScript($("#password").val());
-    if (password.length < 6) {
-      showErrorMessage("Password is not strong enough!");
-      return;
-    };
-
-    console.log(params);
-  });
-});
-
 // helper to prevent Cross Site Scripting
 const escapeScript = function(str) {
   let div = document.createElement("div");
@@ -162,6 +130,7 @@ const combineCategWithPswd = (obj) => {
   return categoryWithPassword;
 }
 
+// Shauna
 const generateLayouts = function(credentials, categories) {
   for (const category of categories) {
     const categoryLayout = createCategoryLayout(category.name)
@@ -185,9 +154,9 @@ const renderCategories = (obj) => {
       $.get("/categories")
         .then((categories) => {
           generateLayouts(credentials.credentials, categories);
+          reloadEventListeners();
         });
     });
-  reloadEventListeners();
 }
 
 const createCategoryLayout = (category) => {
@@ -215,23 +184,23 @@ const createCategoryLayout = (category) => {
 const createPswdLayout = (data) => {
   const passwordLayout = `
   <div class="is-flex flex-direction-row div-password">
-    <input class="is-hidden password-id ${data.id}" />
-    <a href="" class="mx-2">
-      <i class="fa-solid fa-key password-icon "></i> ${data.name}
-    </a>
-    <a href=" " class="mx-2">
-      <i class="fa-solid fa-copy"></i>
-    </a>
-    <div class="field is-grouped is-grouped-right mx-2">
-      <p class="control">
-        <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
-          <i class="fa-solid fa-pen-to-square"></i>
-        </a>
-      </p>
-    </div>
-    <a href="" class="mx-2">
-      <i class="fa-solid fa-rectangle-xmark"></i>
-    </a>
+  <a href="" class="mx-2">
+  <i class="fa-solid fa-key password-icon"></i> ${data.name}
+  </a>
+  <a href=" " class="mx-2">
+  <i class="fa-solid fa-copy"></i>
+  </a>
+  <div class="field is-grouped is-grouped-right mx-2">
+  <p class="control">
+  <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
+    <input class="is-hidden password-id " value="${data.id}" />
+  <i class="fa-solid fa-pen-to-square"></i>
+  </a>
+  </p>
+  </div>
+  <a href="" class="mx-2">
+  <i class="fa-solid fa-rectangle-xmark"></i>
+  </a>
   </div>
   `
   return passwordLayout;

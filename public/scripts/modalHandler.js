@@ -51,7 +51,16 @@ const reloadEventListeners = function() {
     const modal = trigger.dataset.target;
     const target = document.getElementById(modal);
 
-    trigger.addEventListener('click', () => {
+    trigger.addEventListener('click', function() {
+      if (modal === "edit-password-modal") {
+        const passwordID = $(this).children(".password-id").attr("value");
+        $("#edit-credential-form").append(`<div class="field">
+        <label class="label is-large edit-form-name"></label>
+        <div class="control">
+        <input type="hidden" id="password-id" type="text" name="password-id" value="${passwordID}">
+        </div>
+      </div>`);
+      }
       openModal(target);
     });
   });
@@ -72,5 +81,14 @@ const reloadEventListeners = function() {
     if (e.keyCode === 27) { // Escape key
       closeAllModals();
     }
+  });
+
+  $('#edit-credential-form').on('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    console.log(formData.entries(), formData.values());
+    const params = $("#create-credential-form").serializeArray();
+    const password = escapeScript($("#password").val());
+    console.log(params);
   });
 };
