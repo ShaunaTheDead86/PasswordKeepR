@@ -45,16 +45,11 @@ module.exports = (db) => {
       })
   });
 
-  router.post("/credentials/edit", (req, res) => {
+  router.get("/credentials/delete", (req, res) => {
     const queryString = `
-    UPDATE credentials
-    SET username = $1,
-    password = $2,
-    url = $3,
-    name = $4,
-    category_id = $5
-    WHERE id = $6;`
-    const queryParams = [req.body.username, req.body.password, req.body.url, req.body.name, req.body.categoryId, req.body['password-id']];
+    DELETE FROM credentials
+    WHERE id = $1`
+    const queryParams = [req.query.passwordID];
 
     db.query(queryString, queryParams)
       .then(data => {
@@ -67,11 +62,16 @@ module.exports = (db) => {
       });
   });
 
-  router.post("/credentials/delete", (req, res) => {
+  router.post("/credentials/edit", (req, res) => {
     const queryString = `
-    DELETE FROM credentials
-    WHERE id = $1`
-    const queryParams = [req.body['password-id']];
+    UPDATE credentials
+    SET username = $1,
+    password = $2,
+    url = $3,
+    name = $4,
+    category_id = $5
+    WHERE id = $6;`
+    const queryParams = [req.body.username, req.body.password, req.body.url, req.body.name, req.body.categoryId, req.body['password-id']];
 
     db.query(queryString, queryParams)
       .then(data => {

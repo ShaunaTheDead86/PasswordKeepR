@@ -7,7 +7,7 @@ const registerNewPasswordFormEvents = function() {
   generatePassOnEvents();
   togglePassword();
   updatePasswordStrengthBar();
-  
+
 }
 
 const login = function(str) {
@@ -162,11 +162,11 @@ function testPassStrength(pass) {
     return "absolute";
   }
   // 2 out of 3 criterias met
-  if ((hasUpper && hasNum && !hasSpecial) || (hasUpper && !hasNum && hasSpecial ) || (!hasUpper && hasNum && hasSpecial)) {
+  if ((hasUpper && hasNum && !hasSpecial) || (hasUpper && !hasNum && hasSpecial) || (!hasUpper && hasNum && hasSpecial)) {
     return "strong";
   }
   // 1 out of 3 criterias met
-  if ((hasUpper && !hasNum && !hasSpecial) || (!hasUpper && !hasNum && hasSpecial ) || (!hasUpper && hasNum && !hasSpecial)) {
+  if ((hasUpper && !hasNum && !hasSpecial) || (!hasUpper && !hasNum && hasSpecial) || (!hasUpper && hasNum && !hasSpecial)) {
     return "medium";
   }
   return "weak";
@@ -287,8 +287,8 @@ const createPswdLayout = (data) => {
   </a>
   </p>
   </div>
-  <a href="" class="mx-2 delete-button">
-  <i class="fa-solid fa-rectangle-xmark"></i>
+  <a href="" class="mx-2">
+  <i class="fa-solid fa-rectangle-xmark delete-button"></i>
   </a>
   </div>
   `

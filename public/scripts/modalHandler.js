@@ -110,4 +110,29 @@ const reloadEventListeners = function() {
       }
     });
   });
+
+  // prevent default action on all links (action will be handled in code)
+  $("a").click(function(event) {
+    event.preventDefault();
+  });
+
+  // Add a click event on buttons
+  (document.querySelectorAll(".delete-button") || []).forEach((trigger) => {
+    trigger.addEventListener('click', function(event) {
+      const deleteTarget = $(this).closest(".div-password");
+      const passwordID = deleteTarget.find(".password-id").val();
+
+      $.ajax({
+        url: "/api/credentials/delete",
+        data: { passwordID: passwordID },
+        type: "GET",
+        success: function(res) {
+          renderCategories();
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    });
+  });
 };
