@@ -27,7 +27,7 @@ module.exports = (db) => {
   router.post("/", (req, res) => {
 
     // to be replaced when session userid is available
-    const userId = 1;
+    const userId = req.session["user_id"] || 2;
 
     // prepare first query to get organization_id 
     const queryString = `
