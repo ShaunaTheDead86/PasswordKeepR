@@ -160,7 +160,6 @@ const generateLayouts = function(credentials, categories) {
 
 // gets data from the server and appends to the main layout
 const renderCategories = () => {
-  $(".category-container").empty();
   $.get("/api/credentials")
     .then((credentials) => {
       $.get("/api/categories")
