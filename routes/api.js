@@ -30,6 +30,21 @@ module.exports = (db) => {
       });
   });
 
+  router.get("/credentials/id", (req, res) => {
+    const queryString = `SELECT *
+    FROM credentials
+    WHERE id = $1;`;
+    const queryParams = [req.query.passwordID];
+
+    db.query(queryString, queryParams)
+      .then((data) => {
+        res.send(data.rows);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  });
+
   router.post("/credentials/edit", (req, res) => {
     const queryString = `
     UPDATE credentials
@@ -54,6 +69,25 @@ module.exports = (db) => {
       });
   });
 
+  router.post("/credentials/delete", (req, res) => {
+    const queryString = `
+    DELETE FROM credentials
+    WHERE id = $1`
+    const queryParams = [req.body['password-id']];
+
+    console.log(queryString, queryParams);
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   router.post("/login", (req, res) => {
     const params = [req.body.username, req.body.password];
     db.query(`
@@ -61,19 +95,6 @@ module.exports = (db) => {
     FROM users
     WHERE username = $1
     AND password = $2
-    ;`, params)
-      .then(data => {
-        if (data.rows && data.rows.length > 0) {
-          req.session["user_id"] = data.rows[0].id;
-          res.send(data.rows[0]);
-        }
-      })
-  });
-
-  router.post("/credentials/edit", (req, res) => {
-    const params = [req.body.username, req.body.password];
-    db.query(`
-    ALTER TABLE
     ;`, params)
       .then(data => {
         if (data.rows && data.rows.length > 0) {
