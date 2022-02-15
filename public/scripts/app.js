@@ -1,18 +1,19 @@
 // Client facing scripts here
 
-
-
-
-const loadCategories = () => {
-
-  // fetch obj with db data from server
-  $.get("/api/categories")
-    .then((data) => {
-      renderCategories(data);
+// Le Minh
+const login = function(str) {
+  $('#login-form').on('submit', (evt) => {
+    evt.preventDefault();
+    const params = $("#login-form").serialize();
+    $.post('/api/login', params).then((user) => {
+      $("#login-button").hide();
+      $("#login-email").text(user.email);
+      $("#login-email").show();
     })
+    $("#login-modal").removeClass('is-active');
+  });
 };
 
-// Le Minh
 const createNewItemOnSubmit = function(str) {
   $('#create-credential-form').on('submit', (evt) => {
     evt.preventDefault();
@@ -75,35 +76,21 @@ const generateNewPass = function() {
   }
   let password = "";
   const poolLength = characterPool.length;
-  for (let i = 0; i < passLength; i++ ) {
+  for (let i = 0; i < passLength; i++) {
     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
   }
   $("#password").val(password);
 }
 
-// Shauna
-const editItemOnSubmit = function(str) {
-  $('#edit-credential-form').on('submit', (evt) => {
-    evt.preventDefault();
-    const params = $("#edit-credential-form").serialize();
-    const password = escapeScript($("#password").val());
-    if (password.length < 6) {
-      showErrorMessage("Password is not strong enough!");
-      return;
-    };
-    $.post('/credentials', params).then((credential) => {
-      muteErrorMessage();
-      // close popup
-      $("username").val("");
-      $("password").val("");
-      $("name").val("");
-      $("url").val("");
-      $("#edit-password-modal").removeClass('is-active');
-
-      // Inject new credential code goes here
-      loadCategories();
-    })
-  });
+const togglePassword = function() {
+  $('#reveal').on('click', (evt) => {
+    var type = document.getElementById("password").type;
+    if (type == 'password') {
+      document.getElementById("password").type = "text";
+    } else {
+      document.getElementById("password").type = "password";
+    }
+  })
 };
 
 // helper to prevent Cross Site Scripting
@@ -115,18 +102,19 @@ const escapeScript = function(str) {
 
 // helper to show the error message
 const showErrorMessage = function(errorMessage) {
-  $("#error-message").html(errorMessage);
-  $("#error-message").slideDown("slow");
+  $(".error-message").html(errorMessage);
+  $(".error-message").slideDown("slow");
 }
 
 // helper to clear the error message
 const muteErrorMessage = function() {
-  $("#error-message").slideUp()
-  $("#error-message").html("");
+  $(".error-message").slideUp()
+  $(".error-message").html("");
 }
 
+const getCredentials = async function() {
 
-/// Nastasi
+}
 
 // assign each pswd to corresponding website_name as an obj and add this obj to an array that assigned to corresponding category name
 const groupCategWithPswds = (obj) => {
@@ -149,35 +137,40 @@ const groupCategWithPswds = (obj) => {
   }
   console.log(categoryWithPassword)
   return categoryWithPassword;
-
 }
 
-//takes in category/pswd obj and append to the main layout
-const renderCategories = (obj) => {
-  $(".category-container").empty();
-  const categoryWithPassword = groupCategWithPswds(obj)
-
-
-
-  const categoryArr = Object.keys(categoryWithPassword);
-
-  for (let category of categoryArr) {
-    let categoryLayout = createCategoryLayout(category);
-    $(".category-container").append(categoryLayout);
-
-    let pswdArr = categoryWithPassword[category];
-
-    for (let pswdObj of pswdArr) {
-      let pswdName = Object.keys(pswdObj)[0];
-      let pswd = pswdObj[pswdName];
-
-      let pswdLayout = createPswdLayout(pswdName, pswd);
-      $(`#${category}-pswd`).append(pswdLayout);
-    }
+// Shauna
+const generateLayouts = function(credentials, categories) {
+  for (const category of categories) {
+    const categoryLayout = createCategoryLayout(category.name)
+    $(".category-container").append(categoryLayout)
   }
 
-  reloadEventListeners();
-  loadEventListenerCopyBtn();
+  for (const category of categories) {
+    for (const credential of credentials) {
+      if (category.id === credential.category_id) {
+        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name })
+        $(`#${category.name}-pswd`).append(passwordLayout);
+      }
+    }
+  }
+}
+
+// gets data from the server and appends to the main layout
+const renderCategories = () => {
+  $.get("/api/credentials")
+    .then((credentials) => {
+      console.log(credentials);
+      $.get("/api/categories")
+        .then((categories) => {
+          console.log(categories);
+          generateLayouts(credentials.credentials, categories.categories);
+          reloadEventListeners();
+          // copy to clip
+          loadEventListenerCopyBtn();
+
+        });
+    });
 }
 
 const createCategoryLayout = (category) => {
@@ -202,38 +195,37 @@ const createCategoryLayout = (category) => {
   return categoryLayout;
 }
 
-const createPswdLayout = (passwordName, pswd) => {
+const createPswdLayout = (data) => {
   const passwordLayout = `
-  <div class="is-flex flex-direction-row">
-    <a href="" class="mx-2">
-      <i class="fa-solid fa-key password-icon "></i> ${passwordName}
-    </a>
-    <div class="mx-2">
-      <div class="copy">
-      <i password=${pswd} class="fa-solid fa-copy"></i>
-      </div>
-    </div>
-    <div class="field is-grouped is-grouped-right mx-2">
-      <p class="control">
-        <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
-          <i class="fa-solid fa-pen-to-square"></i>
-        </a>
-      </p>
-    </div>
-    <a href="" class="mx-2">
-      <i class="fa-solid fa-rectangle-xmark"></i>
-    </a>
+  <div class="is-flex flex-direction-row div-password">
+  <a href="" class="mx-2">
+  <i class="fa-solid fa-key password-icon"></i> ${data.name}
+  </a>
+  <a href=" " class="mx-2">
+  <i class="fa-solid fa-copy"></i>
+  </a>
+  <div class="field is-grouped is-grouped-right mx-2">
+  <p class="control">
+  <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
+    <input class="is-hidden password-id " value="${data.id}" />
+  <i class="fa-solid fa-pen-to-square"></i>
+  </a>
+  </p>
+  </div>
+  <a href="" class="mx-2">
+  <i class="fa-solid fa-rectangle-xmark"></i>
+  </a>
   </div>
   `
   return passwordLayout;
 }
 
 
-
-$(() => {
+$(document).ready(function() {
   // render category and corresponding pswd which are already in db
-  loadCategories();
+  renderCategories();
   createNewItemOnSubmit();
   generatePassOnEvents();
-
+  togglePassword();
+  login();
 });
