@@ -40,46 +40,39 @@ module.exports = (db) => {
   // POST /credentials - create a new credential
   router.post("/", (req, res) => {
 
-    // to be replaced when session userid is available
-    const userId = req.session["user_id"] || 2;
+    // get user_id and organization_id from session
+    const userId = req.currentUser || 2;
+    const orgId = req.currentOrg || 2;
 
-    // prepare first query to get organization_id
-    const queryString = `
-      SELECT * FROM users
-      WHERE id = $1;
-    `;
-    db.query(queryString, [userId])
-      .then(data => {
-        //prepare 2nd query for insert new credential
-        const insertParams = [
-          req.body.username,
-          req.body.password,
-          req.body.url,
-          req.body.name,
-          userId,
-          data.rows[0].organization_id,
-          req.body.categoryId
-        ];
+    //prepare query for insert new credential
+    const insertParams = [
+      req.body.username,
+      req.body.password,
+      req.body.url,
+      req.body.name,
+      userId,
+      orgId,
+      req.body.categoryId
+    ];
 
-        const insertQueryString = `
-          INSERT INTO credentials (username, password, url, name, creator_id, organization_id, category_id)
-          VALUES ($1, $2, $3, $4, $5, $6, $7)
-          RETURNING *;
-        `;
-        return db.query(insertQueryString, insertParams);
-      })
-      .then(data => {
-        credential = data.rows[0];
-        templateVars = { credential }
-        res.render("index", templateVars);
-      })
-      .catch(err => {
-        console.log(err)
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
+    const insertQueryString = `
+      INSERT INTO credentials (username, password, url, name, creator_id, organization_id, category_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *;
+      `;
+   db.query(insertQueryString, insertParams)
+    .then(data => {
+      credential = data.rows[0];
+      templateVars = { credential }
+      res.render("index", templateVars);
+    })
+    .catch(err => {
+      console.log(err)
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  })
+  
   return router;
 }

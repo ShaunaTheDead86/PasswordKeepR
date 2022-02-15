@@ -41,6 +41,7 @@ module.exports = (db) => {
       .then(data => {
         if (data.rows && data.rows.length > 0) {
           req.session["user_id"] = data.rows[0].id;
+          req.session["organization_id"] = data.rows[0].organization_id;
           res.send(data.rows[0]);
         }
       })

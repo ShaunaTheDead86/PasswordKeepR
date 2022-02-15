@@ -33,7 +33,7 @@ const createNewItemOnSubmit = function(str) {
       $("#new-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
-      loadCategories();
+      renderCategories();
     })
   });
 };
