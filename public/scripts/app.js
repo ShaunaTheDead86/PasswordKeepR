@@ -130,7 +130,7 @@ const groupCategWithPswds = (obj) => {
       categoryWithPassword[categoryName] = [];
 
 
-    categoryWithPassword[categoryName].push(newObj);
+      categoryWithPassword[categoryName].push(newObj);
     } else {
       categoryWithPassword[categoryName].push(newObj);
     }
