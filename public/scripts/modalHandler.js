@@ -81,10 +81,19 @@ const reloadEventListeners = function() {
 
   $('#edit-credential-form').on('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    console.log(formData.entries(), formData.values());
-    const params = $("#create-credential-form").serializeArray();
-    const password = escapeScript($("#password").val());
-    console.log(params);
+    const data = $("#edit-credential-form").serializeArray();
+
+    $.ajax({
+      url: "/api/credentials/edit",
+      data: data,
+      type: "POST",
+      success: function(res) {
+        closeAllModals();
+        renderCategories();
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
   });
 };

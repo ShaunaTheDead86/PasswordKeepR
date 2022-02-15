@@ -154,12 +154,11 @@ const generateLayouts = function(credentials, categories) {
 
 // gets data from the server and appends to the main layout
 const renderCategories = () => {
+  $(".category-container").empty();
   $.get("/api/credentials")
     .then((credentials) => {
-      console.log(credentials);
       $.get("/api/categories")
         .then((categories) => {
-          console.log(categories);
           generateLayouts(credentials.credentials, categories.categories);
           reloadEventListeners();
         });
