@@ -33,6 +33,7 @@ const populateCategoryDropdown = function(dropDownTarget) {
 
 const loadCreateNewPasswordForm = function() {
   $(".new-password-password").val("");
+  $("#password-strength-bar").val(0);
   populateCategoryDropdown("#category");
 };
 

@@ -1,6 +1,15 @@
 // Client facing scripts here
 
 // Le Minh
+
+const registerNewPasswordFormEvents = function() {
+  createNewPasswordOnSubmit();
+  generatePassOnEvents();
+  togglePassword();
+  updatePasswordStrengthBar();
+  
+}
+
 const login = function(str) {
   $('#login-form').on('submit', (evt) => {
     evt.preventDefault();
@@ -14,7 +23,7 @@ const login = function(str) {
   });
 };
 
-const createNewItemOnSubmit = function(str) {
+const createNewPasswordOnSubmit = function(str) {
   $('#create-credential-form').on('submit', (evt) => {
     evt.preventDefault();
     const params = $("#create-credential-form").serialize();
@@ -26,10 +35,11 @@ const createNewItemOnSubmit = function(str) {
     $.post('/credentials', params).then((credential) => {
       muteErrorMessage();
       // close popup
-      $("username").val("");
-      $("password").val("");
-      $("name").val("");
-      $("url").val("");
+      $("#username").val("");
+      $("#password").val("");
+      $("#name").val("");
+      $("#url").val("");
+      $("#password-strength-bar").val(0);
       $("#new-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
@@ -69,10 +79,10 @@ const generateNewPass = function() {
     characterPool += "ABCDEFGHIJKLMNOPQRSTUVXYZ";
   }
   if (inclNum) {
-    characterPool += "0123456789";
+    characterPool += "012345678901234567890123456789";
   }
   if (inclSpecial) {
-    characterPool += "!@#$%^&*()[]{}";
+    characterPool += "!@#$%^&*()[]{}!@#$%^&*()[]{}";
   }
   let password = "";
   const poolLength = characterPool.length;
@@ -80,18 +90,88 @@ const generateNewPass = function() {
     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
   }
   $("#password").val(password);
+  $("#password").trigger('input');
 }
 
 const togglePassword = function() {
   $('#reveal').on('click', (evt) => {
-    var type = document.getElementById("password").type;
+    let type = $("#password").attr('type');
     if (type == 'password') {
-      document.getElementById("password").type = "text";
+      $('#password').attr('type', 'text');
     } else {
-      document.getElementById("password").type = "password";
+      $('#password').attr('type', 'password');
     }
   })
 };
+
+const updatePasswordStrengthBar = function() {
+  $('#password').on('input', (evt) => {
+    const pass = $('#password').val();
+    const strength = testPassStrength(pass);
+
+    if (strength === "failure") {
+      $("#password-strength-bar").val(0);
+      $("#password-strength-bar").removeClass('is-warning');
+      $("#password-strength-bar").removeClass('is-success');
+      $("#password-strength-bar").removeClass('is-danger');
+    }
+    if (strength === "weak") {
+      $("#password-strength-bar").val(25);
+      $("#password-strength-bar").removeClass('is-success');
+      $("#password-strength-bar").removeClass('is-warning');
+      $("#password-strength-bar").removeClass('is-info');
+      $("#password-strength-bar").addClass('is-danger');
+    }
+    if (strength === "medium") {
+      $("#password-strength-bar").val(50);
+      $("#password-strength-bar").removeClass('is-danger');
+      $("#password-strength-bar").removeClass('is-success');
+      $("#password-strength-bar").removeClass('is-info');
+      $("#password-strength-bar").addClass('is-warning');
+    }
+    if (strength === "strong") {
+      $("#password-strength-bar").val(75);
+      $("#password-strength-bar").removeClass('is-warning');
+      $("#password-strength-bar").removeClass('is-danger');
+      $("#password-strength-bar").removeClass('is-success');
+      $("#password-strength-bar").addClass('is-info');
+    }
+    if (strength === "absolute") {
+      $("#password-strength-bar").val(100);
+      $("#password-strength-bar").removeClass('is-warning');
+      $("#password-strength-bar").removeClass('is-danger');
+      $("#password-strength-bar").removeClass('is-info');
+      $("#password-strength-bar").addClass('is-success');
+    }
+  })
+};
+
+//helper to test password strength level
+function testPassStrength(pass) {
+  // Regex to check if a string contains uppercase, lowercase, special character & numeric value
+  const hasNum = /\d/.test(pass);
+  const hasUpper = /[A-Z]/.test(pass);
+  const hasSpecial = /[!@#$%^&*()\[\]{}]/.test(pass);
+  const length = pass.length;
+
+  if (length < 6) {
+    return "failure"
+  }
+  // all 3 criterias met
+  if (hasUpper && hasNum && hasSpecial) {
+    return "absolute";
+  }
+  // 2 out of 3 criterias met
+  if ((hasUpper && hasNum && !hasSpecial) || (hasUpper && !hasNum && hasSpecial ) || (!hasUpper && hasNum && hasSpecial)) {
+    return "strong";
+  }
+  // 1 out of 3 criterias met
+  if ((hasUpper && !hasNum && !hasSpecial) || (!hasUpper && !hasNum && hasSpecial ) || (!hasUpper && hasNum && !hasSpecial)) {
+    return "medium";
+  }
+  return "weak";
+}
+
 
 // helper to prevent Cross Site Scripting
 const escapeScript = function(str) {
@@ -223,8 +303,6 @@ const createPswdLayout = (data) => {
 $(document).ready(function() {
   // render category and corresponding pswd which are already in db
   renderCategories();
-  createNewItemOnSubmit();
-  generatePassOnEvents();
-  togglePassword();
+  registerNewPasswordFormEvents();
   login();
 });
