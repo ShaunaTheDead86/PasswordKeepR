@@ -30,10 +30,7 @@ module.exports = (db) => {
       .then(data => {
         if (data.rows && data.rows.length > 0) {
           req.session["user_id"] = data.rows[0].id;
-          const templateVars = {
-            user: data.rows[0]
-          };
-          res.render("index", templateVars);
+          res.send(data.rows[0]);
         }
       })
   });

@@ -54,11 +54,8 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item is-hoverable is-size-5">
-          <% if (typeof user != "undefined") { %>
-            <label class="label has-text-white is-medium"><%= user.email%></label>
-          <% } else { %>
-              <button class="button js-modal-trigger" data-target="login-modal">Login</button>
-          <% } %> 
+            <label class="label has-text-white is-medium" id="login-email"></label>
+            <button class="button js-modal-trigger" id="login-button" data-target="login-modal">Login</button>
         </div>
       </div>
     </nav>

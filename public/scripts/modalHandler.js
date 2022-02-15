@@ -5,6 +5,8 @@ function openModal($el) {
     loadCreateNewPasswordForm();
   } else if ($el.id === "edit-password-modal") {
     loadEditPasswordForm();
+  } else if ($el.id === "login-modal") {
+    $("#login-username").focus();
   }
 }
 
