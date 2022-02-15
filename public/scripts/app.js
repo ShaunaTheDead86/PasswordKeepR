@@ -128,7 +128,7 @@ const muteErrorMessage = function() {
 
 /// Nastasi
 
-// assign each pswd to corresponding pswd_name as an obj and assign this obj to an array that assigned to corresponding category name
+// assign each pswd to corresponding website_name as an obj and add this obj to an array that assigned to corresponding category name
 const groupCategWithPswds = (obj) => {
 
   const categoryWithPassword = {};
@@ -165,12 +165,13 @@ const renderCategories = (obj) => {
     let categoryLayout = createCategoryLayout(category);
     $(".category-container").append(categoryLayout);
 
-    let pswdArr = categoryWithPassword[category]
+    let pswdArr = categoryWithPassword[category];
 
-    for (let pswd of pswdArr) {
+    for (let pswdObj of pswdArr) {
+      let pswdName = Object.keys(pswdObj)[0];
+      let pswd = pswdObj[pswdName];
 
-
-      let pswdLayout = createPswdLayout(pswd);
+      let pswdLayout = createPswdLayout(pswdName, pswd);
       $(`#${category}-pswd`).append(pswdLayout);
     }
   }
@@ -201,7 +202,7 @@ const createCategoryLayout = (category) => {
   return categoryLayout;
 }
 
-const createPswdLayout = (passwordName) => {
+const createPswdLayout = (passwordName, pswd) => {
   const passwordLayout = `
   <div class="is-flex flex-direction-row">
     <a href="" class="mx-2">
@@ -209,7 +210,7 @@ const createPswdLayout = (passwordName) => {
     </a>
     <div class="mx-2">
       <div class="copy">
-      <i class="fa-solid fa-copy"></i>
+      <i password=${pswd} class="fa-solid fa-copy"></i>
       </div>
     </div>
     <div class="field is-grouped is-grouped-right mx-2">
