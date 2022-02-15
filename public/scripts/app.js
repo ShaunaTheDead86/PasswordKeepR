@@ -9,6 +9,19 @@ const loadCategories = () => {
 };
 
 // Le Minh
+const login = function(str) {
+  $('#login-form').on('submit', (evt) => {
+    evt.preventDefault();
+    const params = $("#login-form").serialize();
+    $.post('/api/login', params).then((user) => {
+      $("#login-button").hide();
+      $("#login-email").text(user.email);
+      $("#login-email").show();
+    })
+    $("#login-modal").removeClass('is-active');
+  });
+};
+
 const createNewItemOnSubmit = function(str) {
   $('#create-credential-form').on('submit', (evt) => {
     evt.preventDefault();
@@ -213,5 +226,6 @@ $(() => {
   loadCategories();
   createNewItemOnSubmit();
   generatePassOnEvents();
-  togglePassword()
+  togglePassword();
+  login();
 });

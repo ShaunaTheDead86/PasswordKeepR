@@ -19,6 +19,21 @@ module.exports = (db) => {
       });
   });
 
+  router.post("/login", (req, res) => {
+    const params = [req.body.username, req.body.password];
+    db.query(`
+    SELECT *
+    FROM users
+    WHERE username = $1 
+    AND password = $2
+    ;`, params)
+      .then(data => {
+        if (data.rows && data.rows.length > 0) {
+          req.session["user_id"] = data.rows[0].id;
+          res.send(data.rows[0]);
+        }
+      })
+  });
   router.get("/credentials", (req, res) => {
     db.query(`SELECT id FROM credentials;`)
       .then(data => {
