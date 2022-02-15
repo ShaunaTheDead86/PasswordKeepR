@@ -48,14 +48,9 @@ const reloadEventListeners = function() {
     const target = document.getElementById(modal);
 
     trigger.addEventListener('click', function() {
+      const passwordID = $(trigger).children(".password-id").val();
       if (modal === "edit-password-modal") {
-        const passwordID = $(this).children(".password-id").attr("value");
-        $("#edit-credential-form").append(`<div class="field">
-        <label class="label is-large edit-form-name"></label>
-        <div class="control">
-        <input type="hidden" id="password-id" type="text" name="password-id" value="${passwordID}">
-        </div>
-      </div>`);
+        $(".edit-password-id").attr("value", `${passwordID}`);
       }
       openModal(target);
     });
@@ -89,7 +84,7 @@ const reloadEventListeners = function() {
       type: "POST",
       success: function(res) {
         closeAllModals();
-        renderCategories();
+        return renderCategories();
       },
       error: function(err) {
         console.log(err);

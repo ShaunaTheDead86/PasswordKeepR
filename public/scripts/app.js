@@ -141,6 +141,8 @@ const groupCategWithPswds = (obj) => {
 
 // Shauna
 const generateLayouts = function(credentials, categories) {
+  $(".category-container").empty();
+  $(`#${category.name}-pswd`).empty();
   for (const category of categories) {
     const categoryLayout = createCategoryLayout(category.name)
     $(".category-container").append(categoryLayout)
@@ -167,7 +169,6 @@ const renderCategories = () => {
           reloadEventListeners();
           // copy to clip
           loadEventListenerCopyBtn();
-
         });
     });
 }
@@ -206,7 +207,7 @@ const createPswdLayout = (data) => {
   <div class="field is-grouped is-grouped-right mx-2">
   <p class="control">
   <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
-    <input class="is-hidden password-id " value="${data.id}" />
+    <input class="is-hidden password-id" value="${data.id}" />
   <i class="fa-solid fa-pen-to-square"></i>
   </a>
   </p>

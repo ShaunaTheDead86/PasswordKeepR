@@ -45,7 +45,6 @@ module.exports = (db) => {
 
     db.query(queryString, queryParams)
       .then(data => {
-        console.log("data updated", data);
         res.send(data);
       })
       .catch(err => {
