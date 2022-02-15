@@ -1,5 +1,8 @@
 // Client facing scripts here
 
+
+
+
 const loadCategories = () => {
 
   // fetch obj with db data from server
@@ -35,7 +38,7 @@ const createNewItemOnSubmit = function(str) {
 };
 
 const generatePassOnEvents = function() {
-  
+
   $('#incl-upper').on('change', (evt) => {
     generateNewPass();
   });
@@ -125,21 +128,26 @@ const muteErrorMessage = function() {
 
 /// Nastasi
 
-const combineCategWithPswd = (obj) => {
+// assign each pswd to corresponding pswd_name as an obj and assign this obj to an array that assigned to corresponding category name
+const groupCategWithPswds = (obj) => {
 
   const categoryWithPassword = {};
 
   for (let item of obj.categories) {
+    let newObj = {};
+    newObj[item.password_name] = item.password;
 
     let categoryName = item.category;
     if (!categoryWithPassword[categoryName]) {
-      categoryWithPassword[categoryName] = []
-      categoryWithPassword[categoryName].push(item.password_name)
+      categoryWithPassword[categoryName] = [];
+
+
+    categoryWithPassword[categoryName].push(newObj);
     } else {
-      categoryWithPassword[categoryName].push(item.password_name)
+      categoryWithPassword[categoryName].push(newObj);
     }
   }
-
+  console.log(categoryWithPassword)
   return categoryWithPassword;
 
 }
@@ -147,7 +155,7 @@ const combineCategWithPswd = (obj) => {
 //takes in category/pswd obj and append to the main layout
 const renderCategories = (obj) => {
   $(".category-container").empty();
-  const categoryWithPassword = combineCategWithPswd(obj)
+  const categoryWithPassword = groupCategWithPswds(obj)
 
 
 
@@ -168,6 +176,7 @@ const renderCategories = (obj) => {
   }
 
   reloadEventListeners();
+  loadEventListenerCopyBtn();
 }
 
 const createCategoryLayout = (category) => {
@@ -198,9 +207,11 @@ const createPswdLayout = (passwordName) => {
     <a href="" class="mx-2">
       <i class="fa-solid fa-key password-icon "></i> ${passwordName}
     </a>
-    <a href=" " class="mx-2">
+    <div class="mx-2">
+      <div class="copy">
       <i class="fa-solid fa-copy"></i>
-    </a>
+      </div>
+    </div>
     <div class="field is-grouped is-grouped-right mx-2">
       <p class="control">
         <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
@@ -223,5 +234,5 @@ $(() => {
   loadCategories();
   createNewItemOnSubmit();
   generatePassOnEvents();
-  
+
 });
