@@ -41,12 +41,6 @@ const loadEditPasswordForm = function() {
   populateCategoryDropdown(".edit-category");
 };
 
-// function updateSlider(slideAmount) {
-//   if (slideAmount != undefined) {
-//     document.getElementById("password-length").innerHTML = slideAmount;
-//   }
-// }
-
 const reloadEventListeners = function() {
   // Add a click event on buttons to open a specific modal
   (document.querySelectorAll('.js-modal-trigger') || []).forEach((trigger) => {
