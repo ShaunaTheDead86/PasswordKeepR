@@ -29,8 +29,20 @@ const createNewPasswordOnSubmit = function(str) {
     evt.preventDefault();
     const params = $("#create-credential-form").serialize();
     const password = escapeScript($("#password").val());
+    if ($("#name").val() === undefined || $("#name").val() === "") {
+      showErrorMessage("Please enter an account name!");
+      return;
+    }
+    if ($("#url").val() === undefined || $("#url").val() === "") {
+      showErrorMessage("Please enter an URL!");
+      return;
+    }
+    if ($("#username").val() === undefined || $("#username").val() === "" || $("#username").val().includes(" ")) {
+      showErrorMessage("Please enter a valid username!");
+      return;
+    }
     if (password.length < 6) {
-      showErrorMessage("Password is not strong enough!");
+      showErrorMessage("Password needs to be at least 6 character!");
       return;
     };
     $.post('/credentials', params).then((credential) => {
@@ -83,7 +95,7 @@ const generateNewPass = function() {
     characterPool += "012345678901234567890123456789";
   }
   if (inclSpecial) {
-    characterPool += "!@#$%^&*()[]{}!@#$%^&*()[]{}";
+    characterPool += "!@#$%^&*()[]{}!@#$%^&*()[]{}!@#$%^&*()[]{}!@#$%^&*()[]{}";
   }
   let password = "";
   const poolLength = characterPool.length;
