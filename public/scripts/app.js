@@ -243,7 +243,7 @@ const generateLayouts = function(credentials, categories) {
     for (const credential of credentials) {
       if (category.id === credential.category_id) {
 
-        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name, password: credential.password})
+        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name, password: credential.password })
         $(`#${category.name}-pswd`).append(passwordLayout);
       }
     }
@@ -252,6 +252,7 @@ const generateLayouts = function(credentials, categories) {
 
 // gets data from the server and appends to the main layout
 const renderCategories = () => {
+  $(".category-container").empty();
   $.get("/api/credentials")
     .then((credentials) => {
       $.get("/api/categories")
@@ -285,20 +286,22 @@ const createUncategorized = function(category) {
 const createCategoryLayout = (category) => {
   const categoryLayout = `
   <details class="category-outer" value="${category.id}">
-    <summary class="has-background-primary">
-      <div class="is-size-5 has-text-white mx-2">
-        <i class="fa-solid fa-vault mx-2"></i> ${category.name}
-        <a href=" " class="has-text-white mx-2">
-          <i class="fa-solid fa-pen-to-square category-edit-button"></i>
-        </a>
-        <a href=" " class="has-text-white mx-2">
-          <i class="fa-solid fa-rectangle-xmark category-delete-button"></i>
-        </a>
-      </div>
-    </summary>
-    <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
+  <summary class="has-background-primary">
+  <div class="is-size-5 has-text-white mx-2">
+  <i class="fa-solid fa-vault mx-2"></i> ${category.name}
+  <a href=" " class="has-text-white mx-2">
+  <i class="fa-solid fa-pen-to-square js-modal-trigger" data-target="edit-category-modal">
+  <input class="is-hidden category-id" value="${category.id}" />
+  </i>
+  </a>
+  <a href=" " class="has-text-white mx-2">
+  <i class="fa-solid fa-rectangle-xmark category-delete-button"></i>
+  </a>
+  </div>
+  </summary>
+  <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
 
-    </p>
+  </p>
   </details>
   `
   return categoryLayout;
@@ -336,11 +339,6 @@ $(document).ready(function() {
   renderCategories();
   registerNewPasswordFormEvents();
   login();
-
-  $(".delete-button").click(function(event) {
-    event.preventDefault();
-    console.log("click!");
-  });
 });
 
 
@@ -351,7 +349,7 @@ const copyPswdToClipboard = () => {
 
     let password = $(evt.target).attr("password")
     let tempEl = document.createElement('input');
-    tempEl.setAttribute('type','text');
+    tempEl.setAttribute('type', 'text');
 
     document.body.appendChild(tempEl);
     tempEl.value = password;

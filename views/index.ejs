@@ -92,7 +92,7 @@
       <div class="category-container">
 
       </div>
-      <a href="" class="create-new-category">
+      <a href="" class="create-new-category js-modal-trigger" data-target="new-category-modal">
         <div class="is-size-5 has-text-white has-background-primary">
           <div class="mx-2">
             <i class="fa-solid fa-vault mx-2"></i> Create New Category
@@ -123,6 +123,8 @@
     <%- include('partials/_editPasswordModal'); -%>
       <%- include('partials/_newPasswordModal'); -%>
         <%- include('partials/_loginModal'); -%>
+          <%- include('partials/_createNewCategory'); -%>
+            <%- include('partials/_editCategory'); -%>
   </main>
 </body>
 

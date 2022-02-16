@@ -14,8 +14,8 @@ VALUES  ('Uncategorized'),
         ('Entertainment');
 
 INSERT INTO credentials (username, password, logo_url, url, name, creator_id, organization_id, category_id)
-VALUES  ('lhlfacebook', 'password', '../images/facebook.png', 'http://www.facebook.com', 'Facebook', 1, 1, 1),
-        ('lhltwitter', 'password', '../images/twitter.jpg', 'http://www.twitter.com', 'Twitter', 1, 1, 1),
-        ('lhlcompass', 'password', NULL, 'https://web.compass.lighthouselabs.ca/', 'Compass', 2, 1, 2),
-        ('lhlnetflix', 'password', '../images/netflix.png', 'http://www.netflix.com', 'Netflix', 3, 1, 3),
-        ('lhlprimevideo', 'password', '../images/prime.png', 'https://www.primevideo.com', 'Prime Video', 3, 1, 3);
+VALUES  ('lhlfacebook', 'password', '../images/facebook.png', 'http://www.facebook.com', 'Facebook', 1, 1, 2),
+        ('lhltwitter', 'password', '../images/twitter.jpg', 'http://www.twitter.com', 'Twitter', 1, 1, 2),
+        ('lhlcompass', 'password', NULL, 'https://web.compass.lighthouselabs.ca/', 'Compass', 2, 1, 3),
+        ('lhlnetflix', 'password', '../images/netflix.png', 'http://www.netflix.com', 'Netflix', 3, 1, 4),
+        ('lhlprimevideo', 'password', '../images/prime.png', 'https://www.primevideo.com', 'Prime Video', 3, 1, 4);
