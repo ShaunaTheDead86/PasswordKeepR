@@ -39,11 +39,9 @@
     <nav class="navbar is-fixed-top is-spaced has-shadow has-background-primary">
       <div class="navbar-start">
         <div class="navbar-brand">
-          <a class="has-text-white">
-            <p class="is-family-secondary is-link-light is-size-2 mx-2">
-              PasswordKeepR
-            </p>
-          </a>
+          <p class="is-family-secondary is-link-light is-size-2 mx-2">
+            PasswordKeepR
+          </p>
           <div class="field is-grouped is-grouped-right mx-2">
             <p class="control">
               <button class="button js-modal-trigger is-medium is-warning is-rounded" data-target="new-password-modal">New Password</button>
@@ -60,30 +58,26 @@
     </nav>
   </section>
 
-  <header class="is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center m-4">
-    <div class="navbar-item has-dropdown is-hoverable">
-      <a class="navbar-link button" aria-haspopup="true" aria-controls="dropdown-menu">
-              Sort By
-            </a>
-      <div class="navbar-dropdown" id="dropdown-menu" role="menu">
-        <a class="navbar-item has-text-primary">
-                Name
-              </a>
-        <a class="navbar-item has-text-primary">
-                Date
-              </a>
+  <header class="m-2">
+    <div class="navbar-item is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center">
+      <div class="navbar-item has-dropdown is-hoverable button">
+        <div class="navbar-link is-link-primary" aria-haspopup="true" aria-controls="dropdown-menu">
+          Sort By
+        </div>
+        <div class="navbar-dropdown" id="dropdown-menu" role="menu">
+          <div class="navbar-item is-link-primary">
+            Name
+          </div>
+          <div class="navbar-item is-link-primary">
+            Date
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="icons-display">
-      <a class="mx-1 is-link-primary">
-        <i class="fa-solid fa-folder"></i>
-      </a>
-      <a class="mx-1 is-link-primary">
-        <i class="fa-solid fa-table-cells-large"></i>
-      </a>
-      <a class="mx-1 is-link-primary">
-        <i class="fa-solid fa-bars"></i>
-      </a>
+      <div class="navbar-item icons-display">
+        <i class="fa-solid fa-folder mx-1 is-link-primary"></i>
+        <i class="fa-solid fa-table-cells-large mx-1 is-link-primary"></i>
+        <i class="fa-solid fa-bars mx-1 is-link-primary"></i>
+      </div>
     </div>
   </header>
 
@@ -92,13 +86,11 @@
       <div class="category-container">
 
       </div>
-      <a class="create-new-category js-modal-trigger" data-target="new-category-modal">
-        <div class="is-size-5 has-text-white has-background-primary">
-          <div class="mx-2">
-            <i class="fa-solid fa-vault mx-2"></i> Create New Category
-          </div>
+      <div class="is-flex is-flex-direction-row is-align-items-center  is-size-5 has-background-primary p-1 js-modal-trigger" data-target="new-category-modal">
+        <div class="is-link-light">
+          <i class=" fa-solid fa-vault mx-2"></i>Create New Category
         </div>
-      </a>
+      </div>
     </section>
 
     <footer class="navbar is-fixed-bottom is-dark ">
@@ -108,15 +100,11 @@
         </div>
       </div>
       <div class="navbar-end ">
-        <div class="navbar-item ">
-          <a class="has-text-link-light ">
+        <div class="navbar-item is-link-light">
           Help
-          </a>
         </div>
-        <div class="navbar-item ">
-          <a class="has-text-link-light ">
+        <div class="navbar-item is-link-light">
           Privacy Policy
-          </a>
         </div>
       </div>
     </footer>

@@ -283,11 +283,13 @@ const createUncategorized = function(category) {
   const uncategorizedLayout = `
   <details class="category-outer" value="${category.id}">
     <summary class="has-background-primary">
-      <div class="is-size-5 has-text-white mx-2">
-        <i class="fa-solid fa-vault mx-2"></i> ${category.name}
+      <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1">
+      <div class="is-link-light">
+        <i class="fa-solid fa-vault mx-2"></i>${category.name}
+        </div>
       </div>
     </summary>
-    <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
+    <p id="${category.name}-pswd" class="has-text-weight-bold has-text-primary">
 
     </p>
   </details>
@@ -300,8 +302,10 @@ const createCategoryLayout = (category) => {
   const categoryLayout = `
   <details class="category-outer" value="${category.id}">
   <summary class="has-background-primary">
-  <div class="is-size-5 has-text-white mx-2">
-  <i class="fa-solid fa-vault mx-2"></i> ${category.name}
+  <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1">
+  <div class="is-link-light">
+  <i class="fa-solid fa-vault mx-2"></i>${category.name}
+  </div>
   <i class="fa-solid fa-pen-to-square is-link-light mx-2 js-modal-trigger" data-target="edit-category-modal">
   <input class="is-hidden category-id" value="${category.id}" /></i>
   <i class="fa-solid fa-rectangle-xmark is-link-light mx-2 category-delete-button"></i>
@@ -318,21 +322,16 @@ const createCategoryLayout = (category) => {
 const createPswdLayout = (data) => {
 
   const passwordLayout = `
-  <div class="is-flex flex-direction-row div-password">
-  <a class="mx-2">
-  <i class="fa-solid fa-key password-icon"></i> ${data.name}
-  </a>
-  <div class="mx-2 is-link-primary copy">
-  <i password=${data.password} class="fa-solid fa-copy pswd-icon"></i>
-  <p class="notification is-success is-light">Copied!</p>
+  <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1 div-password">
+  <div class="is-link-primary">
+  <i class="fa-solid fa-key mx-2 password-icon"></i> ${data.name}
   </div>
-  <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
+  <i password=${data.password} class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon"></i>
+  <p class="notification is-success is-light">Copied!</p>
+  <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
   <input class="is-hidden password-id" value="${data.id}" />
-  <i class="fa-solid fa-pen-to-square is-link-primary"></i>
-  </a>
-  <a class="mx-2">
-  <i class="fa-solid fa-rectangle-xmark is-link-primary delete-button"></i>
-  </a>
+  </i>
+  <i class="fa-solid fa-rectangle-xmark is-link-primary mx-2 delete-button"></i>
   </div>
   `
   return passwordLayout;

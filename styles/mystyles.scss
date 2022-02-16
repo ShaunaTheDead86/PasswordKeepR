@@ -44,6 +44,7 @@ a:hover {
 }
 
 .is-link-primary:hover {
+  cursor: pointer;
   color: $warning;
 }
 
@@ -52,6 +53,7 @@ a:hover {
 }
 
 .is-link-light:hover {
+  cursor: pointer;
   color: $warning;
 }
 

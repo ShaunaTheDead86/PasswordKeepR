@@ -1,6 +1,7 @@
 // Functions to open and close a modal
 function openModal($el) {
   $el.classList.add('is-active');
+  $($el).find("input")[0].focus(); // focus the first input
   if ($el.id === "new-password-modal") {
     loadCreateNewPasswordForm();
   } else if ($el.id === "login-modal") {
@@ -34,8 +35,6 @@ const populateCategoryDropdown = function(dropDownTarget, defaultCategory) {
         $dropdown.append(`<option value="${item.id}">${item.name}</option>`);
       }
     }
-
-    // $dropdown.append(`<option value="Uncategorized">Uncategorized</option>`);
   });
 }
 
