@@ -194,6 +194,8 @@ const muteErrorMessage = function() {
 }
 
 // assign each pswd to corresponding website_name as an obj and add this obj to an array that assigned to corresponding category name
+
+//can remove that function since it never called
 const groupCategWithPswds = (obj) => {
 
   const categoryWithPassword = {};
@@ -212,7 +214,7 @@ const groupCategWithPswds = (obj) => {
       categoryWithPassword[categoryName].push(newObj);
     }
   }
-  console.log(categoryWithPassword)
+
   return categoryWithPassword;
 }
 
@@ -237,9 +239,11 @@ const generateLayouts = function(credentials, categories) {
   $(".category-container").append(categoryLayout)
 
   for (const category of categories) {
+
     for (const credential of credentials) {
       if (category.id === credential.category_id) {
-        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name })
+
+        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name, password: credential.password})
         $(`#${category.name}-pswd`).append(passwordLayout);
       }
     }
@@ -255,7 +259,8 @@ const renderCategories = () => {
           generateLayouts(credentials.credentials, categories.categories);
           reloadEventListeners();
           // copy to clip
-          // loadEventListenerCopyBtn();
+          copyPswdToClipboard();
+
         });
     });
 }
@@ -300,14 +305,16 @@ const createCategoryLayout = (category) => {
 }
 
 const createPswdLayout = (data) => {
+
   const passwordLayout = `
   <div class="is-flex flex-direction-row div-password">
   <a href="" class="mx-2">
   <i class="fa-solid fa-key password-icon"></i> ${data.name}
   </a>
-  <a href=" " class="mx-2">
-  <i class="fa-solid fa-copy"></i>
-  </a>
+  <div class="mx-2 copy">
+
+  <i password=${data.password} class="fa-solid fa-copy"></i>
+  </div>
   <div class="field is-grouped is-grouped-right mx-2">
   <p class="control">
   <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
@@ -335,3 +342,24 @@ $(document).ready(function() {
     console.log("click!");
   });
 });
+
+
+// copying password to clipboard on click
+const copyPswdToClipboard = () => {
+  $(".copy").on('click', (evt) => {
+    evt.preventDefault()
+
+    let password = $(evt.target).attr("password")
+    let tempEl = document.createElement('input');
+    tempEl.setAttribute('type','text');
+
+    document.body.appendChild(tempEl);
+    tempEl.value = password;
+    tempEl.select();
+
+    document.execCommand("copy");
+    document.body.removeChild(tempEl);
+    console.log('copied')
+
+  })
+}
