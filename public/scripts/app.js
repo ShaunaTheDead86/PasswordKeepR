@@ -220,12 +220,8 @@ const groupCategWithPswds = (obj) => {
 
 // Shauna
 const generateLayouts = function(credentials, categories) {
-<<<<<<< HEAD
-
-=======
   $(".category-container").empty();
   $(`#${category.name}-pswd`).empty();
->>>>>>> master
   for (const category of categories) {
     const categoryLayout = createCategoryLayout(category.name)
     $(".category-container").append(categoryLayout)
@@ -252,12 +248,8 @@ const renderCategories = () => {
           generateLayouts(credentials.credentials, categories.categories);
           reloadEventListeners();
           // copy to clip
-<<<<<<< HEAD
           copyPswdToClipboard();
 
-=======
-          // loadEventListenerCopyBtn();
->>>>>>> master
         });
     });
 }
@@ -330,7 +322,6 @@ const copyPswdToClipboard = () => {
     evt.preventDefault()
 
     let password = $(evt.target).attr("password")
-    evt.target.notify('copied')
     let tempEl = document.createElement('input');
     tempEl.setAttribute('type','text');
 
