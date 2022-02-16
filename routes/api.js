@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const { encrypt, decrypt } = require('../encryption/encryption');
 
 module.exports = (db) => {
@@ -194,20 +195,25 @@ module.exports = (db) => {
   });
 
   router.post("/login", (req, res) => {
-    const params = [req.body.username, req.body.password];
+    
+    const params = [req.body.username];
     db.query(`
     SELECT *
     FROM users
     WHERE username = $1
-    AND password = $2
     ;`, params)
       .then(data => {
         if (data.rows && data.rows.length > 0) {
-          req.session["user_id"] = data.rows[0].id;
-          req.session["organization_id"] = data.rows[0].organization_id;
-          res.send(data.rows[0]);
+          if (bcrypt.compareSync(req.body.password, data.rows[0].password)) {
+            req.session["user_id"] = data.rows[0].id;
+            req.session["organization_id"] = data.rows[0].organization_id;
+            res.send(data.rows[0]);
+          }
         }
       })
+      .catch(err => {
+        console.log(err.message);
+      });
   });
 
   const getConfig = function(attr) {

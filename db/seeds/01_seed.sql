@@ -3,9 +3,9 @@ INSERT INTO organizations (name, email, phone)
 VALUES  ('Lighthouse Lab', 'lhl@lighthouselab.com', '1-888-569-6898');
 
 INSERT INTO users (username, password, email, phone, full_name, organization_id)
-VALUES  ('jane', 'password', 'jane@lhl.com', '416 392-2489', 'Jane Doe', 1),
-        ('john', 'password', 'john@lhl.com', '416 392-2490', 'John Doe', 1),
-        ('alice', 'password', 'alice@lhl.com', '416 392-2491', 'Alice Doe', 1);
+VALUES  ('jane', '$2b$12$Kg80kpznJqM1Pybyb1dz3uBIREK8J3DJ4XRPuaZKmj4EuZJL/y4P.', 'jane@lhl.com', '416 392-2489', 'Jane Doe', 1),
+        ('john', '$2b$12$Kg80kpznJqM1Pybyb1dz3uBIREK8J3DJ4XRPuaZKmj4EuZJL/y4P.', 'john@lhl.com', '416 392-2490', 'John Doe', 1),
+        ('alice', '$2b$12$Kg80kpznJqM1Pybyb1dz3uBIREK8J3DJ4XRPuaZKmj4EuZJL/y4P.', 'alice@lhl.com', '416 392-2491', 'Alice Doe', 1);
 
 INSERT INTO categories (name)
 VALUES  ('Uncategorized'),
