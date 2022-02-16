@@ -19,6 +19,7 @@ const login = function(str) {
       $("#login-email").text(user.email);
       $("#login-email").show();
       $("#create-new-button").attr("hidden", false);
+      $(".search").attr("hidden", false);
     })
     $("#login-modal").removeClass('is-active');
   });
