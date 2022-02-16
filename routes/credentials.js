@@ -7,13 +7,20 @@
 
 const express = require('express');
 const router = express.Router();
-
+const { encrypt, decrypt } = require('../encryption/encryption');
 module.exports = (db) => {
   // GET /credentials - get all credentials
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM credentials;`)
       .then(data => {
         const credentials = data.rows;
+        //decrypt password before returning to front-end
+        getConfig("ENCRYPTION_KEY")
+        .then(secretKey => {
+          for (const credential of credentials) {
+            credential.password = decrypt(credential.password, secretKey.value);
+          }
+        })
         res.json({ credentials });
       })
       .catch(err => {
@@ -45,34 +52,52 @@ module.exports = (db) => {
     const orgId = req.currentOrg || 2;
 
     //prepare query for insert new credential
-    const insertParams = [
-      req.body.username,
-      req.body.password,
-      req.body.url,
-      req.body.name,
-      userId,
-      orgId,
-      req.body.categoryId
-    ];
+    getConfig("ENCRYPTION_KEY")
+    .then(secretKey => {
+      const insertParams = [
+        req.body.username,
+        encrypt(req.body.password, secretKey.value),
+        req.body.url,
+        req.body.name,
+        userId,
+        orgId,
+        req.body.categoryId
+      ];
 
-    const insertQueryString = `
-      INSERT INTO credentials (username, password, url, name, creator_id, organization_id, category_id)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
-      RETURNING *;
-      `;
-   db.query(insertQueryString, insertParams)
+      const insertQueryString = `
+        INSERT INTO credentials (username, password, url, name, creator_id, organization_id, category_id)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        RETURNING *;
+        `;
+      db.query(insertQueryString, insertParams)
+        .then(data => {
+          credential = data.rows[0];
+          templateVars = { credential }
+          res.render("index", templateVars);
+        })
+        .catch(err => {
+          console.log(err)
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+    })
+
+  })
+
+  const getConfig = function(attr) {
+    return db.query(`SELECT * FROM configurations WHERE attribute = $1;`, [attr])
     .then(data => {
-      credential = data.rows[0];
-      templateVars = { credential }
-      res.render("index", templateVars);
+      if (data.rows.length > 0) {
+        return data.rows[0];
+      }
     })
     .catch(err => {
-      console.log(err)
-      res
-        .status(500)
-        .json({ error: err.message });
+      console.log(err.message);
     });
-  })
-  
+  }
+
   return router;
 }
+
+

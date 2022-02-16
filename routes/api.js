@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { encrypt, decrypt } = require('../encryption/encryption');
 
 module.exports = (db) => {
   router.get("/categories", (req, res) => {
@@ -21,7 +22,14 @@ module.exports = (db) => {
     FROM credentials;`)
       .then(data => {
         const credentials = data.rows;
-        res.json({ credentials });
+        //decrypt password before returning to front-end
+        getConfig("ENCRYPTION_KEY")
+          .then(secretKey => {
+            for (const credential of credentials) {
+              credential.password = decrypt(credential.password, secretKey.value);
+            }
+            res.json({ credentials });
+          })
       })
       .catch(err => {
         res
@@ -38,7 +46,15 @@ module.exports = (db) => {
 
     db.query(queryString, queryParams)
       .then((data) => {
-        res.send(data.rows);
+        const credentials = data.rows;
+        //decrypt password before returning to front-end
+        getConfig("ENCRYPTION_KEY")
+          .then(secretKey => {
+            for (const credential of credentials) {
+              credential.password = decrypt(credential.password, secretKey.value);
+            }
+            res.send(credentials);
+          })
       })
       .catch((err) => {
         console.log(err);
@@ -83,17 +99,21 @@ module.exports = (db) => {
     name = $4,
     category_id = $5
     WHERE id = $6;`
-    const queryParams = [req.body.username, req.body.password, req.body.url, req.body.name, req.body.categoryId, req.body['password-id']];
 
-    db.query(queryString, queryParams)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    // encrypt password before storing in DB
+    getConfig("ENCRYPTION_KEY")
+    .then(secretKey => {
+      const queryParams = [req.body.username, encrypt(req.body.password, secretKey.value), req.body.url, req.body.name, req.body.categoryId, req.body['password-id']];
+      db.query(queryString, queryParams)
+        .then(data => {
+          res.send(data);
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+    })
   });
 
   router.post("/credentials/move", (req, res) => {
@@ -105,7 +125,15 @@ module.exports = (db) => {
 
     db.query(queryString, queryParams)
       .then(data => {
-        res.send(data.rows);
+        const credentials = data.rows;
+       //decrypt password before returning to front-end
+       getConfig("ENCRYPTION_KEY")
+       .then(secretKey => {
+         for (const credential of credentials) {
+           credential.password = decrypt(credential.password, secretKey.value);
+         }
+         res.send(credentials);
+       })
       })
       .catch(err => {
         res
@@ -182,5 +210,19 @@ module.exports = (db) => {
       })
   });
 
+  const getConfig = function(attr) {
+    return db.query(`SELECT * FROM configurations WHERE attribute = $1;`, [attr])
+    .then(data => {
+      if (data.rows.length > 0) {
+        return data.rows[0];
+      }
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+  }
+
   return router;
 };
+
+

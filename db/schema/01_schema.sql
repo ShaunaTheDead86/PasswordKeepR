@@ -36,3 +36,9 @@ CREATE TABLE credentials (
   organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE,
   category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE
 );
+
+CREATE TABLE configurations (
+  id SERIAL PRIMARY KEY NOT NULL,
+  ATTRIBUTE VARCHAR(255) NOT NULL,
+  VALUE VARCHAR(255) NOT NULL
+);
