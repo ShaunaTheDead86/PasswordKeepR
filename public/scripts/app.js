@@ -285,13 +285,13 @@ const createPswdLayout = (data) => {
   </a>
   <div class="mx-2 copy">
 
-  <i password=${data.password} class="fa-solid fa-copy"></i>
+  <i password=${data.password} class="fa-solid fa-copy pswd-icon"></i>
   </div>
-  <div class="field is-grouped is-grouped-right mx-2">
+  <div class="field is-grouped is-grouped-right mx-2 ">
   <p class="control">
   <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
     <input class="is-hidden password-id" value="${data.id}" />
-  <i class="fa-solid fa-pen-to-square"></i>
+  <i class="fa-solid fa-pen-to-square pswd-icon"></i>
   </a>
   </p>
   </div>
