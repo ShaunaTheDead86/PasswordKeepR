@@ -302,14 +302,9 @@ const createCategoryLayout = (category) => {
   <summary class="has-background-primary">
   <div class="is-size-5 has-text-white mx-2">
   <i class="fa-solid fa-vault mx-2"></i> ${category.name}
-  <a href=" " class="has-text-white mx-2">
-  <i class="fa-solid fa-pen-to-square js-modal-trigger" data-target="edit-category-modal">
-  <input class="is-hidden category-id" value="${category.id}" />
-  </i>
-  </a>
-  <a href=" " class="has-text-white mx-2">
-  <i class="fa-solid fa-rectangle-xmark category-delete-button"></i>
-  </a>
+  <i class="fa-solid fa-pen-to-square is-link-light mx-2 js-modal-trigger" data-target="edit-category-modal">
+  <input class="is-hidden category-id" value="${category.id}" /></i>
+  <i class="fa-solid fa-rectangle-xmark is-link-light mx-2 category-delete-button"></i>
   </div>
   </summary>
   <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
@@ -324,29 +319,19 @@ const createPswdLayout = (data) => {
 
   const passwordLayout = `
   <div class="is-flex flex-direction-row div-password">
-  <a href="" class="mx-2">
+  <a class="mx-2">
   <i class="fa-solid fa-key password-icon"></i> ${data.name}
   </a>
-  <div class="mx-2 copy">
-
+  <div class="mx-2 is-link-primary copy">
   <i password=${data.password} class="fa-solid fa-copy pswd-icon"></i>
   <p class="notification is-success is-light">Copied!</p>
   </div>
-  <div class="field is-grouped is-grouped-right mx-2 ">
-  <p class="control">
   <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
-<<<<<<< HEAD
-    <input class="is-hidden password-id" value="${data.id}" />
-  <i class="fa-solid fa-pen-to-square pswd-icon"></i>
-=======
   <input class="is-hidden password-id" value="${data.id}" />
-  <i class="fa-solid fa-pen-to-square"></i>
->>>>>>> master
+  <i class="fa-solid fa-pen-to-square is-link-primary"></i>
   </a>
-  </p>
-  </div>
-  <a href="" class="mx-2">
-  <i class="fa-solid fa-rectangle-xmark delete-button"></i>
+  <a class="mx-2">
+  <i class="fa-solid fa-rectangle-xmark is-link-primary delete-button"></i>
   </a>
   </div>
   `
@@ -380,7 +365,7 @@ const copyPswdToClipboard = () => {
     // shows a msg that pswd is copied to clipboard
     $(evt.target).next().show();
 
-    setTimeout(() => {$(evt.target).next().hide(1000);}, 1000);
+    setTimeout(() => { $(evt.target).next().hide(1000); }, 1000);
     console.log('copied')
 
   })
