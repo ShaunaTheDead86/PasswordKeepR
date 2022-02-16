@@ -33,8 +33,9 @@ const createNewPasswordOnSubmit = function(str) {
       showErrorMessage("Please enter an account name!");
       return;
     }
-    if ($("#url").val() === undefined || $("#url").val() === "") {
-      showErrorMessage("Please enter an URL!");
+    urlReg = /https?:\/\/w{0,3}\w*?\.(\w*?\.)?\w{2,3}\S*|www\.(\w*?\.)?\w*?\.\w{2,3}\S*|(\w*?\.)?\w*?\.\w{2,3}[\/\?]\S*/;
+    if (!urlReg.test($("#url").val())) {
+      showErrorMessage("Please enter a valid URL!");
       return;
     }
     if ($("#username").val() === undefined || $("#username").val() === "" || $("#username").val().includes(" ")) {

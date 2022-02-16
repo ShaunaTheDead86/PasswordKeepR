@@ -22,8 +22,12 @@ const populateCategoryDropdown = function(dropDownTarget, defaultCategory) {
   $.get('/categories').then((categories) => {
     let $dropdown = $(dropDownTarget);
     $dropdown.empty();
-
+    // currently filter out "Uncategorized" from DB, but should be refactored to have additional boolean column.
+    const UNCATEGORIZED = "Uncategorized";
     for (const item of categories) {
+      if (item.name === UNCATEGORIZED) {
+        continue;
+      }
       if (item.id === defaultCategory) {
         $dropdown.append(`<option value="${item.id}" selected="selected">${item.name}</option>`);
       } else {
