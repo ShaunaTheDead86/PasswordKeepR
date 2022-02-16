@@ -220,10 +220,21 @@ const groupCategWithPswds = (obj) => {
 const generateLayouts = function(credentials, categories) {
   $(".category-container").empty();
   $(`#${category.name}-pswd`).empty();
+
+  let uncategorized;
+
   for (const category of categories) {
-    const categoryLayout = createCategoryLayout(category.name)
-    $(".category-container").append(categoryLayout)
+    if (category.name !== "Uncategorized") {
+      const categoryLayout = createCategoryLayout(category)
+      $(".category-container").append(categoryLayout)
+    } else {
+      uncategorized = category;
+    }
   }
+
+  // create uncategorized last
+  const categoryLayout = createUncategorized(uncategorized)
+  $(".category-container").append(categoryLayout)
 
   for (const category of categories) {
     for (const credential of credentials) {
@@ -249,21 +260,38 @@ const renderCategories = () => {
     });
 }
 
-const createCategoryLayout = (category) => {
-  const categoryLayout = `
-  <details>
+const createUncategorized = function(category) {
+  const uncategorizedLayout = `
+  <details class="category-outer" value="${category.id}">
     <summary class="has-background-primary">
       <div class="is-size-5 has-text-white mx-2">
-        <i class="fa-solid fa-vault mx-2"></i> ${category}
+        <i class="fa-solid fa-vault mx-2"></i> ${category.name}
+      </div>
+    </summary>
+    <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
+
+    </p>
+  </details>
+  `;
+
+  return uncategorizedLayout;
+}
+
+const createCategoryLayout = (category) => {
+  const categoryLayout = `
+  <details class="category-outer" value="${category.id}">
+    <summary class="has-background-primary">
+      <div class="is-size-5 has-text-white mx-2">
+        <i class="fa-solid fa-vault mx-2"></i> ${category.name}
         <a href=" " class="has-text-white mx-2">
-          <i class="fa-solid fa-pen-to-square"></i>
+          <i class="fa-solid fa-pen-to-square category-edit-button"></i>
         </a>
         <a href=" " class="has-text-white mx-2">
-          <i class="fa-solid fa-rectangle-xmark"></i>
+          <i class="fa-solid fa-rectangle-xmark category-delete-button"></i>
         </a>
       </div>
     </summary>
-    <p id="${category}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
+    <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
 
     </p>
   </details>
@@ -283,7 +311,7 @@ const createPswdLayout = (data) => {
   <div class="field is-grouped is-grouped-right mx-2">
   <p class="control">
   <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
-    <input class="is-hidden password-id" value="${data.id}" />
+  <input class="is-hidden password-id" value="${data.id}" />
   <i class="fa-solid fa-pen-to-square"></i>
   </a>
   </p>

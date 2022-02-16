@@ -30,6 +30,8 @@ const populateCategoryDropdown = function(dropDownTarget, defaultCategory) {
         $dropdown.append(`<option value="${item.id}">${item.name}</option>`);
       }
     }
+
+    // $dropdown.append(`<option value="Uncategorized">Uncategorized</option>`);
   });
 }
 
@@ -134,5 +136,56 @@ const reloadEventListeners = function() {
         }
       });
     });
+  });
+
+  // listener for category delete buttons and on click event
+  (document.querySelectorAll(".category-delete-button") || []).forEach((trigger) => {
+    trigger.addEventListener('click', function(event) {
+      const deleteTarget = $(this).closest(".category-outer");
+      const targetCategoryID = deleteTarget.attr("value");
+
+      // get the details of the uncategorized category to use later
+      $.ajax({
+        url: "/api/categories/uncategorized",
+        type: "GET",
+        success: function(res) {
+          const newCategoryID = res[0].id;
+          // on success move passwords in current category to uncategorized category
+          $.ajax({
+            url: "/api/credentials/move",
+            data: { target: targetCategoryID, newCategory: newCategoryID },
+            type: "POST",
+            success: function(res) {
+              // on success delete the category
+              $.ajax({
+                url: "/api/categories/delete",
+                data: { target: targetCategoryID },
+                type: "POST",
+                success: function(res) {
+                  // on success reload the categories display
+                  renderCategories();
+                },
+                error: function(err) {
+                  console.log(err);
+                }
+              });
+            },
+            error: function(err) {
+              console.log(err);
+            }
+          });
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    });
+  });
+
+  // listener for create new category and on click event
+  $(".create-new-category").click(function(event) {
+    event.preventDefault();
+
+    // TODO open create new catergory modal
   });
 };

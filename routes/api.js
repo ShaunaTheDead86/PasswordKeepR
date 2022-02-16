@@ -84,6 +84,71 @@ module.exports = (db) => {
       });
   });
 
+  router.get("/categories/uncategorized", (req, res) => {
+    db.query("SELECT * FROM categories WHERE name = 'Uncategorized'")
+      .then((data) => {
+        res.send(data.rows);
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      })
+  });
+
+  router.post("/credentials/move", (req, res) => {
+    const queryString = `
+    UPDATE credentials
+    SET category_id = $1
+    WHERE category_id = $2;`
+    const queryParams = [req.body.newCategory, req.body.target];
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.send(data.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post("/categories/delete", (req, res) => {
+    const queryString = `
+    DELETE FROM categories
+    WHERE id = $1`
+    const queryParams = [req.body.target];
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post("/categories/edit", (req, res) => {
+    const queryString = `
+    UPDATE categories
+    SET name = $1
+    WHERE id = $2;`
+    const queryParams = [req.body.name, req.body.categoryID];
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   router.post("/login", (req, res) => {
     const params = [req.body.username, req.body.password];
     db.query(`
