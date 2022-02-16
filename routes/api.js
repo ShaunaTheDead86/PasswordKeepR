@@ -62,6 +62,18 @@ module.exports = (db) => {
       });
   });
 
+  router.get("/categories/uncategorized", (req, res) => {
+    db.query("SELECT * FROM categories WHERE name = 'Uncategorized'")
+      .then(data => {
+        res.send(data.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   router.post("/credentials/edit", (req, res) => {
     const queryString = `
     UPDATE credentials
@@ -72,6 +84,75 @@ module.exports = (db) => {
     category_id = $5
     WHERE id = $6;`
     const queryParams = [req.body.username, req.body.password, req.body.url, req.body.name, req.body.categoryId, req.body['password-id']];
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post("/credentials/move", (req, res) => {
+    const queryString = `
+    UPDATE credentials
+    SET category_id = $1
+    WHERE category_id = $2;`
+    const queryParams = [req.body.newCategory, req.body.target];
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.send(data.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post("/categories/create", (req, res) => {
+    const queryString = `INSERT INTO categories (name)
+    VALUES ($1)`
+    const queryParams = [req.body.name];
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.send(data.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post("/categories/delete", (req, res) => {
+    const queryString = `
+    DELETE FROM categories
+    WHERE id = $1`
+    const queryParams = [req.body.target];
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.send(data.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.post("/categories/edit", (req, res) => {
+    const queryString = `
+    UPDATE categories
+    SET name = $1
+    WHERE id = $2;`
+    const queryParams = [req.body.newName, req.body.oldName];
 
     db.query(queryString, queryParams)
       .then(data => {

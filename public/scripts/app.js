@@ -29,8 +29,21 @@ const createNewPasswordOnSubmit = function(str) {
     evt.preventDefault();
     const params = $("#create-credential-form").serialize();
     const password = escapeScript($("#password").val());
+    if ($("#name").val() === undefined || $("#name").val() === "") {
+      showErrorMessage("Please enter an account name!");
+      return;
+    }
+    urlReg = /https?:\/\/w{0,3}\w*?\.(\w*?\.)?\w{2,3}\S*|www\.(\w*?\.)?\w*?\.\w{2,3}\S*|(\w*?\.)?\w*?\.\w{2,3}[\/\?]\S*/;
+    if (!urlReg.test($("#url").val())) {
+      showErrorMessage("Please enter a valid URL!");
+      return;
+    }
+    if ($("#username").val() === undefined || $("#username").val() === "" || $("#username").val().includes(" ")) {
+      showErrorMessage("Please enter a valid username!");
+      return;
+    }
     if (password.length < 6) {
-      showErrorMessage("Password is not strong enough!");
+      showErrorMessage("Password needs to be at least 6 character!");
       return;
     };
     $.post('/credentials', params).then((credential) => {
@@ -83,7 +96,7 @@ const generateNewPass = function() {
     characterPool += "012345678901234567890123456789";
   }
   if (inclSpecial) {
-    characterPool += "!@#$%^&*()[]{}!@#$%^&*()[]{}";
+    characterPool += "!@#$%^&*()[]{}!@#$%^&*()[]{}!@#$%^&*()[]{}!@#$%^&*()[]{}";
   }
   let password = "";
   const poolLength = characterPool.length;
@@ -222,17 +235,28 @@ const groupCategWithPswds = (obj) => {
 const generateLayouts = function(credentials, categories) {
   $(".category-container").empty();
   $(`#${category.name}-pswd`).empty();
+
+  let uncategorized;
+
   for (const category of categories) {
-    const categoryLayout = createCategoryLayout(category.name)
-    $(".category-container").append(categoryLayout)
+    if (category.name !== "Uncategorized") {
+      const categoryLayout = createCategoryLayout(category)
+      $(".category-container").append(categoryLayout)
+    } else {
+      uncategorized = category;
+    }
   }
+
+  // create uncategorized last
+  const categoryLayout = createUncategorized(uncategorized)
+  $(".category-container").append(categoryLayout)
 
   for (const category of categories) {
 
     for (const credential of credentials) {
       if (category.id === credential.category_id) {
 
-        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name, password: credential.password})
+        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name, password: credential.password })
         $(`#${category.name}-pswd`).append(passwordLayout);
       }
     }
@@ -241,6 +265,7 @@ const generateLayouts = function(credentials, categories) {
 
 // gets data from the server and appends to the main layout
 const renderCategories = () => {
+  $(".category-container").empty();
   $.get("/api/credentials")
     .then((credentials) => {
       $.get("/api/categories")
@@ -254,23 +279,42 @@ const renderCategories = () => {
     });
 }
 
-const createCategoryLayout = (category) => {
-  const categoryLayout = `
-  <details>
+const createUncategorized = function(category) {
+  const uncategorizedLayout = `
+  <details class="category-outer" value="${category.id}">
     <summary class="has-background-primary">
       <div class="is-size-5 has-text-white mx-2">
-        <i class="fa-solid fa-vault mx-2"></i> ${category}
-        <a href=" " class="has-text-white mx-2">
-          <i class="fa-solid fa-pen-to-square"></i>
-        </a>
-        <a href=" " class="has-text-white mx-2">
-          <i class="fa-solid fa-rectangle-xmark"></i>
-        </a>
+        <i class="fa-solid fa-vault mx-2"></i> ${category.name}
       </div>
     </summary>
-    <p id="${category}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
+    <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
 
     </p>
+  </details>
+  `;
+
+  return uncategorizedLayout;
+}
+
+const createCategoryLayout = (category) => {
+  const categoryLayout = `
+  <details class="category-outer" value="${category.id}">
+  <summary class="has-background-primary">
+  <div class="is-size-5 has-text-white mx-2">
+  <i class="fa-solid fa-vault mx-2"></i> ${category.name}
+  <a href=" " class="has-text-white mx-2">
+  <i class="fa-solid fa-pen-to-square js-modal-trigger" data-target="edit-category-modal">
+  <input class="is-hidden category-id" value="${category.id}" />
+  </i>
+  </a>
+  <a href=" " class="has-text-white mx-2">
+  <i class="fa-solid fa-rectangle-xmark category-delete-button"></i>
+  </a>
+  </div>
+  </summary>
+  <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
+
+  </p>
   </details>
   `
   return categoryLayout;
@@ -291,8 +335,13 @@ const createPswdLayout = (data) => {
   <div class="field is-grouped is-grouped-right mx-2 ">
   <p class="control">
   <a class="js-modal-trigger mx-2" data-target="edit-password-modal">
+<<<<<<< HEAD
     <input class="is-hidden password-id" value="${data.id}" />
   <i class="fa-solid fa-pen-to-square pswd-icon"></i>
+=======
+  <input class="is-hidden password-id" value="${data.id}" />
+  <i class="fa-solid fa-pen-to-square"></i>
+>>>>>>> master
   </a>
   </p>
   </div>
@@ -309,11 +358,6 @@ $(document).ready(function() {
   renderCategories();
   registerNewPasswordFormEvents();
   login();
-
-  $(".delete-button").click(function(event) {
-    event.preventDefault();
-    console.log("click!");
-  });
 });
 
 
@@ -324,7 +368,7 @@ const copyPswdToClipboard = () => {
 
     let password = $(evt.target).attr("password")
     let tempEl = document.createElement('input');
-    tempEl.setAttribute('type','text');
+    tempEl.setAttribute('type', 'text');
 
     document.body.appendChild(tempEl);
     tempEl.value = password;
