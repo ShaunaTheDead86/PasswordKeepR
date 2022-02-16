@@ -80,3 +80,12 @@ input[type=checkbox] {
   position: absolute;
   z-index: 1000;
 }
+
+.search {
+  cursor: pointer;
+  color: #fca311;
+  margin-left: 10px;
+  &:hover {
+    color: #fca211c9;
+  }
+}
