@@ -286,6 +286,7 @@ const createPswdLayout = (data) => {
   <div class="mx-2 copy">
 
   <i password=${data.password} class="fa-solid fa-copy pswd-icon"></i>
+  <p class="notification is-success is-light">Copied!</p>
   </div>
   <div class="field is-grouped is-grouped-right mx-2 ">
   <p class="control">
@@ -331,6 +332,11 @@ const copyPswdToClipboard = () => {
 
     document.execCommand("copy");
     document.body.removeChild(tempEl);
+
+    // shows a msg that pswd is copied to clipboard
+    $(evt.target).next().show();
+
+    setTimeout(() => {$(evt.target).next().hide(1000);}, 1000);
     console.log('copied')
 
   })

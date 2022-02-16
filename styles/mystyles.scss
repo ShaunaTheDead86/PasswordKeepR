@@ -5,6 +5,7 @@
 $primary: #14213d;
 $warning: #fca311;
 $text: #262228;
+
 // Set fonts
 $family-monospace: 'Press Start 2P',
 cursive;
@@ -19,6 +20,7 @@ $link-dark: $primary;
 $link-visited: $primary;
 $link-hover: $warning;
 $link-focus: $primary;
+
 // Import Bulma
 @import '../node_modules/bulma/bulma.sass';
 // Import only what you need from Bulma
@@ -63,4 +65,14 @@ input[type=checkbox] {
   &:hover {
     color:#fca311;
   }
+}
+
+.notification {
+  display: none;
+
+  // opacity: 0.7;
+  max-width: 40px;
+
+  position: absolute;
+  z-index: 1000;
 }
