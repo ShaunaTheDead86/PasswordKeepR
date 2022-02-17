@@ -236,11 +236,7 @@ module.exports = (db) => {
   FROM credentials
   WHERE upper(name) LIKE $1;`
 
-<<<<<<< HEAD
-  const queryParams = [`%${req.body.website.toUpperCase()}%`];
-=======
-    const queryParams = [`%${req.body.website}%`];
->>>>>>> shauna
+    const queryParams = [`%${req.body.website.toUpperCase()}%`];
 
 
     db.query(queryString, queryParams)

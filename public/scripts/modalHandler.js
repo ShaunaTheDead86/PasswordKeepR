@@ -135,6 +135,7 @@ const reloadEventListeners = function() {
     const target = document.getElementById(modal);
 
     trigger.addEventListener('click', function() {
+      console.log(target);
 
       if (modal === "edit-password-modal") {
         const passwordID = $(trigger).children(".password-id").val();

@@ -26,21 +26,104 @@ const login = function(str) {
   });
 };
 
+// const createNewPasswordOnSubmit = function(str) {
+//   $('#create-credential-form').on('submit', (evt) => {
+//     evt.preventDefault();
+//     const params = $("#create-credential-form").serialize();
+//     const password = escapeScript($("#password").val());
+//     if ($("#name").val() === undefined || $("#name").val() === "") {
+//       showErrorMessage("Please enter an account name!");
+//       return;
+//     }
+//     urlReg = /https?:\/\/w{0,3}\w*?\.(\w*?\.)?\w{2,3}\S*|www\.(\w*?\.)?\w*?\.\w{2,3}\S*|(\w*?\.)?\w*?\.\w{2,3}[\/\?]\S*/;
+//     if (!urlReg.test($("#url").val())) {
+//       showErrorMessage("Please enter a valid URL!");
+//       return;
+//     }
+//     if ($("#username").val() === undefined || $("#username").val() === "" || $("#username").val().includes(" ")) {
+//       showErrorMessage("Please enter a valid username!");
+//       return;
+//     }
+//     if (password.length < 6) {
+//       showErrorMessage("Password needs to be at least 6 character!");
+//       return;
+//     };
+//     $.post('/credentials', params).then((credential) => {
+//       muteErrorMessage();
+//       // close popup
+//       $("#username").val("");
+//       $("#password").val("");
+//       $("#name").val("");
+//       $("#url").val("");
+//       $("#new-password-modal").removeClass('is-active');
+
+//       // Inject new credential code goes here
+//       renderDisplay();
+//     })
+//   });
+// };
+
+// const generatePassOnEvents = function() {
+
+//   $('#incl-upper').on('change', (evt) => {
+//     generateNewPass();
+//   });
+//   $('#incl-number').on('change', (evt) => {
+//     generateNewPass();
+//   });
+//   $('#incl-special').on('change', (evt) => {
+//     generateNewPass();
+//   });
+//   $('#passRange').on('change', (evt) => {
+//     generateNewPass();
+//     $("#pass-length").text($('#passRange').val());
+//   });
+//   $('#generate').on('click', (evt) => {
+//     generateNewPass();
+//     $("#auto-gen-password-section").removeClass("is-hidden");
+//   });
+// }
+
+// const generateNewPass = function() {
+//   const inclUpper = $("#incl-upper").is(":checked");
+//   const inclNum = $("#incl-number").is(":checked");
+//   const inclSpecial = $("#incl-special").is(":checked");
+//   const passLength = $('#passRange').val();
+
+//   let characterPool = "abcdefghijklmnopqrstuvxyz";
+//   if (inclUpper) {
+//     characterPool += "ABCDEFGHIJKLMNOPQRSTUVXYZ";
+//   }
+//   if (inclNum) {
+//     characterPool += "012345678901234567890123456789";
+//   }
+//   if (inclSpecial) {
+//     characterPool += "!@#$%^&*()[]{}!@#$%^&*()[]{}!@#$%^&*()[]{}!@#$%^&*()[]{}";
+//   }
+//   let password = "";
+//   const poolLength = characterPool.length;
+//   for (let i = 0; i < passLength; i++) {
+//     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
+//   }
+//   $("#password").val(password);
+//   $("#password").trigger('input');
+// }
+
 const createNewPasswordOnSubmit = function(str) {
-  $('#create-credential-form').on('submit', (evt) => {
+  $('#edit-credential-form').on('submit', (evt) => {
     evt.preventDefault();
-    const params = $("#create-credential-form").serialize();
-    const password = escapeScript($("#password").val());
-    if ($("#name").val() === undefined || $("#name").val() === "") {
+    const params = $("#edit-credential-form").serialize();
+    const password = escapeScript($(".password").val());
+    if ($(".name").val() === undefined || $(".name").val() === "") {
       showErrorMessage("Please enter an account name!");
       return;
     }
     urlReg = /https?:\/\/w{0,3}\w*?\.(\w*?\.)?\w{2,3}\S*|www\.(\w*?\.)?\w*?\.\w{2,3}\S*|(\w*?\.)?\w*?\.\w{2,3}[\/\?]\S*/;
-    if (!urlReg.test($("#url").val())) {
+    if (!urlReg.test($(".url").val())) {
       showErrorMessage("Please enter a valid URL!");
       return;
     }
-    if ($("#username").val() === undefined || $("#username").val() === "" || $("#username").val().includes(" ")) {
+    if ($(".username").val() === undefined || $(".username").val() === "" || $(".username").val().includes(" ")) {
       showErrorMessage("Please enter a valid username!");
       return;
     }
@@ -51,11 +134,11 @@ const createNewPasswordOnSubmit = function(str) {
     $.post('/credentials', params).then((credential) => {
       muteErrorMessage();
       // close popup
-      $("#username").val("");
-      $("#password").val("");
-      $("#name").val("");
-      $("#url").val("");
-      $("#new-password-modal").removeClass('is-active');
+      $(".username").val("");
+      $(".password").val("");
+      $(".name").val("");
+      $(".url").val("");
+      $(".new-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
       renderDisplay();
@@ -65,30 +148,30 @@ const createNewPasswordOnSubmit = function(str) {
 
 const generatePassOnEvents = function() {
 
-  $('#incl-upper').on('change', (evt) => {
+  $('.incl-upper').on('change', (evt) => {
     generateNewPass();
   });
-  $('#incl-number').on('change', (evt) => {
+  $('.incl-number').on('change', (evt) => {
     generateNewPass();
   });
-  $('#incl-special').on('change', (evt) => {
+  $('.incl-special').on('change', (evt) => {
     generateNewPass();
   });
-  $('#passRange').on('change', (evt) => {
+  $('.passRange').on('change', (evt) => {
     generateNewPass();
-    $("#pass-length").text($('#passRange').val());
+    $(".pass-length").text($('.passRange').val());
   });
-  $('#generate').on('click', (evt) => {
+  $('.generate').on('click', (evt) => {
     generateNewPass();
-    $("#auto-gen-password-section").removeClass("is-hidden");
+    $(".auto-gen-password-section").removeClass("is-hidden");
   });
 }
 
 const generateNewPass = function() {
-  const inclUpper = $("#incl-upper").is(":checked");
-  const inclNum = $("#incl-number").is(":checked");
-  const inclSpecial = $("#incl-special").is(":checked");
-  const passLength = $('#passRange').val();
+  const inclUpper = $(".incl-upper").is(":checked");
+  const inclNum = $(".incl-number").is(":checked");
+  const inclSpecial = $(".incl-special").is(":checked");
+  const passLength = $('.passRange').val();
 
   let characterPool = "abcdefghijklmnopqrstuvxyz";
   if (inclUpper) {
@@ -105,8 +188,8 @@ const generateNewPass = function() {
   for (let i = 0; i < passLength; i++) {
     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
   }
-  $("#password").val(password);
-  $("#password").trigger('input');
+  $(".password").val(password);
+  $(".password").trigger('input');
 }
 
 const togglePassword = function() {
@@ -121,43 +204,43 @@ const togglePassword = function() {
 };
 
 const updatePasswordStrengthBar = function() {
-  $('#password').on('input', (evt) => {
-    const pass = $('#password').val();
+  $('.password').on('input', (evt) => {
+    const pass = $('.password').val();
     const strength = testPassStrength(pass);
 
     if (strength === "failure") {
-      $("#password-strength-bar").val(0);
-      $("#password-strength-bar").removeClass('is-warning');
-      $("#password-strength-bar").removeClass('is-success');
-      $("#password-strength-bar").removeClass('is-danger');
+      $(".password-strength-bar").val(0);
+      $(".password-strength-bar").removeClass('is-warning');
+      $(".password-strength-bar").removeClass('is-success');
+      $(".password-strength-bar").removeClass('is-danger');
     }
     if (strength === "weak") {
-      $("#password-strength-bar").val(25);
-      $("#password-strength-bar").removeClass('is-success');
-      $("#password-strength-bar").removeClass('is-warning');
-      $("#password-strength-bar").removeClass('is-info');
-      $("#password-strength-bar").addClass('is-danger');
+      $(".password-strength-bar").val(25);
+      $(".password-strength-bar").removeClass('is-success');
+      $(".password-strength-bar").removeClass('is-warning');
+      $(".password-strength-bar").removeClass('is-info');
+      $(".password-strength-bar").addClass('is-danger');
     }
     if (strength === "medium") {
-      $("#password-strength-bar").val(50);
-      $("#password-strength-bar").removeClass('is-danger');
-      $("#password-strength-bar").removeClass('is-success');
-      $("#password-strength-bar").removeClass('is-info');
-      $("#password-strength-bar").addClass('is-warning');
+      $(".password-strength-bar").val(50);
+      $(".password-strength-bar").removeClass('is-danger');
+      $(".password-strength-bar").removeClass('is-success');
+      $(".password-strength-bar").removeClass('is-info');
+      $(".password-strength-bar").addClass('is-warning');
     }
     if (strength === "strong") {
-      $("#password-strength-bar").val(75);
-      $("#password-strength-bar").removeClass('is-warning');
-      $("#password-strength-bar").removeClass('is-danger');
-      $("#password-strength-bar").removeClass('is-success');
-      $("#password-strength-bar").addClass('is-info');
+      $(".password-strength-bar").val(75);
+      $(".password-strength-bar").removeClass('is-warning');
+      $(".password-strength-bar").removeClass('is-danger');
+      $(".password-strength-bar").removeClass('is-success');
+      $(".password-strength-bar").addClass('is-info');
     }
     if (strength === "absolute") {
-      $("#password-strength-bar").val(100);
-      $("#password-strength-bar").removeClass('is-warning');
-      $("#password-strength-bar").removeClass('is-danger');
-      $("#password-strength-bar").removeClass('is-info');
-      $("#password-strength-bar").addClass('is-success');
+      $(".password-strength-bar").val(100);
+      $(".password-strength-bar").removeClass('is-warning');
+      $(".password-strength-bar").removeClass('is-danger');
+      $(".password-strength-bar").removeClass('is-info');
+      $(".password-strength-bar").addClass('is-success');
     }
   })
 };
