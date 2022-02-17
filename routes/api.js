@@ -222,6 +222,33 @@ module.exports = (db) => {
     });
   }
 
+  // search for specific website_name and its password
+router.get("/credentials/search", (req, res) => {
+
+  const queryString = `
+  SELECT name, password
+  FROM credentials
+  WHERE name LIKE $1;`
+
+  const queryParams = [`%${req.query.website}%`];
+
+
+  db.query(queryString, queryParams)
+    .then(data => {
+
+      const searchResult = data.rows;
+      res.json({ searchResult });
+
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+
+
+});
+
   return router;
 };
 
