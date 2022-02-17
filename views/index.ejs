@@ -53,18 +53,18 @@
             <form id="search-form" method="POST">
               <div class="field has-addons">
                 <p class="control has-icons-left has-icons-right">
-                <input class="input is-rounded" type="text" name="website" placeholder="Search">
-                <span class="icon is-small is-left">
+                  <input class="input is-rounded" type="text" name="website" placeholder="Search">
+                  <span class="icon is-small is-left">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
                 </p>
                 <div class="control">
-                <button class="button is-warning is-rounded" type="submit">
+                  <button class="button is-warning is-rounded" type="submit">
                 Search
               </button>
-            </div>
+                </div>
 
-            </div>
+              </div>
             </form>
           </div>
 
@@ -85,14 +85,21 @@
     <div class="navbar-item is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center">
       <div class="navbar-item icons-display">
         <div class="navbar-item">
-          <div class="has-text-primary is-size-6 mx-2">
-            Display Type:
+          <div class="is-size-6">
+            Display:
+            <i class="fa-solid fa-folder mx-1 is-link-primary display-icon category-display display-active" data-target="">
+              <span class="tag is-primary has-text-white icon-tag">Category</span>
+            </i>
+            <i class="fa-solid fa-table-cells-large mx-1 is-link-primary display-icon box-display" data-target="box-design-modal">
+              <span class="tag is-primary has-text-white icon-tag">Box</span>
+            </i>
+            <i class="fa-solid fa-bars mx-1 is-link-primary display-icon list-display">
+              <span class="tag is-primary has-text-white icon-tag">List</span>
+            </i>
           </div>
-          <i class="fa-solid fa-folder mx-1 is-link-primary category-display display-active" data-target=""></i>
-          <i class="fa-solid fa-table-cells-large mx-1 is-link-primary box-display" data-target="box-design-modal"></i>
-          <i class="fa-solid fa-bars mx-1 is-link-primary list-display"></i>
         </div>
       </div>
+    </div>
   </header>
 
   <main>

@@ -245,13 +245,15 @@ const getActiveDisplay = function() {
 // main function that calls all other required functions
 const renderDisplay = function() {
   $(".category-container").empty();
+  $(".create-new-container").empty();
   $.get("/api/credentials")
     .then((credentials) => {
       $.get("/api/categories")
         .then((categories) => {
-          console.log("rendering...");
           const displayType = getActiveDisplay();
-          generateCategories(categories.categories, displayType);
+          if (displayType !== "list") {
+            generateCategories(categories.categories, displayType);
+          }
           generatePasswords(credentials.credentials, categories.categories, displayType);
           reloadEventListeners();
           copyPswdToClipboard();
@@ -303,7 +305,8 @@ const generateCategories = function(categories, displayType) {
 
 // generate password layouts based on display type
 const generatePasswords = function(credentials, categories, displayType) {
-  // iterate through categories
+  const listTarget = $(".category-container")
+    // iterate through categories
   for (const category of categories) {
     let target = $(`.${category.name}-password`); // set the target to append to for each category
     // iterate through credentials to generate password list
@@ -316,30 +319,43 @@ const generatePasswords = function(credentials, categories, displayType) {
           const layout = boxPasswordLayout(credential);
           target.append(layout);
         }
+
+        if (displayType === "list") {
+          const layout = categoryPasswordLayout(credential);
+          listTarget.append(layout);
+        }
       }
     }
 
     if (displayType === "box") {
       const layout = boxCreateNewPasswordLayout(category);
       target.append(layout);
+    } else if (displayType === "category") {
+      const layout = listCreateNewLayout();
+      target.append(layout);
     }
+  }
+
+  if (displayType === "list") {
+    const layout = listCreateNewLayout();
+    listTarget.append(layout);
   }
 }
 
-// // gets data from the server and appends to the main layout
-// const renderCategories = () => {
-//   $(".category-container").empty();
-//   $.get("/api/credentials")
-//     .then((credentials) => {
-//       $.get("/api/categories")
-//         .then((categories) => {
-//           generateLayouts(credentials.credentials, categories.categories);
-//           reloadEventListeners();
-//           // copy to clip
+const listCreateNewLayout = function() {
+  const layout = `
+  <div class="is-flex is-flex-direction-row is-align-items-center is-size-6 p-1 div-password">
+  <div class="is-link-primary js-modal-trigger" data-target="new-password-modal">
+  <i class="fa-solid fa-key mx-2 password-icon"></i>
+  Create New Password
+  <i class="fa-solid fa-plus mx-2"></i>
+  </div>
+  </div>
+  `
 
-//         });
-//       });
-// }
+  return layout;
+}
+
 /*----------------------------
 | FORMATTING FOR BOX DISPLAY |
 ----------------------------*/
@@ -388,7 +404,7 @@ const boxCategoryLayout = (category) => {
 // generate dynamic HTML for the passwords
 const boxPasswordLayout = (data) => {
   const layout = `
-  <div class="box is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2 div-password">
+  <div class="box is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-squareish is-size-6 has-background-white has-text-centered m-2 div-password">
       <img src="${data.logo_url}" class="square"></img><br>
       <div class="is-link-primary">
         <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
@@ -403,16 +419,18 @@ const boxPasswordLayout = (data) => {
       <div class="is-link-primary">
         <i class="fa-regular fa-user"></i> ${data.username}<br>
       </div>
-      <div password=${data.password} class="is-link-primary copy">
-        <p class="notification is-success is-light">Copied!</p>
+      <div  class="is-link-primary">
+        </div>
         <input class="is-hidden password-id" value="${data.id}" />
         <div class="is-flex">
           <div class="is-link-primary"">
             <i class="fa-solid fa-key"></i>
             Password
             </div>
-            <div class="is-link-primary mx-2"">
-            <i class="fa-solid fa-copy"></i>
+            <div class="is-link-primary mx-2 copy-button" password="${data.password}">
+            <i class="fa-solid fa-copy">
+            <div class="tag is-primary has-text-white copied-tag">Copied!</div>
+            </i>
             <div>
         </div>
       </div>
@@ -424,7 +442,7 @@ const boxPasswordLayout = (data) => {
 
 const boxCreateNewPasswordLayout = function() {
   const layout = `
-  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2">
+  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-6 has-background-white has-text-centered m-2">
   <div class="is-link-primary js-modal-trigger" data-target="new-password-modal">
   <i class="fa-solid fa-plus"></i>
   Create New</div>
@@ -498,12 +516,15 @@ const categoryLayout = (category) => {
 const categoryPasswordLayout = (data) => {
 
   const layout = `
-  <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1 div-password">
+  <div class="is-flex is-flex-direction-row is-align-items-center is-size-6 p-1 div-password">
   <div class="is-link-primary">
   <i class="fa-solid fa-key mx-2 password-icon"></i> ${data.name}
   </div>
-  <i password=${data.password} class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon"></i>
-  <p class="notification is-success is-light">Copied!</p>
+  <div class="is-link-primary mx-2 copy-button" password="${data.password}">
+  <i class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon">
+  <div class="tag is-primary has-text-white copied-tag">Copied!</div>
+  </i>
+  </div>
   <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
   <input class="is-hidden password-id" value="${data.id}" />
   </i>
@@ -530,7 +551,6 @@ $(document).ready(function() {
   registerNewPasswordFormEvents();
   login();
   search();
-
 
   const categoryIcon = $(".category-display");
   const boxIcon = $(".box-display");
@@ -560,28 +580,29 @@ $(document).ready(function() {
   });
 });
 
-
 // copying password to clipboard on click
 const copyPswdToClipboard = () => {
-  $(".copy").on('click', (evt) => {
-    evt.preventDefault()
+  (document.querySelectorAll(".copy-button") || []).forEach((trigger) => {
 
-    let password = $(evt.target).attr("password")
-    let tempEl = document.createElement('input');
-    tempEl.setAttribute('type', 'text');
+    trigger.addEventListener('click', function() {
+      const target = $(trigger).find(".copied-tag");
+      const password = $(trigger).attr("password");
+      let tempEl = document.createElement('input');
+      tempEl.setAttribute('type', 'text');
 
-    document.body.appendChild(tempEl);
-    tempEl.value = password;
-    tempEl.select();
+      document.body.appendChild(tempEl);
+      tempEl.value = password;
+      tempEl.select();
 
-    document.execCommand("copy");
-    document.body.removeChild(tempEl);
+      document.execCommand("copy");
+      document.body.removeChild(tempEl);
 
-    // shows a msg that pswd is copied to clipboard
-    $(evt.target).next().show();
+      // shows a msg that pswd is copied to clipboard
+      target.css("visibility", "visible");
 
-    setTimeout(() => { $(evt.target).next().hide(1000); }, 1000);
-    console.log('copied')
+      setTimeout(() => { target.css("visibility", "hidden"); }, 1500);
+    });
+
 
   })
 };

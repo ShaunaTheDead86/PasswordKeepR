@@ -124,7 +124,6 @@ $(document).ready(function() {
 
 // reload function for event listeners on dynamically created HTML elements
 const reloadEventListeners = function() {
-
   // prevent default action on all links (action will be handled in code)
   $("a").click(function(event) {
     event.preventDefault();
@@ -228,7 +227,6 @@ const reloadEventListeners = function() {
                 data: { target: targetCategoryID },
                 type: "POST",
                 success: function(res) {
-                  console.log("outside success");
                   // on success reload the categories display
                   closeAllModals();
                   return renderDisplay();
@@ -249,5 +247,5 @@ const reloadEventListeners = function() {
       });
     });
   });
-  copyPswdToClipboard();
+  // copyPswdToClipboard();
 }
