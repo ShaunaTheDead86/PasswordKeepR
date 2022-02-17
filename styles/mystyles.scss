@@ -82,5 +82,9 @@ input[type=checkbox] {
   z-index: 1000;
 }
 
+.is-hidden {
+  display: none;
+}
+
 // Import Bulma
 @import '../node_modules/bulma/bulma.sass';

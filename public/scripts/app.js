@@ -77,8 +77,7 @@ const generatePassOnEvents = function() {
   });
   $('#generate').on('click', (evt) => {
     generateNewPass();
-    $("#auto-gen-password-section").attr("hidden", false);
-    // $("#auto-gen-password-section").fadeIn("slow");
+    $("#auto-gen-password-section").removeClass("is-hidden");
   });
 }
 
