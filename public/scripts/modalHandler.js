@@ -42,7 +42,7 @@ const loadCreateNewPasswordForm = function() {
   $(".new-password-password").val("");
   $("#password-strength-bar").val(0);
   $("#pass-length").val(0);
-  $("#auto-gen-password-section").attr("hidden", true);
+  $("#auto-gen-password-section").addClass("is-hidden");
   populateCategoryDropdown("#category");
 };
 
@@ -124,6 +124,7 @@ $(document).ready(function() {
 
 // reload function for event listeners on dynamically created HTML elements
 const reloadEventListeners = function() {
+
   // prevent default action on all links (action will be handled in code)
   $("a").click(function(event) {
     event.preventDefault();
@@ -248,4 +249,5 @@ const reloadEventListeners = function() {
       });
     });
   });
+  copyPswdToClipboard();
 }

@@ -9,6 +9,7 @@ const registerNewPasswordFormEvents = function() {
   updatePasswordStrengthBar();
 }
 
+
 const login = function(str) {
   $('#login-form').on('submit', (evt) => {
     evt.preventDefault();
@@ -18,6 +19,8 @@ const login = function(str) {
       $("#login-email").text(user.email);
       $("#login-email").show();
       $("#create-new-button").attr("hidden", false);
+      // revealing search box when user is logged in
+      $(".search-box").attr("hidden", false);
     })
     $("#login-modal").removeClass('is-active');
   });
@@ -77,8 +80,7 @@ const generatePassOnEvents = function() {
   });
   $('#generate').on('click', (evt) => {
     generateNewPass();
-    $("#auto-gen-password-section").attr("hidden", false);
-    // $("#auto-gen-password-section").fadeIn("slow");
+    $("#auto-gen-password-section").removeClass("is-hidden");
   });
 }
 
@@ -324,6 +326,20 @@ const generatePasswords = function(credentials, categories, displayType) {
   }
 }
 
+// // gets data from the server and appends to the main layout
+// const renderCategories = () => {
+//   $(".category-container").empty();
+//   $.get("/api/credentials")
+//     .then((credentials) => {
+//       $.get("/api/categories")
+//         .then((categories) => {
+//           generateLayouts(credentials.credentials, categories.categories);
+//           reloadEventListeners();
+//           // copy to clip
+
+//         });
+//       });
+// }
 /*----------------------------
 | FORMATTING FOR BOX DISPLAY |
 ----------------------------*/
@@ -498,7 +514,7 @@ const categoryPasswordLayout = (data) => {
 }
 
 const categoryCreateNewLayout = function() {
-  const layout = `<div class="is-flex is-flex-direction-row is-align-items-center  is-size-5 has-background-primary p-1 js-modal-trigger" data-target="new-category-modal">
+  const layout = `<div class="new-category is-flex is-flex-direction-row is-align-items-center  is-size-5 has-background-primary p-1 js-modal-trigger" data-target="new-category-modal">
   <div class="is-link-light">
   <i class=" fa-solid fa-vault mx-2"></i>Create New Category
   </div>
@@ -513,6 +529,8 @@ $(document).ready(function() {
   renderDisplay();
   registerNewPasswordFormEvents();
   login();
+  search();
+
 
   const categoryIcon = $(".category-display");
   const boxIcon = $(".box-display");
@@ -542,6 +560,7 @@ $(document).ready(function() {
   });
 });
 
+
 // copying password to clipboard on click
 const copyPswdToClipboard = () => {
   $(".copy").on('click', (evt) => {
@@ -565,4 +584,4 @@ const copyPswdToClipboard = () => {
     console.log('copied')
 
   })
-}
+};

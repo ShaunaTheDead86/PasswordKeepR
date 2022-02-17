@@ -81,5 +81,20 @@ input[type=checkbox] {
   z-index: 1000;
 }
 
+<<<<<<< HEAD
+.search {
+  cursor: pointer;
+  color: #fca311;
+  margin-left: 10px;
+  &:hover {
+    color: #fca211c9;
+  }
+}
+=======
+.is-hidden {
+  display: none;
+}
+
 // Import Bulma
 @import '../node_modules/bulma/bulma.sass';
+>>>>>>> master
