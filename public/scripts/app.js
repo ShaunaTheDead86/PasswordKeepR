@@ -276,7 +276,7 @@ const renderCategories = () => {
           generateLayouts(credentials.credentials, categories.categories);
           reloadEventListeners();
           // copy to clip
-          copyPswdToClipboard();
+
 
         });
     });
