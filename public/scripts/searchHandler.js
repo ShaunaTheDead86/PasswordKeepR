@@ -11,7 +11,10 @@ const search = () => {
       type: "POST",
       success: function(res) {
         //fetch the response of the server
-        console.log(res.searchResult[0])
+        const searchResultArr = res.searchResult;
+
+
+        renderQuerySiteLayout(searchResultArr);
 
       },
       error: function(err) {
@@ -21,3 +24,17 @@ const search = () => {
 
   })
 };
+
+const renderQuerySiteLayout = (dataset) => {
+  $(".category-container").empty();
+  //hide new category that hardcoded in main layout, make sure to return back visibility when input field is clear
+  $(".new-category").removeClass("is-flex");
+  $(".new-category").css("display", "none");
+
+  console.log(dataset)
+  for (let data of dataset) {
+    const querySiteLayout = createPswdLayout(data);
+    $(".category-container").append(querySiteLayout);
+    reloadEventListeners();
+  }
+}
