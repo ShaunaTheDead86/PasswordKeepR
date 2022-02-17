@@ -53,7 +53,6 @@ const createNewPasswordOnSubmit = function(str) {
       $("#password").val("");
       $("#name").val("");
       $("#url").val("");
-      $("#password-strength-bar").val(0);
       $("#new-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
@@ -73,12 +72,14 @@ const generatePassOnEvents = function() {
   $('#incl-special').on('change', (evt) => {
     generateNewPass();
   });
-  $('#pass-length').on('change', (evt) => {
-    generateNewPass();
-  });
   $('#passRange').on('change', (evt) => {
     generateNewPass();
     $("#pass-length").text($('#passRange').val());
+  });
+  $('#generate').on('click', (evt) => {
+    generateNewPass();
+    $("#auto-gen-password-section").attr("hidden", false);
+    // $("#auto-gen-password-section").fadeIn("slow");
   });
 }
 
