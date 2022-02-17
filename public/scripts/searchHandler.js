@@ -1,18 +1,19 @@
 const search = () => {
 
   //submission of form data to the server using post
-  $("#search-form").on('submit', (evt) => {
-    evt.preventDefault();
-    const passwordSearch = $("#search-form").serializeArray();
+  $("#keyword").on('input', () => {
+    // evt.preventDefault();
+    let passwordSearch = $("#keyword").val();
 
+    if (passwordSearch.length > 0) {
     $.ajax({
       url: "/api/credentials/search",
-      data: passwordSearch,
+      data: {website: passwordSearch},
       type: "POST",
       success: function(res) {
         //fetch the response of the server
-        const searchResultArr = res.searchResult;
 
+        const searchResultArr = res.searchResult;
 
         renderQuerySiteLayout(searchResultArr);
 
@@ -21,7 +22,9 @@ const search = () => {
         console.log(err);
       }
     });
-
+  } else {
+    renderDisplay()
+  }
   })
 };
 
