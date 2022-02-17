@@ -44,7 +44,7 @@ const loadCreateNewPasswordForm = function() {
   populateCategoryDropdown("#category");
 };
 
-// load event listeners that aren't on dynamically created HTML elements only once
+// load event listeners that aren't attached to dynamically created HTML elements only once
 $(document).ready(function() {
   $("#new-category-form").on("submit", function(event) {
     event.preventDefault();
@@ -105,6 +105,18 @@ $(document).ready(function() {
         console.log(err);
       }
     });
+  });
+
+  $(".category-display").click(function(event) {
+    event.preventDefault();
+  });
+
+  $(".box-display").click(function(event) {
+    event.preventDefault();
+  });
+
+  $(".list-display").click(function(event) {
+    event.preventDefault();
   });
 });
 

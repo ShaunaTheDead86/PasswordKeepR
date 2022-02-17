@@ -60,25 +60,13 @@
 
   <header class="m-2">
     <div class="navbar-item is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center">
-      <div class="navbar-item has-dropdown is-hoverable button">
-        <div class="navbar-link is-link-primary" aria-haspopup="true" aria-controls="dropdown-menu">
-          Sort By
-        </div>
-        <div class="navbar-dropdown" id="dropdown-menu" role="menu">
-          <div class="navbar-item is-link-primary">
-            Name
-          </div>
-          <div class="navbar-item is-link-primary">
-            Date
-          </div>
-        </div>
-      </div>
       <div class="navbar-item icons-display">
-        <i class="fa-solid fa-folder mx-1 is-link-primary"></i>
-        <i class="fa-solid fa-table-cells-large mx-1 is-link-primary"></i>
-        <i class="fa-solid fa-bars mx-1 is-link-primary"></i>
+        <div class="navbar-item">
+          <i class="fa-solid fa-folder mx-1 is-link-primary category-display js-modal-trigger" data-target=""></i>
+          <i class="fa-solid fa-table-cells-large mx-1 is-link-primary box-display js-modal-trigger" data-target="box-design-modal"></i>
+          <i class="fa-solid fa-bars mx-1 is-link-primary list-display js-modal-trigger"></i>
+        </div>
       </div>
-    </div>
   </header>
 
   <main>
@@ -92,7 +80,6 @@
         </div>
       </div>
     </section>
-
     <footer class="navbar is-fixed-bottom is-dark ">
       <div class="navbar-start ">
         <div class="navbar-item ">
@@ -113,6 +100,7 @@
         <%- include('partials/_loginModal'); -%>
           <%- include('partials/_createNewCategory'); -%>
             <%- include('partials/_editCategory'); -%>
+              <!-- <%- include('partials/_boxDesign.ejs'); -%> -->
   </main>
 </body>
 
