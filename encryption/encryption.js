@@ -6,7 +6,6 @@ const algorithm = 'aes-256-ctr';
 const iv = crypto.randomBytes(16);
 
 const encrypt = function(text, secretKey) {
-  console.log("SECRET KEY:"+ secretKey);
     const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
     const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
     return iv.toString('hex') + '.' + encrypted.toString('hex');
