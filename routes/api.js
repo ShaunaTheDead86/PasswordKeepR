@@ -226,7 +226,7 @@ module.exports = (db) => {
 router.post("/credentials/search", (req, res) => {
 
   const queryString = `
-  SELECT name, password
+  SELECT id, name, password
   FROM credentials
   WHERE name LIKE $1;`
 
