@@ -223,14 +223,14 @@ module.exports = (db) => {
   }
 
   // search for specific website_name and its password
-router.get("/credentials/search", (req, res) => {
+router.post("/credentials/search", (req, res) => {
 
   const queryString = `
   SELECT name, password
   FROM credentials
   WHERE name LIKE $1;`
 
-  const queryParams = [`%${req.query.website}%`];
+  const queryParams = [`%${req.body.website}%`];
 
 
   db.query(queryString, queryParams)
