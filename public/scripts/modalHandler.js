@@ -234,4 +234,5 @@ const reloadEventListeners = function() {
       });
     });
   });
+  copyPswdToClipboard();
 }
