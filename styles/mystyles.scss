@@ -17,6 +17,24 @@ $link-dark: $primary;
 $link-visited: $primary;
 $link-hover: $warning;
 $link-focus: $primary;
+.copied-tag {
+  font-family: $family-primary;
+  position: absolute;
+  visibility: hidden;
+}
+
+.icon-tag {
+  font-family: $family-primary;
+  position: absolute;
+  top: -1rem;
+  right: 0;
+  visibility: hidden;
+}
+
+.display-icon:hover .icon-tag {
+  visibility: visible;
+}
+
 .is-squareish {
   min-height: 15rem;
   min-width: 15rem;
@@ -24,10 +42,8 @@ $link-focus: $primary;
 }
 
 img.square {
-  min-height: 3rem;
-  max-height: 5rem;
-  max-width: 15rem;
-  aspect-ratio: 1 / 1;
+  max-height: 3rem;
+  max-width: 12rem;
 }
 
 // Import only what you need from Bulma
@@ -84,14 +100,7 @@ input[type=checkbox] {
   border-radius: 6px;
 }
 
-// .search {
-//   cursor: pointer;
-//   color: #fca311;
-//   margin-left: 10px;
-//   &:hover {
-//     color: #fca211c9;
-//   }
-// }
+
 .is-hidden {
   display: none;
 }

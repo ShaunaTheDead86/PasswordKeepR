@@ -109,6 +109,89 @@ const generateNewPass = function() {
   $("#password").trigger('input');
 }
 
+// const createNewPasswordOnSubmit = function(str) {
+//   $('#edit-credential-form').on('submit', (evt) => {
+//     evt.preventDefault();
+//     const params = $("#edit-credential-form").serialize();
+//     const password = escapeScript($(".password").val());
+//     if ($(".name").val() === undefined || $(".name").val() === "") {
+//       showErrorMessage("Please enter an account name!");
+//       return;
+//     }
+//     urlReg = /https?:\/\/w{0,3}\w*?\.(\w*?\.)?\w{2,3}\S*|www\.(\w*?\.)?\w*?\.\w{2,3}\S*|(\w*?\.)?\w*?\.\w{2,3}[\/\?]\S*/;
+//     if (!urlReg.test($(".url").val())) {
+//       showErrorMessage("Please enter a valid URL!");
+//       return;
+//     }
+//     if ($(".username").val() === undefined || $(".username").val() === "" || $(".username").val().includes(" ")) {
+//       showErrorMessage("Please enter a valid username!");
+//       return;
+//     }
+//     if (password.length < 6) {
+//       showErrorMessage("Password needs to be at least 6 character!");
+//       return;
+//     };
+//     $.post('/credentials', params).then((credential) => {
+//       muteErrorMessage();
+//       // close popup
+//       $(".username").val("");
+//       $(".password").val("");
+//       $(".name").val("");
+//       $(".url").val("");
+//       $(".new-password-modal").removeClass('is-active');
+
+//       // Inject new credential code goes here
+//       renderDisplay();
+//     })
+//   });
+// };
+
+// const generatePassOnEvents = function() {
+
+//   $('.incl-upper').on('change', (evt) => {
+//     generateNewPass();
+//   });
+//   $('.incl-number').on('change', (evt) => {
+//     generateNewPass();
+//   });
+//   $('.incl-special').on('change', (evt) => {
+//     generateNewPass();
+//   });
+//   $('.passRange').on('change', (evt) => {
+//     generateNewPass();
+//     $(".pass-length").text($('.passRange').val());
+//   });
+//   $('.generate').on('click', (evt) => {
+//     generateNewPass();
+//     $(".auto-gen-password-section").removeClass("is-hidden");
+//   });
+// }
+
+// const generateNewPass = function() {
+//   const inclUpper = $(".incl-upper").is(":checked");
+//   const inclNum = $(".incl-number").is(":checked");
+//   const inclSpecial = $(".incl-special").is(":checked");
+//   const passLength = $('.passRange').val();
+
+//   let characterPool = "abcdefghijklmnopqrstuvxyz";
+//   if (inclUpper) {
+//     characterPool += "ABCDEFGHIJKLMNOPQRSTUVXYZ";
+//   }
+//   if (inclNum) {
+//     characterPool += "012345678901234567890123456789";
+//   }
+//   if (inclSpecial) {
+//     characterPool += "!@#$%^&*()[]{}!@#$%^&*()[]{}!@#$%^&*()[]{}!@#$%^&*()[]{}";
+//   }
+//   let password = "";
+//   const poolLength = characterPool.length;
+//   for (let i = 0; i < passLength; i++) {
+//     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
+//   }
+//   $(".password").val(password);
+//   $(".password").trigger('input');
+// }
+
 const togglePassword = function() {
   $('.reveal').on('click', (evt) => {
     let type = $(".password-hidden").attr('type');
@@ -121,43 +204,43 @@ const togglePassword = function() {
 };
 
 const updatePasswordStrengthBar = function() {
-  $('#password').on('input', (evt) => {
-    const pass = $('#password').val();
+  $('.password').on('input', (evt) => {
+    const pass = $('.password').val();
     const strength = testPassStrength(pass);
 
     if (strength === "failure") {
-      $("#password-strength-bar").val(0);
-      $("#password-strength-bar").removeClass('is-warning');
-      $("#password-strength-bar").removeClass('is-success');
-      $("#password-strength-bar").removeClass('is-danger');
+      $(".password-strength-bar").val(0);
+      $(".password-strength-bar").removeClass('is-warning');
+      $(".password-strength-bar").removeClass('is-success');
+      $(".password-strength-bar").removeClass('is-danger');
     }
     if (strength === "weak") {
-      $("#password-strength-bar").val(25);
-      $("#password-strength-bar").removeClass('is-success');
-      $("#password-strength-bar").removeClass('is-warning');
-      $("#password-strength-bar").removeClass('is-info');
-      $("#password-strength-bar").addClass('is-danger');
+      $(".password-strength-bar").val(25);
+      $(".password-strength-bar").removeClass('is-success');
+      $(".password-strength-bar").removeClass('is-warning');
+      $(".password-strength-bar").removeClass('is-info');
+      $(".password-strength-bar").addClass('is-danger');
     }
     if (strength === "medium") {
-      $("#password-strength-bar").val(50);
-      $("#password-strength-bar").removeClass('is-danger');
-      $("#password-strength-bar").removeClass('is-success');
-      $("#password-strength-bar").removeClass('is-info');
-      $("#password-strength-bar").addClass('is-warning');
+      $(".password-strength-bar").val(50);
+      $(".password-strength-bar").removeClass('is-danger');
+      $(".password-strength-bar").removeClass('is-success');
+      $(".password-strength-bar").removeClass('is-info');
+      $(".password-strength-bar").addClass('is-warning');
     }
     if (strength === "strong") {
-      $("#password-strength-bar").val(75);
-      $("#password-strength-bar").removeClass('is-warning');
-      $("#password-strength-bar").removeClass('is-danger');
-      $("#password-strength-bar").removeClass('is-success');
-      $("#password-strength-bar").addClass('is-info');
+      $(".password-strength-bar").val(75);
+      $(".password-strength-bar").removeClass('is-warning');
+      $(".password-strength-bar").removeClass('is-danger');
+      $(".password-strength-bar").removeClass('is-success');
+      $(".password-strength-bar").addClass('is-info');
     }
     if (strength === "absolute") {
-      $("#password-strength-bar").val(100);
-      $("#password-strength-bar").removeClass('is-warning');
-      $("#password-strength-bar").removeClass('is-danger');
-      $("#password-strength-bar").removeClass('is-info');
-      $("#password-strength-bar").addClass('is-success');
+      $(".password-strength-bar").val(100);
+      $(".password-strength-bar").removeClass('is-warning');
+      $(".password-strength-bar").removeClass('is-danger');
+      $(".password-strength-bar").removeClass('is-info');
+      $(".password-strength-bar").addClass('is-success');
     }
   })
 };
@@ -245,13 +328,15 @@ const getActiveDisplay = function() {
 // main function that calls all other required functions
 const renderDisplay = function() {
   $(".category-container").empty();
+  $(".create-new-container").empty();
   $.get("/api/credentials")
     .then((credentials) => {
       $.get("/api/categories")
         .then((categories) => {
-          console.log("rendering...");
           const displayType = getActiveDisplay();
-          generateCategories(categories.categories, displayType);
+          if (displayType !== "list") {
+            generateCategories(categories.categories, displayType);
+          }
           generatePasswords(credentials.credentials, categories.categories, displayType);
           reloadEventListeners();
           copyPswdToClipboard();
@@ -303,7 +388,8 @@ const generateCategories = function(categories, displayType) {
 
 // generate password layouts based on display type
 const generatePasswords = function(credentials, categories, displayType) {
-  // iterate through categories
+  const listTarget = $(".category-container")
+    // iterate through categories
   for (const category of categories) {
     let target = $(`.${category.name}-password`); // set the target to append to for each category
     // iterate through credentials to generate password list
@@ -316,30 +402,43 @@ const generatePasswords = function(credentials, categories, displayType) {
           const layout = boxPasswordLayout(credential);
           target.append(layout);
         }
+
+        if (displayType === "list") {
+          const layout = categoryPasswordLayout(credential);
+          listTarget.append(layout);
+        }
       }
     }
 
     if (displayType === "box") {
       const layout = boxCreateNewPasswordLayout(category);
       target.append(layout);
+    } else if (displayType === "category") {
+      const layout = listCreateNewLayout();
+      target.append(layout);
     }
+  }
+
+  if (displayType === "list") {
+    const layout = listCreateNewLayout();
+    listTarget.append(layout);
   }
 }
 
-// // gets data from the server and appends to the main layout
-// const renderCategories = () => {
-//   $(".category-container").empty();
-//   $.get("/api/credentials")
-//     .then((credentials) => {
-//       $.get("/api/categories")
-//         .then((categories) => {
-//           generateLayouts(credentials.credentials, categories.categories);
-//           reloadEventListeners();
-//           // copy to clip
+const listCreateNewLayout = function() {
+  const layout = `
+  <div class="is-flex is-flex-direction-row is-align-items-center is-size-6 p-1 div-password">
+  <div class="is-link-primary js-modal-trigger" data-target="new-password-modal">
+  <i class="fa-solid fa-key mx-2 password-icon"></i>
+  Create New Password
+  <i class="fa-solid fa-plus mx-2"></i>
+  </div>
+  </div>
+  `
 
-//         });
-//       });
-// }
+  return layout;
+}
+
 /*----------------------------
 | FORMATTING FOR BOX DISPLAY |
 ----------------------------*/
@@ -388,7 +487,7 @@ const boxCategoryLayout = (category) => {
 // generate dynamic HTML for the passwords
 const boxPasswordLayout = (data) => {
   const layout = `
-  <div class="box is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2 div-password">
+  <div class="box is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-squareish is-size-6 has-background-white has-text-centered m-2 div-password">
       <img src="${data.logo_url}" class="square"></img><br>
       <div class="is-link-primary">
         <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
@@ -403,16 +502,17 @@ const boxPasswordLayout = (data) => {
       <div class="is-link-primary">
         <i class="fa-regular fa-user"></i> ${data.username}<br>
       </div>
-      <div password=${data.password} class="is-link-primary copy">
+      <div  class="is-link-primary">
+        </div>
         <input class="is-hidden password-id" value="${data.id}" />
         <div class="is-flex">
           <div class="is-link-primary"">
             <i class="fa-solid fa-key"></i>
             Password
             </div>
-            <div class="is-link-primary mx-2"">
-            <i password=${data.password} class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon">
-            <p id="notification-copy" class="notification is-success is-light"><i class="fa-solid fa-check-double">Copied!</i></p>
+            <div class="is-link-primary mx-2 copy-button" password="${data.password}">
+            <i class="fa-solid fa-copy">
+            <div class="tag is-primary has-text-white copied-tag">Copied!</div>
             </i>
             <div>
         </div>
@@ -425,7 +525,7 @@ const boxPasswordLayout = (data) => {
 
 const boxCreateNewPasswordLayout = function() {
   const layout = `
-  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2">
+  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-6 has-background-white has-text-centered m-2">
   <div class="is-link-primary js-modal-trigger" data-target="new-password-modal">
   <i class="fa-solid fa-plus"></i>
   Create New</div>
@@ -499,13 +599,15 @@ const categoryLayout = (category) => {
 const categoryPasswordLayout = (data) => {
 
   const layout = `
-  <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1 div-password">
+  <div class="is-flex is-flex-direction-row is-align-items-center is-size-6 p-1 div-password">
   <div class="is-link-primary">
   <i class="fa-solid fa-key mx-2 password-icon"></i> ${data.name}
   </div>
-  <i password=${data.password} class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon">
-  <p id="notification-copy" class="notification is-success is-light"><i class="fa-solid fa-check-double">Copied!</i></p>
+  <div class="is-link-primary mx-2 copy-button" password="${data.password}">
+  <i class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon">
+  <div class="tag is-primary has-text-white copied-tag">Copied!</div>
   </i>
+  </div>
   <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
   <input class="is-hidden password-id" value="${data.id}" />
   </i>
@@ -532,8 +634,6 @@ $(document).ready(function() {
   registerNewPasswordFormEvents();
   login();
   search();
-
-
 
   const categoryIcon = $(".category-display");
   const boxIcon = $(".box-display");
@@ -563,29 +663,29 @@ $(document).ready(function() {
   });
 });
 
-
 // copying password to clipboard on click
 const copyPswdToClipboard = () => {
-  $(".copy").on('click', (evt) => {
-    evt.preventDefault()
+  (document.querySelectorAll(".copy-button") || []).forEach((trigger) => {
 
-    let password = $(evt.target).attr("password")
-    let tempEl = document.createElement('input');
-    tempEl.setAttribute('type', 'text');
+    trigger.addEventListener('click', function() {
+      const target = $(trigger).find(".copied-tag");
+      const password = $(trigger).attr("password");
+      let tempEl = document.createElement('input');
+      tempEl.setAttribute('type', 'text');
 
-    document.body.appendChild(tempEl);
-    tempEl.value = password;
-    tempEl.select();
+      document.body.appendChild(tempEl);
+      tempEl.value = password;
+      tempEl.select();
 
-    document.execCommand("copy");
-    document.body.removeChild(tempEl);
+      document.execCommand("copy");
+      document.body.removeChild(tempEl);
 
-    // shows a msg that pswd is copied to clipboard
-    const message = $(evt.target).children('#notification-copy')
-    message.show();
+      // shows a msg that pswd is copied to clipboard
+      target.css("visibility", "visible");
 
-    setTimeout(() => { message.hide(1000); }, 1000);
-    console.log('copied')
+      setTimeout(() => { target.css("visibility", "hidden"); }, 1500);
+    });
+
 
   })
 };
