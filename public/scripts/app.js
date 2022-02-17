@@ -247,8 +247,8 @@ const renderDisplay = function() {
     .then((credentials) => {
       $.get("/api/categories")
         .then((categories) => {
+          console.log("rendering...");
           const displayType = getActiveDisplay();
-          console.log(displayType);
           generateCategories(categories.categories, displayType);
           generatePasswords(credentials.credentials, categories.categories, displayType);
           reloadEventListeners();
@@ -293,6 +293,9 @@ const generateCategories = function(categories, displayType) {
     createNewContainer.append(layout)
   } else if (displayType === "box") {
     categoryContainer.append(uncategorized);
+
+    const layout = boxCreateNewCategoryLayout();
+    createNewContainer.append(layout);
   }
 }
 
@@ -304,8 +307,6 @@ const generatePasswords = function(credentials, categories, displayType) {
     // iterate through credentials to generate password list
     for (const credential of credentials) {
       if (category.id === credential.category_id) { // check if password id matches current category id
-        console.log(target);
-
         if (displayType === "category") {
           const layout = categoryPasswordLayout(credential)
           target.append(layout);
@@ -317,7 +318,7 @@ const generatePasswords = function(credentials, categories, displayType) {
     }
 
     if (displayType === "box") {
-      const layout = boxCreateNewLayout(category);
+      const layout = boxCreateNewPasswordLayout(category);
       target.append(layout);
     }
   }
@@ -330,7 +331,9 @@ const generatePasswords = function(credentials, categories, displayType) {
 // generate dynamic HTML for the uncategorized category
 const boxUncategorizedLayout = function(category) {
   const layout = `
-  <div class="box is-link-light is-size-5 has-background-primary py-2 px-4 m-2">${category.name}</div>
+  <div class="box has-background-primary py-2 px-4 m-2">
+  <div class="is-link-light is-size-5">${category.name}</div>
+  </div>
   <input class="is-hidden category-id" value="${category.id}" /></i>
   <article class="box is-flex is-flex-wrap-wrap has-background-primary px-2 py-2 mx-2 ${category.name}-password ">
 
@@ -342,13 +345,26 @@ const boxUncategorizedLayout = function(category) {
 // generate dynmic HTML for the other categories
 const boxCategoryLayout = (category) => {
   const layout = `
-  <div class="box has-background-primary py-2 px-4 m-2">
-  <div class="is-link-light is-size-5">${category.name}</div>
+  <div class="category-outer" value=${category.id}>
+  <div class="box is-flex is-flex-direction-row has-background-primary py-2 px-4 m-2">
+  <div class="is-link-light is-size-5">
+  <i class="fa-solid fa-vault mx-2"></i>${category.name}
+  </div>
+  <div class="is-link-light is-size-5">
+  <i class="fa-solid fa-pen-to-square is-link-light mx-2 js-modal-trigger" data-target="edit-category-modal">
+  <input class="is-hidden category-id" value="${category.id}" /></i>
+  </div>
+  <div class="is-link-light is-size-5">
+  <input class="is-hidden category-id" value="${category.id}" /></i>
+  <i class="fa-solid fa-rectangle-xmark is-link-light mx-2 category-delete-button"></i>
+</div>
+  </div>
   </div>
   <input class="is-hidden category-id" value="${category.id}" /></i>
   <article class="box is-flex is-flex-wrap-wrap has-background-primary px-2 py-2 mx-2 ${category.name}-password">
 
   </article>
+  </div>
   `
   return layout;
 }
@@ -356,9 +372,15 @@ const boxCategoryLayout = (category) => {
 // generate dynamic HTML for the passwords
 const boxPasswordLayout = (data) => {
   const layout = `
-  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2">
+  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2 div-password">
   <div>
     <img src="${data.logo_url}" class="square"></img><br>
+    <div class="is-link-primary">
+  <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
+  <input class="is-hidden password-id" value="${data.id}" />
+  </i>
+  <i class="fa-solid fa-rectangle-xmark is-link-primary mx-2 delete-button"></i>
+  </div>
     <div class="is-link-primary">
     <i class="fa-regular fa-user"></i> ${data.name}<br>
     </div>
@@ -366,21 +388,37 @@ const boxPasswordLayout = (data) => {
     <div class="is-link-primary">
     <i class="fa-regular fa-user"></i> ${data.username}<br>
     </div>
-    <div class="is-link-primary">
-    <i class="fa-solid fa-key"></i> ${data.password}<br>
-    </div>
+    <div password=${data.password} class="is-link-primary copy">
+  <p class="notification is-success is-light">Copied!</p>
+    <input class="is-hidden password-id" value="${data.id}" />
+    <i class="fa-solid fa-key"></i> ${data.password}
+    <i class="fa-solid fa-copy mx-2"></i>
     </div>
   </div>`;
 
   return layout;
 }
 
-const boxCreateNewLayout = function() {
+const boxCreateNewPasswordLayout = function() {
   const layout = `
   <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2">
   <div class="is-link-primary js-modal-trigger" data-target="new-password-modal">
   <i class="fa-solid fa-plus"></i>
   Create New</div>
+  </div>
+  `;
+
+  return layout;
+}
+
+const boxCreateNewCategoryLayout = function() {
+  const layout = `
+  <div class="box is-flex is-flex-direction-row has-background-primary py-2 px-4 m-2">
+  <div class="is-link-light is-size-5 js-modal-trigger" data-target="new-category-modal">
+  <i class="fa-solid fa-vault mx-2"></i>
+  Create New Category
+  <i class="fa-solid fa-plus"></i>
+  </div>
   </div>
   `;
 
@@ -415,19 +453,19 @@ const categoryUncategorizedLayout = function(category) {
 const categoryLayout = (category) => {
   const layout = `
   <details class="category-outer" value="${category.id}">
-  <summary class="has-background-primary">
-  <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1">
-  <div class="is-link-light">
-  <i class="fa-solid fa-vault mx-2"></i>${category.name}
-  </div>
-  <i class="fa-solid fa-pen-to-square is-link-light mx-2 js-modal-trigger" data-target="edit-category-modal">
-  <input class="is-hidden category-id" value="${category.id}" /></i>
-  <i class="fa-solid fa-rectangle-xmark is-link-light mx-2 category-delete-button"></i>
-  </div>
-  </summary>
-  <p class="is-size-6 has-text-weight-bold has-text-primary ${category.name}-password">
+    <summary class="has-background-primary">
+      <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1">
+        <div class="is-link-light">
+          <i class="fa-solid fa-vault mx-2"></i>${category.name}
+        </div>
+        <i class="fa-solid fa-pen-to-square is-link-light mx-2 js-modal-trigger" data-target="edit-category-modal">
+        <input class="is-hidden category-id" value="${category.id}" /></i>
+        <i class="fa-solid fa-rectangle-xmark is-link-light mx-2 category-delete-button"></i>
+      </div>
+    </summary>
+    <p class="is-size-6 has-text-weight-bold has-text-primary ${category.name}-password">
 
-  </p>
+    </p>
   </details>
   `
   return layout;
