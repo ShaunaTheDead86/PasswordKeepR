@@ -404,7 +404,6 @@ const boxPasswordLayout = (data) => {
         <i class="fa-regular fa-user"></i> ${data.username}<br>
       </div>
       <div password=${data.password} class="is-link-primary copy">
-        <p class="notification is-success is-light">Copied!</p>
         <input class="is-hidden password-id" value="${data.id}" />
         <div class="is-flex">
           <div class="is-link-primary"">
@@ -412,7 +411,9 @@ const boxPasswordLayout = (data) => {
             Password
             </div>
             <div class="is-link-primary mx-2"">
-            <i class="fa-solid fa-copy"></i>
+            <i password=${data.password} class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon">
+            <p id="notification-copy" class="notification is-success is-light"><i class="fa-solid fa-check-double">Copied!</i></p>
+            </i>
             <div>
         </div>
       </div>
@@ -502,8 +503,9 @@ const categoryPasswordLayout = (data) => {
   <div class="is-link-primary">
   <i class="fa-solid fa-key mx-2 password-icon"></i> ${data.name}
   </div>
-  <i password=${data.password} class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon"></i>
-  <p class="notification is-success is-light">Copied!</p>
+  <i password=${data.password} class="fa-solid fa-copy mx-2 is-link-primary copy pswd-icon">
+  <p id="notification-copy" class="notification is-success is-light"><i class="fa-solid fa-check-double">Copied!</i></p>
+  </i>
   <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
   <input class="is-hidden password-id" value="${data.id}" />
   </i>
@@ -530,6 +532,7 @@ $(document).ready(function() {
   registerNewPasswordFormEvents();
   login();
   search();
+
 
 
   const categoryIcon = $(".category-display");
@@ -578,9 +581,10 @@ const copyPswdToClipboard = () => {
     document.body.removeChild(tempEl);
 
     // shows a msg that pswd is copied to clipboard
-    $(evt.target).next().show();
+    const message = $(evt.target).children('#notification-copy')
+    message.show();
 
-    setTimeout(() => { $(evt.target).next().hide(1000); }, 1000);
+    setTimeout(() => { message.hide(1000); }, 1000);
     console.log('copied')
 
   })

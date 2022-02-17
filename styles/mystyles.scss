@@ -73,28 +73,28 @@ input[type=checkbox] {
   }
 }
 
-.notification {
+#notification-copy {
   display: none;
-  // opacity: 0.7;
-  max-width: 40px;
+  font-size: small;
+
   position: absolute;
   z-index: 1000;
+
+  border: 1px solid #2dbb6349;
+  border-radius: 6px;
 }
 
-<<<<<<< HEAD
-.search {
-  cursor: pointer;
-  color: #fca311;
-  margin-left: 10px;
-  &:hover {
-    color: #fca211c9;
-  }
-}
-=======
+// .search {
+//   cursor: pointer;
+//   color: #fca311;
+//   margin-left: 10px;
+//   &:hover {
+//     color: #fca211c9;
+//   }
+// }
 .is-hidden {
   display: none;
 }
 
 // Import Bulma
 @import '../node_modules/bulma/bulma.sass';
->>>>>>> master
