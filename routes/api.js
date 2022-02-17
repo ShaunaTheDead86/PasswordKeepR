@@ -165,11 +165,8 @@ module.exports = (db) => {
     WHERE id = $1`
     const queryParams = [req.body.target];
 
-    console.log(queryString, queryParams);
-
     db.query(queryString, queryParams)
       .then(data => {
-        console.log("inside success");
         res.send(data.rows);
       })
       .catch(err => {
@@ -232,31 +229,31 @@ module.exports = (db) => {
   }
 
   // search for specific website_name and its password
-router.post("/credentials/search", (req, res) => {
+  router.post("/credentials/search", (req, res) => {
 
-  const queryString = `
+    const queryString = `
   SELECT id, name, password
   FROM credentials
   WHERE upper(name) LIKE $1;`
 
-  const queryParams = [`%${req.body.website.toUpperCase()}%`];
+    const queryParams = [`%${req.body.website.toUpperCase()}%`];
 
 
-  db.query(queryString, queryParams)
-    .then(data => {
+    db.query(queryString, queryParams)
+      .then(data => {
 
-      const searchResult = data.rows;
-      res.json({ searchResult });
+        const searchResult = data.rows;
+        res.json({ searchResult });
 
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
 
 
-});
+  });
 
   return router;
 };

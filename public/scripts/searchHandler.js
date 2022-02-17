@@ -34,7 +34,6 @@ const renderQuerySiteLayout = (dataset) => {
   $(".new-category").removeClass("is-flex");
   $(".new-category").css("display", "none");
 
-  console.log(dataset)
   for (let data of dataset) {
     const querySiteLayout = categoryPasswordLayout(data);
     $(".category-container").append(querySiteLayout);
