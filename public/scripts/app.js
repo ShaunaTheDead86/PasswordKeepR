@@ -7,7 +7,6 @@ const registerNewPasswordFormEvents = function() {
   generatePassOnEvents();
   togglePassword();
   updatePasswordStrengthBar();
-
 }
 
 
@@ -56,11 +55,10 @@ const createNewPasswordOnSubmit = function(str) {
       $("#password").val("");
       $("#name").val("");
       $("#url").val("");
-      $("#password-strength-bar").val(0);
       $("#new-password-modal").removeClass('is-active');
 
       // Inject new credential code goes here
-      renderCategories();
+      renderDisplay();
     })
   });
 };
@@ -76,12 +74,13 @@ const generatePassOnEvents = function() {
   $('#incl-special').on('change', (evt) => {
     generateNewPass();
   });
-  $('#pass-length').on('change', (evt) => {
-    generateNewPass();
-  });
   $('#passRange').on('change', (evt) => {
     generateNewPass();
     $("#pass-length").text($('#passRange').val());
+  });
+  $('#generate').on('click', (evt) => {
+    generateNewPass();
+    $("#auto-gen-password-section").removeClass("is-hidden");
   });
 }
 
@@ -189,7 +188,6 @@ function testPassStrength(pass) {
   return "weak";
 }
 
-
 // helper to prevent Cross Site Scripting
 const escapeScript = function(str) {
   let div = document.createElement("div");
@@ -209,81 +207,247 @@ const muteErrorMessage = function() {
   $(".error-message").html("");
 }
 
-// assign each pswd to corresponding website_name as an obj and add this obj to an array that assigned to corresponding category name
-
-//can remove that function since it never called
-const groupCategWithPswds = (obj) => {
-
-  const categoryWithPassword = {};
-
-  for (let item of obj.categories) {
-    let newObj = {};
-    newObj[item.password_name] = item.password;
-
-    let categoryName = item.category;
-    if (!categoryWithPassword[categoryName]) {
-      categoryWithPassword[categoryName] = [];
-
-
-      categoryWithPassword[categoryName].push(newObj);
-    } else {
-      categoryWithPassword[categoryName].push(newObj);
-    }
+const toggleActive = function(iconArr, target) {
+  for (const icon of iconArr) {
+    icon.removeClass("display-active");
   }
 
-  return categoryWithPassword;
+  target.addClass("display-active");
 }
 
-// Shauna
-const generateLayouts = function(credentials, categories) {
-  $(".category-container").empty();
-  $(`#${category.name}-pswd`).empty();
+const getActiveDisplay = function() {
+  const categoryIcon = $(".category-display");
+  const boxIcon = $(".box-display");
+  const listIcon = $(".list-display");
+  const icons = [categoryIcon, boxIcon, listIcon];
 
-  let uncategorized;
-
-  for (const category of categories) {
-    if (category.name !== "Uncategorized") {
-      const categoryLayout = createCategoryLayout(category)
-      $(".category-container").append(categoryLayout)
-    } else {
-      uncategorized = category;
-    }
-  }
-
-  // create uncategorized last
-  const categoryLayout = createUncategorized(uncategorized)
-  $(".category-container").append(categoryLayout)
-
-  for (const category of categories) {
-
-    for (const credential of credentials) {
-      if (category.id === credential.category_id) {
-
-        const passwordLayout = createPswdLayout({ id: credential.id, name: credential.name, password: credential.password })
-        $(`#${category.name}-pswd`).append(passwordLayout);
+  // iterate through icons and find the active one
+  for (const icon of icons) {
+    if (icon.hasClass("display-active")) {
+      if (icon === categoryIcon) {
+        toggleActive(icons, categoryIcon);
+        return "category";
+      } else if (icon === boxIcon) {
+        toggleActive(icons, boxIcon);
+        return "box";
+      } else {
+        toggleActive(icons, listIcon);
+        return "list";
       }
     }
   }
+
+  // have a default fallback of "category"
+  toggleActive(icons, categoryIcon)
+  return "category";
 }
 
-// gets data from the server and appends to the main layout
-const renderCategories = () => {
+// main function that calls all other required functions
+const renderDisplay = function() {
   $(".category-container").empty();
   $.get("/api/credentials")
     .then((credentials) => {
       $.get("/api/categories")
         .then((categories) => {
-          generateLayouts(credentials.credentials, categories.categories);
+          console.log("rendering...");
+          const displayType = getActiveDisplay();
+          generateCategories(categories.categories, displayType);
+          generatePasswords(credentials.credentials, categories.categories, displayType);
           reloadEventListeners();
-          // copy to clip
-
-
+          copyPswdToClipboard();
         });
     });
 }
 
-const createUncategorized = function(category) {
-  const uncategorizedLayout = `
+// generate categories layout based on display type
+const generateCategories = function(categories, displayType) {
+  const categoryContainer = $(".category-container");
+  const createNewContainer = $(".create-new-container");
+  let uncategorized;
+
+  categoryContainer.empty(); // make sure container is empty
+  createNewContainer.empty(); // empty the "create new category" container
+
+  // iterate through catergories to generate category list
+  for (const category of categories) {
+    if (category.name !== "Uncategorized") {
+      if (displayType === "category") {
+        const layout = categoryLayout(category);
+        categoryContainer.append(layout);
+      } else if (displayType === "box") {
+        const layout = boxCategoryLayout(category);
+        categoryContainer.append(layout);
+      }
+    } else {
+      if (displayType === "category") {
+        uncategorized = categoryUncategorizedLayout(category);
+      } else if (displayType === "box") {
+        uncategorized = boxUncategorizedLayout(category);
+      }
+    }
+  }
+
+  // append after all other categories
+  if (displayType === "category") {
+    categoryContainer.append(uncategorized);
+
+    const layout = categoryCreateNewLayout();
+    createNewContainer.append(layout)
+  } else if (displayType === "box") {
+    categoryContainer.append(uncategorized);
+
+    const layout = boxCreateNewCategoryLayout();
+    createNewContainer.append(layout);
+  }
+}
+
+// generate password layouts based on display type
+const generatePasswords = function(credentials, categories, displayType) {
+  // iterate through categories
+  for (const category of categories) {
+    let target = $(`.${category.name}-password`); // set the target to append to for each category
+    // iterate through credentials to generate password list
+    for (const credential of credentials) {
+      if (category.id === credential.category_id) { // check if password id matches current category id
+        if (displayType === "category") {
+          const layout = categoryPasswordLayout(credential)
+          target.append(layout);
+        } else if (displayType === "box") {
+          const layout = boxPasswordLayout(credential);
+          target.append(layout);
+        }
+      }
+    }
+
+    if (displayType === "box") {
+      const layout = boxCreateNewPasswordLayout(category);
+      target.append(layout);
+    }
+  }
+}
+
+// // gets data from the server and appends to the main layout
+// const renderCategories = () => {
+//   $(".category-container").empty();
+//   $.get("/api/credentials")
+//     .then((credentials) => {
+//       $.get("/api/categories")
+//         .then((categories) => {
+//           generateLayouts(credentials.credentials, categories.categories);
+//           reloadEventListeners();
+//           // copy to clip
+
+//         });
+//       });
+// }
+/*----------------------------
+| FORMATTING FOR BOX DISPLAY |
+----------------------------*/
+
+// generate dynamic HTML for the uncategorized category
+const boxUncategorizedLayout = function(category) {
+  const layout = `
+  <div class="box has-background-primary py-2 px-4 m-2">
+  <div class="is-link-light is-size-5">${category.name}</div>
+  </div>
+  <input class="is-hidden category-id" value="${category.id}" /></i>
+  <article class="box is-flex is-flex-wrap-wrap has-background-primary px-2 py-2 mx-2 ${category.name}-password ">
+
+  </article>
+  `
+  return layout;
+}
+
+// generate dynmic HTML for the other categories
+const boxCategoryLayout = (category) => {
+  const layout = `
+  <div class="category-outer" value=${category.id}>
+  <div class="box is-flex is-flex-direction-row has-background-primary py-2 px-4 m-2">
+  <div class="is-link-light is-size-5">
+  <i class="fa-solid fa-vault mx-2"></i>${category.name}
+  </div>
+  <div class="is-link-light is-size-5">
+  <i class="fa-solid fa-pen-to-square is-link-light mx-2 js-modal-trigger" data-target="edit-category-modal">
+  <input class="is-hidden category-id" value="${category.id}" /></i>
+  </div>
+  <div class="is-link-light is-size-5">
+  <input class="is-hidden category-id" value="${category.id}" /></i>
+  <i class="fa-solid fa-rectangle-xmark is-link-light mx-2 category-delete-button"></i>
+</div>
+  </div>
+  </div>
+  <input class="is-hidden category-id" value="${category.id}" /></i>
+  <article class="box is-flex is-flex-wrap-wrap has-background-primary px-2 py-2 mx-2 ${category.name}-password">
+
+  </article>
+  </div>
+  `
+  return layout;
+}
+
+// generate dynamic HTML for the passwords
+const boxPasswordLayout = (data) => {
+  const layout = `
+  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2 div-password">
+  <div>
+    <img src="${data.logo_url}" class="square"></img><br>
+    <div class="is-link-primary">
+  <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
+  <input class="is-hidden password-id" value="${data.id}" />
+  </i>
+  <i class="fa-solid fa-rectangle-xmark is-link-primary mx-2 delete-button"></i>
+  </div>
+    <div class="is-link-primary">
+    <i class="fa-regular fa-user"></i> ${data.name}<br>
+    </div>
+    <a href="${data.url}" class="is-link-primary"><i class="fa-solid fa-link"></i> ${data.url}</a><br>
+    <div class="is-link-primary">
+    <i class="fa-regular fa-user"></i> ${data.username}<br>
+    </div>
+    <div password=${data.password} class="is-link-primary copy">
+  <p class="notification is-success is-light">Copied!</p>
+    <input class="is-hidden password-id" value="${data.id}" />
+    <i class="fa-solid fa-key"></i> ${data.password}
+    <i class="fa-solid fa-copy mx-2"></i>
+    </div>
+  </div>`;
+
+  return layout;
+}
+
+const boxCreateNewPasswordLayout = function() {
+  const layout = `
+  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2">
+  <div class="is-link-primary js-modal-trigger" data-target="new-password-modal">
+  <i class="fa-solid fa-plus"></i>
+  Create New</div>
+  </div>
+  `;
+
+  return layout;
+}
+
+const boxCreateNewCategoryLayout = function() {
+  const layout = `
+  <div class="box is-flex is-flex-direction-row has-background-primary py-2 px-4 m-2">
+  <div class="is-link-light is-size-5 js-modal-trigger" data-target="new-category-modal">
+  <i class="fa-solid fa-vault mx-2"></i>
+  Create New Category
+  <i class="fa-solid fa-plus"></i>
+  </div>
+  </div>
+  `;
+
+  return layout;
+}
+
+/*---------------------------------
+| FORMATTING FOR CATEGORY DISPLAY |
+---------------------------------*/
+
+// generate dynamic HTML for the uncategorized category
+const categoryUncategorizedLayout = function(category) {
+  const layout = `
   <details class="category-outer" value="${category.id}">
     <summary class="has-background-primary">
       <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1">
@@ -292,39 +456,41 @@ const createUncategorized = function(category) {
         </div>
       </div>
     </summary>
-    <p id="${category.name}-pswd" class="has-text-weight-bold has-text-primary">
+    <p class="has-text-weight-bold has-text-primary ${category.name}-password">
 
     </p>
   </details>
   `;
 
-  return uncategorizedLayout;
+  return layout;
 }
 
-const createCategoryLayout = (category) => {
-  const categoryLayout = `
+// generate dynmic HTML for the other categories
+const categoryLayout = (category) => {
+  const layout = `
   <details class="category-outer" value="${category.id}">
-  <summary class="has-background-primary">
-  <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1">
-  <div class="is-link-light">
-  <i class="fa-solid fa-vault mx-2"></i>${category.name}
-  </div>
-  <i class="fa-solid fa-pen-to-square is-link-light mx-2 js-modal-trigger" data-target="edit-category-modal">
-  <input class="is-hidden category-id" value="${category.id}" /></i>
-  <i class="fa-solid fa-rectangle-xmark is-link-light mx-2 category-delete-button"></i>
-  </div>
-  </summary>
-  <p id="${category.name}-pswd" class="is-size-6 has-text-weight-bold has-text-primary">
+    <summary class="has-background-primary">
+      <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1">
+        <div class="is-link-light">
+          <i class="fa-solid fa-vault mx-2"></i>${category.name}
+        </div>
+        <i class="fa-solid fa-pen-to-square is-link-light mx-2 js-modal-trigger" data-target="edit-category-modal">
+        <input class="is-hidden category-id" value="${category.id}" /></i>
+        <i class="fa-solid fa-rectangle-xmark is-link-light mx-2 category-delete-button"></i>
+      </div>
+    </summary>
+    <p class="is-size-6 has-text-weight-bold has-text-primary ${category.name}-password">
 
-  </p>
+    </p>
   </details>
   `
-  return categoryLayout;
+  return layout;
 }
 
-const createPswdLayout = (data) => {
+// generate dynamic HTML for the passwords
+const categoryPasswordLayout = (data) => {
 
-  const passwordLayout = `
+  const layout = `
   <div class="is-flex is-flex-direction-row is-align-items-center is-size-5 p-1 div-password">
   <div class="is-link-primary">
   <i class="fa-solid fa-key mx-2 password-icon"></i> ${data.name}
@@ -337,15 +503,54 @@ const createPswdLayout = (data) => {
   <i class="fa-solid fa-rectangle-xmark is-link-primary mx-2 delete-button"></i>
   </div>
   `
-  return passwordLayout;
+  return layout;
 }
 
+const categoryCreateNewLayout = function() {
+  const layout = `<div class="new-category is-flex is-flex-direction-row is-align-items-center  is-size-5 has-background-primary p-1 js-modal-trigger" data-target="new-category-modal">
+  <div class="is-link-light">
+  <i class=" fa-solid fa-vault mx-2"></i>Create New Category
+  </div>
+  </div>`;
+
+  return layout;
+}
+
+// functions to run on document ready
 $(document).ready(function() {
   // render category and corresponding pswd which are already in db
-  renderCategories();
+  renderDisplay();
   registerNewPasswordFormEvents();
   login();
   search();
+
+
+  const categoryIcon = $(".category-display");
+  const boxIcon = $(".box-display");
+  const listIcon = $(".list-display");
+  const icons = [categoryIcon, boxIcon, listIcon];
+
+  // event listeners for display icons
+  categoryIcon.click(function(event) {
+    event.preventDefault();
+    // make sure only one is active
+    toggleActive(icons, categoryIcon);
+    return renderDisplay("category");
+  });
+
+  boxIcon.click(function(event) {
+    event.preventDefault();
+    // make sure only one is active
+    toggleActive(icons, boxIcon);
+    return renderDisplay("box");
+  });
+
+  listIcon.click(function(event) {
+    event.preventDefault();
+    // make sure only one is active
+    toggleActive(icons, listIcon);
+    return renderDisplay("list");
+  });
 });
 
 
@@ -372,4 +577,4 @@ const copyPswdToClipboard = () => {
     console.log('copied')
 
   })
-}
+};

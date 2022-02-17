@@ -33,7 +33,7 @@ const renderQuerySiteLayout = (dataset) => {
 
   console.log(dataset)
   for (let data of dataset) {
-    const querySiteLayout = createPswdLayout(data);
+    const querySiteLayout = categoryPasswordLayout(data);
     $(".category-container").append(querySiteLayout);
     reloadEventListeners();
   }

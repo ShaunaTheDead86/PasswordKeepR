@@ -1,6 +1,4 @@
 @charset "utf-8";
-// Import a Google Font
-// @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Press+Start+2P&family=Racing+Sans+One&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
 // Set your brand colors
 $primary: #14213d;
 $warning: #fca311;
@@ -19,18 +17,21 @@ $link-dark: $primary;
 $link-visited: $primary;
 $link-hover: $warning;
 $link-focus: $primary;
-// Import Bulma
-@import '../node_modules/bulma/bulma.sass';
+.is-squareish {
+  min-height: 15rem;
+  height: fit-content;
+  min-width: 15rem;
+  max-width: max-content;
+}
+
+img.square {
+  min-height: 3rem;
+  max-height: 3rem;
+  max-width: 14rem;
+  aspect-ratio: 1 / 1;
+}
+
 // Import only what you need from Bulma
-// @import "../node_modules/bulma/sass/utilities/_all.sass";
-// @import "../node_modules/bulma/sass/base/_all.sass";
-// @import "../node_modules/bulma/sass/elements/button.sass";
-// @import "../node_modules/bulma/sass/elements/container.sass";
-// @import "../node_modules/bulma/sass/elements/title.sass";
-// @import "../node_modules/bulma/sass/form/_all.sass";
-// @import "../node_modules/bulma/sass/components/navbar.sass";
-// @import "../node_modules/bulma/sass/layout/hero.sass";
-// @import "../node_modules/bulma/sass/layout/section.sass";
 a {
   text-decoration: none;
 }
@@ -81,6 +82,7 @@ input[type=checkbox] {
   z-index: 1000;
 }
 
+<<<<<<< HEAD
 .search {
   cursor: pointer;
   color: #fca311;
@@ -89,3 +91,11 @@ input[type=checkbox] {
     color: #fca211c9;
   }
 }
+=======
+.is-hidden {
+  display: none;
+}
+
+// Import Bulma
+@import '../node_modules/bulma/bulma.sass';
+>>>>>>> master

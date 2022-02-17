@@ -41,10 +41,12 @@ const populateCategoryDropdown = function(dropDownTarget, defaultCategory) {
 const loadCreateNewPasswordForm = function() {
   $(".new-password-password").val("");
   $("#password-strength-bar").val(0);
+  $("#pass-length").val(0);
+  $("#auto-gen-password-section").addClass("is-hidden");
   populateCategoryDropdown("#category");
 };
 
-// load event listeners that aren't on dynamically created HTML elements only once
+// load event listeners that aren't attached to dynamically created HTML elements only once
 $(document).ready(function() {
   $("#new-category-form").on("submit", function(event) {
     event.preventDefault();
@@ -57,7 +59,7 @@ $(document).ready(function() {
       success: function(res) {
         $(".new-category-name").val("");
         closeAllModals();
-        return renderCategories();
+        return renderDisplay();
       },
       error: function(err) {
         console.log(err);
@@ -76,7 +78,7 @@ $(document).ready(function() {
       success: function(res) {
         $(".edit-category-name").val("");
         closeAllModals();
-        return renderCategories();
+        return renderDisplay();
       },
       error: function(err) {
         console.log(err);
@@ -99,12 +101,24 @@ $(document).ready(function() {
       type: "POST",
       success: function(res) {
         closeAllModals();
-        return renderCategories();
+        return renderDisplay();
       },
       error: function(err) {
         console.log(err);
       }
     });
+  });
+
+  $(".category-display").click(function(event) {
+    event.preventDefault();
+  });
+
+  $(".box-display").click(function(event) {
+    event.preventDefault();
+  });
+
+  $(".list-display").click(function(event) {
+    event.preventDefault();
   });
 });
 
@@ -182,7 +196,7 @@ const reloadEventListeners = function() {
         type: "GET",
         success: function(res) {
           console.log(res)
-          return renderCategories();
+          return renderDisplay();
         },
         error: function(err) {
           console.log(err);
@@ -214,9 +228,10 @@ const reloadEventListeners = function() {
                 data: { target: targetCategoryID },
                 type: "POST",
                 success: function(res) {
+                  console.log("outside success");
                   // on success reload the categories display
                   closeAllModals();
-                  return renderCategories();
+                  return renderDisplay();
                 },
                 error: function(err) {
                   console.log(err);
