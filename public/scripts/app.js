@@ -108,12 +108,12 @@ const generateNewPass = function() {
 }
 
 const togglePassword = function() {
-  $('#reveal').on('click', (evt) => {
-    let type = $("#password").attr('type');
+  $('.reveal').on('click', (evt) => {
+    let type = $(".password-hidden").attr('type');
     if (type == 'password') {
-      $('#password').attr('type', 'text');
+      $('.password-hidden').attr('type', 'text');
     } else {
-      $('#password').attr('type', 'password');
+      $('.password-hidden').attr('type', 'password');
     }
   })
 };
@@ -372,29 +372,36 @@ const boxCategoryLayout = (category) => {
 // generate dynamic HTML for the passwords
 const boxPasswordLayout = (data) => {
   const layout = `
-  <div class="box is-flex is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2 div-password">
-  <div>
-    <img src="${data.logo_url}" class="square"></img><br>
-    <div class="is-link-primary">
-  <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
-  <input class="is-hidden password-id" value="${data.id}" />
-  </i>
-  <i class="fa-solid fa-rectangle-xmark is-link-primary mx-2 delete-button"></i>
-  </div>
-    <div class="is-link-primary">
-    <i class="fa-regular fa-user"></i> ${data.name}<br>
+  <div class="box is-flex is-flex-direction-column is-justify-content-center is-align-items-center is-squareish is-size-5 has-background-white has-text-centered m-2 div-password">
+      <img src="${data.logo_url}" class="square"></img><br>
+      <div class="is-link-primary">
+        <i class="fa-solid fa-pen-to-square is-link-primary js-modal-trigger mx-2" data-target="edit-password-modal">
+        <input class="is-hidden password-id" value="${data.id}" />
+        </i>
+        <i class="fa-solid fa-rectangle-xmark is-link-primary mx-2 delete-button"></i>
+      </div>
+      <div class="is-link-primary">
+        <i class="fa-regular fa-user"></i> ${data.name}<br>
+      </div>
+      <a href="${data.url}" class="is-link-primary"><i class="fa-solid fa-link"></i> ${data.url}</a><br>
+      <div class="is-link-primary">
+        <i class="fa-regular fa-user"></i> ${data.username}<br>
+      </div>
+      <div password=${data.password} class="is-link-primary copy">
+        <p class="notification is-success is-light">Copied!</p>
+        <input class="is-hidden password-id" value="${data.id}" />
+        <div class="is-flex">
+          <div class="is-link-primary"">
+            <i class="fa-solid fa-key"></i>
+            Password
+            </div>
+            <div class="is-link-primary mx-2"">
+            <i class="fa-solid fa-copy"></i>
+            <div>
+        </div>
+      </div>
     </div>
-    <a href="${data.url}" class="is-link-primary"><i class="fa-solid fa-link"></i> ${data.url}</a><br>
-    <div class="is-link-primary">
-    <i class="fa-regular fa-user"></i> ${data.username}<br>
-    </div>
-    <div password=${data.password} class="is-link-primary copy">
-  <p class="notification is-success is-light">Copied!</p>
-    <input class="is-hidden password-id" value="${data.id}" />
-    <i class="fa-solid fa-key"></i> ${data.password}
-    <i class="fa-solid fa-copy mx-2"></i>
-    </div>
-  </div>`;
+    `;
 
   return layout;
 }
