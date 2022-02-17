@@ -237,9 +237,9 @@ router.post("/credentials/search", (req, res) => {
   const queryString = `
   SELECT id, name, password
   FROM credentials
-  WHERE name LIKE $1;`
+  WHERE upper(name) LIKE $1;`
 
-  const queryParams = [`%${req.body.website}%`];
+  const queryParams = [`%${req.body.website.toUpperCase()}%`];
 
 
   db.query(queryString, queryParams)
