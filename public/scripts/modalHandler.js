@@ -59,7 +59,7 @@ $(document).ready(function() {
       success: function(res) {
         $(".new-category-name").val("");
         closeAllModals();
-        return renderCategories();
+        return renderDisplay();
       },
       error: function(err) {
         console.log(err);
@@ -78,7 +78,7 @@ $(document).ready(function() {
       success: function(res) {
         $(".edit-category-name").val("");
         closeAllModals();
-        return renderCategories();
+        return renderDisplay();
       },
       error: function(err) {
         console.log(err);
@@ -101,7 +101,7 @@ $(document).ready(function() {
       type: "POST",
       success: function(res) {
         closeAllModals();
-        return renderCategories();
+        return renderDisplay();
       },
       error: function(err) {
         console.log(err);
@@ -195,7 +195,7 @@ const reloadEventListeners = function() {
         type: "GET",
         success: function(res) {
           console.log(res)
-          return renderCategories();
+          return renderDisplay();
         },
         error: function(err) {
           console.log(err);
@@ -229,7 +229,7 @@ const reloadEventListeners = function() {
                 success: function(res) {
                   // on success reload the categories display
                   closeAllModals();
-                  return renderCategories();
+                  return renderDisplay();
                 },
                 error: function(err) {
                   console.log(err);
