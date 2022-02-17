@@ -345,7 +345,7 @@ $(document).ready(function() {
   renderCategories();
   registerNewPasswordFormEvents();
   login();
-
+  search();
 });
 
 
