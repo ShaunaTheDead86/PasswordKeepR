@@ -103,18 +103,18 @@ module.exports = (db) => {
 
     // encrypt password before storing in DB
     getConfig("ENCRYPTION_KEY")
-    .then(secretKey => {
-      const queryParams = [req.body.username, encrypt(req.body.password, secretKey.value), req.body.url, req.body.name, req.body.categoryId, req.body['password-id']];
-      db.query(queryString, queryParams)
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
-    })
+      .then(secretKey => {
+        const queryParams = [req.body.username, encrypt(req.body.password, secretKey.value), req.body.url, req.body.name, req.body.categoryId, req.body['password-id']];
+        db.query(queryString, queryParams)
+          .then(data => {
+            res.send(data);
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+      })
   });
 
   router.post("/credentials/move", (req, res) => {
@@ -127,14 +127,14 @@ module.exports = (db) => {
     db.query(queryString, queryParams)
       .then(data => {
         const credentials = data.rows;
-       //decrypt password before returning to front-end
-       getConfig("ENCRYPTION_KEY")
-       .then(secretKey => {
-         for (const credential of credentials) {
-           credential.password = decrypt(credential.password, secretKey.value);
-         }
-         res.send(credentials);
-       })
+        //decrypt password before returning to front-end
+        getConfig("ENCRYPTION_KEY")
+          .then(secretKey => {
+            for (const credential of credentials) {
+              credential.password = decrypt(credential.password, secretKey.value);
+            }
+            res.send(credentials);
+          })
       })
       .catch(err => {
         res
@@ -165,8 +165,11 @@ module.exports = (db) => {
     WHERE id = $1`
     const queryParams = [req.body.target];
 
+    console.log(queryString, queryParams);
+
     db.query(queryString, queryParams)
       .then(data => {
+        console.log("inside success");
         res.send(data.rows);
       })
       .catch(err => {
@@ -181,7 +184,7 @@ module.exports = (db) => {
     UPDATE categories
     SET name = $1
     WHERE id = $2;`
-    const queryParams = [req.body.newName, req.body.oldName];
+    const queryParams = [req.body.oldName, req.body.newName];
 
     db.query(queryString, queryParams)
       .then(data => {
@@ -195,7 +198,7 @@ module.exports = (db) => {
   });
 
   router.post("/login", (req, res) => {
-    
+
     const params = [req.body.username];
     db.query(`
     SELECT *
@@ -218,17 +221,15 @@ module.exports = (db) => {
 
   const getConfig = function(attr) {
     return db.query(`SELECT * FROM configurations WHERE attribute = $1;`, [attr])
-    .then(data => {
-      if (data.rows.length > 0) {
-        return data.rows[0];
-      }
-    })
-    .catch(err => {
-      console.log(err.message);
-    });
+      .then(data => {
+        if (data.rows.length > 0) {
+          return data.rows[0];
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
   }
 
   return router;
 };
-
-
