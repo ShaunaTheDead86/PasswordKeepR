@@ -61,12 +61,13 @@ module.exports = (db) => {
         req.body.name,
         userId,
         orgId,
-        req.body.categoryId
+        req.body.categoryId,
+        req.body.logo_url ? req.body.logo_url : "../images/passwordkeepr.png"
       ];
 
       const insertQueryString = `
-        INSERT INTO credentials (username, password, url, name, creator_id, organization_id, category_id)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        INSERT INTO credentials (username, password, url, name, creator_id, organization_id, category_id, logo_url)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *;
         `;
       db.query(insertQueryString, insertParams)
