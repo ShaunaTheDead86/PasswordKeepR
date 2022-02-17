@@ -10,6 +10,7 @@ const registerNewPasswordFormEvents = function() {
 
 }
 
+
 const login = function(str) {
   $('#login-form').on('submit', (evt) => {
     evt.preventDefault();
@@ -19,7 +20,8 @@ const login = function(str) {
       $("#login-email").text(user.email);
       $("#login-email").show();
       $("#create-new-button").attr("hidden", false);
-      $(".search").attr("hidden", false);
+      // revealing search box when user is logged in
+      $(".search-box").attr("hidden", false);
     })
     $("#login-modal").removeClass('is-active');
   });
@@ -343,6 +345,7 @@ $(document).ready(function() {
   renderCategories();
   registerNewPasswordFormEvents();
   login();
+
 });
 
 
