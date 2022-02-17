@@ -227,6 +227,7 @@ const reloadEventListeners = function() {
                 data: { target: targetCategoryID },
                 type: "POST",
                 success: function(res) {
+                  console.log("outside success");
                   // on success reload the categories display
                   closeAllModals();
                   return renderDisplay();
