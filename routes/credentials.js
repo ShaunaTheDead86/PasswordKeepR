@@ -16,11 +16,11 @@ module.exports = (db) => {
         const credentials = data.rows;
         //decrypt password before returning to front-end
         getConfig("ENCRYPTION_KEY")
-        .then(secretKey => {
-          for (const credential of credentials) {
-            credential.password = decrypt(credential.password, secretKey.value);
-          }
-        })
+          .then(secretKey => {
+            for (const credential of credentials) {
+              credential.password = decrypt(credential.password, secretKey.value);
+            }
+          })
         res.json({ credentials });
       })
       .catch(err => {
@@ -53,52 +53,51 @@ module.exports = (db) => {
 
     //prepare query for insert new credential
     getConfig("ENCRYPTION_KEY")
-    .then(secretKey => {
-      const insertParams = [
-        req.body.username,
-        encrypt(req.body.password, secretKey.value),
-        req.body.url,
-        req.body.name,
-        userId,
-        orgId,
-        req.body.categoryId,
-        req.body.logo_url ? req.body.logo_url : "../images/passwordkeepr.png"
-      ];
+      .then(secretKey => {
+        const insertParams = [
+          req.body.username,
+          encrypt(req.body.password, secretKey.value),
+          req.body.url,
+          req.body.name,
+          userId,
+          orgId,
+          req.body.categoryId,
+          req.body.logo_url ? req.body.logo_url : "../images/passwordkeepr.png"
+        ];
 
-      const insertQueryString = `
+        const insertQueryString = `
         INSERT INTO credentials (username, password, url, name, creator_id, organization_id, category_id, logo_url)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *;
         `;
-      db.query(insertQueryString, insertParams)
-        .then(data => {
-          credential = data.rows[0];
-          templateVars = { credential }
-          res.render("index", templateVars);
-        })
-        .catch(err => {
-          console.log(err)
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
-    })
+
+        db.query(insertQueryString, insertParams)
+          .then(data => {
+            credential = data.rows[0];
+            templateVars = { credential }
+            res.render("index", templateVars);
+          })
+          .catch(err => {
+            console.log(err)
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+      })
 
   })
 
   const getConfig = function(attr) {
     return db.query(`SELECT * FROM configurations WHERE attribute = $1;`, [attr])
-    .then(data => {
-      if (data.rows.length > 0) {
-        return data.rows[0];
-      }
-    })
-    .catch(err => {
-      console.log(err.message);
-    });
+      .then(data => {
+        if (data.rows.length > 0) {
+          return data.rows[0];
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
   }
 
   return router;
 }
-
-
