@@ -80,7 +80,7 @@ const loadStaticListeners = function() {
   });
 
   (document.querySelectorAll('.password-input') || []).forEach((trigger) => {
-    $(trigger).on("change", function() {
+    $(trigger).on("input", function() {
       const pass = $(trigger).val();
       const strength = testPassStrength(pass);
       const form = $(trigger).closest("form");
@@ -139,7 +139,7 @@ const loadStaticListeners = function() {
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
       generateNewPass(form);
-      target.trigger("change");
+      target.trigger("input");
     });
   });
 
@@ -148,7 +148,7 @@ const loadStaticListeners = function() {
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
       generateNewPass(form);
-      target.trigger("change");
+      target.trigger("input");
     });
   });
 
@@ -157,7 +157,7 @@ const loadStaticListeners = function() {
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
       generateNewPass(form);
-      target.trigger("change");
+      target.trigger("input");
     });
   });
 
@@ -169,7 +169,7 @@ const loadStaticListeners = function() {
       const target = form.find(".password-input");
       passLength.text($(trigger).val());
       generateNewPass(form);
-      target.trigger("change");
+      target.trigger("input");
     });
   });
 
@@ -179,14 +179,17 @@ const loadStaticListeners = function() {
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
       generateNewPass(form);
-      target.trigger("change");
+      target.trigger("input");
     });
   });
 
   $('#create-credential-form').on('submit', (evt) => {
     evt.preventDefault();
     const params = $("#create-credential-form").serialize();
-    const password = escapeScript($("#password").val());
+    const form = $("#create-credential-form");
+    const passwordInput = form.find(".password-input");
+    const password = escapeScript(passwordInput.val());
+
     if ($("#name").val() === undefined || $("#name").val() === "") {
       showErrorMessage("Please enter an account name!");
       return;
