@@ -13,7 +13,7 @@ const loadDynamicListeners = function() {
           success: function(res) {
             $(".edit-password-id").attr("value", `${passwordID}`);
             $(".edit-form-name").val(res[0].name);
-            $(".edit-url").val(res[0].url);
+            $(".edit-form-url").val(res[0].url);
             $(".edit-form-username").val(res[0].username);
             $(".edit-form-password").val(res[0].password);
             populateCategoryDropdown(".edit-form-category", res[0].category_id);
