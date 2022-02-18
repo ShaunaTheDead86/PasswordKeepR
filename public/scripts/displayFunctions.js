@@ -134,6 +134,7 @@ const renderDisplay = function() {
 
 const renderQuerySiteLayout = (dataset) => {
   $(".category-container").empty();
+  $(".create-new-container").empty();
   //hide new category that hardcoded in main layout, make sure to return back visibility when input field is clear
   $(".new-category").removeClass("is-flex");
   $(".new-category").css("display", "none");
@@ -141,6 +142,5 @@ const renderQuerySiteLayout = (dataset) => {
   for (let data of dataset) {
     const querySiteLayout = categoryPasswordLayout(data);
     $(".category-container").append(querySiteLayout);
-    renderDisplay();
   }
 }
