@@ -48,7 +48,7 @@ const generateNewPass = function(parent) {
   }
 
   passwordInput.val(password);
-  passwordInput.trigger('input');
+  passwordInput.trigger("change");
 }
 
 // helper to prevent Cross Site Scripting

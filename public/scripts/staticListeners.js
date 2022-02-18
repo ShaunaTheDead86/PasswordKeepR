@@ -80,7 +80,7 @@ const loadStaticListeners = function() {
   });
 
   (document.querySelectorAll('.password-input') || []).forEach((trigger) => {
-    trigger.addEventListener("input", function() {
+    $(trigger).on("change", function() {
       const pass = $(trigger).val();
       const strength = testPassStrength(pass);
       const form = $(trigger).closest("form");
@@ -135,41 +135,41 @@ const loadStaticListeners = function() {
   });
 
   (document.querySelectorAll('.incl-upper') || []).forEach((trigger) => {
-    trigger.addEventListener('change', function() {
+    trigger.addEventListener("input", function() {
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
-      target.trigger("input");
       generateNewPass(form);
+      target.trigger("change");
     });
   });
 
   (document.querySelectorAll('.incl-number') || []).forEach((trigger) => {
-    trigger.addEventListener('change', function() {
+    trigger.addEventListener("input", function() {
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
-      target.trigger("input");
       generateNewPass(form);
+      target.trigger("change");
     });
   });
 
   (document.querySelectorAll('.incl-special') || []).forEach((trigger) => {
-    trigger.addEventListener('change', function() {
+    trigger.addEventListener("input", function() {
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
-      target.trigger("input");
       generateNewPass(form);
+      target.trigger("change");
     });
   });
 
   (document.querySelectorAll('.passRange') || []).forEach((trigger) => {
-    trigger.addEventListener('change', function() {
+    trigger.addEventListener("input", function() {
       const parent = $(trigger).closest(".slidecontainer");
       const passLength = parent.find(".pass-length");
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
-      target.trigger("input");
-      generateNewPass(form);
       passLength.text($(trigger).val());
+      generateNewPass(form);
+      target.trigger("change");
     });
   });
 
@@ -178,8 +178,8 @@ const loadStaticListeners = function() {
       $(".auto-gen-password-section").removeClass("is-hidden");
       const form = $(trigger).closest("form");
       const target = form.find(".password-input");
-      target.trigger("input");
       generateNewPass(form);
+      target.trigger("change");
     });
   });
 
