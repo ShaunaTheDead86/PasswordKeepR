@@ -141,6 +141,6 @@ const renderQuerySiteLayout = (dataset) => {
   for (let data of dataset) {
     const querySiteLayout = categoryPasswordLayout(data);
     $(".category-container").append(querySiteLayout);
-    app.reloadPage();
+    renderDisplay();
   }
 }

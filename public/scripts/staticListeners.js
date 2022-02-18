@@ -79,51 +79,53 @@ const loadStaticListeners = function() {
     });
   });
 
-  (document.querySelectorAll('.reveal') || []).forEach((trigger) => {
-    trigger.addEventListener('input', function() {
-      const pass = $('.password').val(); // TODO
-      const strength = testPassStrength(pass); // TODO
+  (document.querySelectorAll('.password-input') || []).forEach((trigger) => {
+    trigger.addEventListener("input", function() {
+      const pass = $(trigger).val();
+      const strength = testPassStrength(pass);
+      const form = $(trigger).closest("form");
+      const passwordStrengthBar = form.find(".password-strength-bar");
 
       if (strength === "failure") {
-        $(".password-strength-bar").val(0);
-        $(".password-strength-bar").removeClass('is-warning');
-        $(".password-strength-bar").removeClass('is-success');
-        $(".password-strength-bar").removeClass('is-danger');
+        passwordStrengthBar.val(0);
+        passwordStrengthBar.removeClass('is-warning');
+        passwordStrengthBar.removeClass('is-success');
+        passwordStrengthBar.removeClass('is-danger');
       }
       if (strength === "weak") {
-        $(".password-strength-bar").val(25);
-        $(".password-strength-bar").removeClass('is-success');
-        $(".password-strength-bar").removeClass('is-warning');
-        $(".password-strength-bar").removeClass('is-info');
-        $(".password-strength-bar").addClass('is-danger');
+        passwordStrengthBar.val(25);
+        passwordStrengthBar.removeClass('is-success');
+        passwordStrengthBar.removeClass('is-warning');
+        passwordStrengthBar.removeClass('is-info');
+        passwordStrengthBar.addClass('is-danger');
       }
       if (strength === "medium") {
-        $(".password-strength-bar").val(50);
-        $(".password-strength-bar").removeClass('is-danger');
-        $(".password-strength-bar").removeClass('is-success');
-        $(".password-strength-bar").removeClass('is-info');
-        $(".password-strength-bar").addClass('is-warning');
+        passwordStrengthBar.val(50);
+        passwordStrengthBar.removeClass('is-danger');
+        passwordStrengthBar.removeClass('is-success');
+        passwordStrengthBar.removeClass('is-info');
+        passwordStrengthBar.addClass('is-warning');
       }
       if (strength === "strong") {
-        $(".password-strength-bar").val(75);
-        $(".password-strength-bar").removeClass('is-warning');
-        $(".password-strength-bar").removeClass('is-danger');
-        $(".password-strength-bar").removeClass('is-success');
-        $(".password-strength-bar").addClass('is-info');
+        passwordStrengthBar.val(75);
+        passwordStrengthBar.removeClass('is-warning');
+        passwordStrengthBar.removeClass('is-danger');
+        passwordStrengthBar.removeClass('is-success');
+        passwordStrengthBar.addClass('is-info');
       }
       if (strength === "absolute") {
-        $(".password-strength-bar").val(100);
-        $(".password-strength-bar").removeClass('is-warning');
-        $(".password-strength-bar").removeClass('is-danger');
-        $(".password-strength-bar").removeClass('is-info');
-        $(".password-strength-bar").addClass('is-success');
+        passwordStrengthBar.val(100);
+        passwordStrengthBar.removeClass('is-warning');
+        passwordStrengthBar.removeClass('is-danger');
+        passwordStrengthBar.removeClass('is-info');
+        passwordStrengthBar.addClass('is-success');
       }
     });
   });
 
   (document.querySelectorAll('.reveal') || []).forEach((trigger) => {
     trigger.addEventListener('click', function() {
-      let type = $(".password-hidden").attr('type'); // TODO
+      let type = $(".password-hidden").attr('type');
       if (type == 'password') {
         $('.password-hidden').attr('type', 'text');
       } else {
@@ -132,22 +134,53 @@ const loadStaticListeners = function() {
     });
   });
 
-  $('.incl-upper').on('change', (evt) => {
-    generateNewPass();
+  (document.querySelectorAll('.incl-upper') || []).forEach((trigger) => {
+    trigger.addEventListener('change', function() {
+      const form = $(trigger).closest("form");
+      const target = form.find(".password-input");
+      target.trigger("input");
+      generateNewPass(form);
+    });
   });
-  $('.incl-number').on('change', (evt) => {
-    generateNewPass();
+
+  (document.querySelectorAll('.incl-number') || []).forEach((trigger) => {
+    trigger.addEventListener('change', function() {
+      const form = $(trigger).closest("form");
+      const target = form.find(".password-input");
+      target.trigger("input");
+      generateNewPass(form);
+    });
   });
-  $('.incl-special').on('change', (evt) => {
-    generateNewPass();
+
+  (document.querySelectorAll('.incl-special') || []).forEach((trigger) => {
+    trigger.addEventListener('change', function() {
+      const form = $(trigger).closest("form");
+      const target = form.find(".password-input");
+      target.trigger("input");
+      generateNewPass(form);
+    });
   });
-  $('.passRange').on('change', (evt) => {
-    generateNewPass();
-    $(".pass-length").text($('.passRange').val());
+
+  (document.querySelectorAll('.passRange') || []).forEach((trigger) => {
+    trigger.addEventListener('change', function() {
+      const parent = $(trigger).closest(".slidecontainer");
+      const passLength = parent.find(".pass-length");
+      const form = $(trigger).closest("form");
+      const target = form.find(".password-input");
+      target.trigger("input");
+      generateNewPass(form);
+      passLength.text($(trigger).val());
+    });
   });
-  $('.generate').on('click', (evt) => {
-    generateNewPass();
-    $(".auto-gen-password-section").removeClass("is-hidden");
+
+  (document.querySelectorAll('.generate') || []).forEach((trigger) => {
+    trigger.addEventListener('click', function() {
+      $(".auto-gen-password-section").removeClass("is-hidden");
+      const form = $(trigger).closest("form");
+      const target = form.find(".password-input");
+      target.trigger("input");
+      generateNewPass(form);
+    });
   });
 
   $('#create-credential-form').on('submit', (evt) => {
@@ -214,7 +247,6 @@ const loadStaticListeners = function() {
     };
 
     const data = $("#edit-credential-form").serializeArray();
-    console.log(data);
     $("#edit-password-modal").removeClass('is-active');
 
     $.ajax({
@@ -253,7 +285,6 @@ const loadStaticListeners = function() {
   $("#edit-category-form").on("submit", function(event) {
     event.preventDefault();
     const data = $("#edit-category-form").serializeArray();
-    console.log(data);
 
     $.ajax({
       url: "/api/categories/edit",

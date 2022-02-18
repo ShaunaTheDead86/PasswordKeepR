@@ -24,11 +24,12 @@ function testPassStrength(pass) {
   return "weak";
 }
 
-const generateNewPass = function() {
-  const inclUpper = $(".incl-upper").is(":checked");
-  const inclNum = $(".incl-number").is(":checked");
-  const inclSpecial = $(".incl-special").is(":checked");
-  const passLength = $('.passRange').val();
+const generateNewPass = function(parent) {
+  const inclUpper = parent.find(".incl-upper").is(":checked");
+  const inclNum = parent.find(".incl-number").is(":checked");
+  const inclSpecial = parent.find(".incl-special").is(":checked");
+  const passLength = parent.find('.passRange').val();
+  const passwordInput = parent.find('.password-input');
 
   let characterPool = "abcdefghijklmnopqrstuvxyz";
   if (inclUpper) {
@@ -45,8 +46,9 @@ const generateNewPass = function() {
   for (let i = 0; i < passLength; i++) {
     password += characterPool.charAt(Math.floor(Math.random() * poolLength));
   }
-  $(".password").val(password);
-  $(".password").trigger('input');
+
+  passwordInput.val(password);
+  passwordInput.trigger('input');
 }
 
 // helper to prevent Cross Site Scripting
