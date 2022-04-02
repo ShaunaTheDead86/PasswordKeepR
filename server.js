@@ -10,23 +10,33 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 
-const Pool = require("pg").Pool;
-require("dotenv").config();
-const isProduction = process.env.NODE_ENV === "production";
-const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
-const pool = new Pool({
-  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+const { Client } = require("pg");
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
 });
-module.exports = pool;
+
+client.connect();
+
+client.query(
+  "SELECT table_schema,table_name FROM information_schema.tables;",
+  (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+    }
+    client.end();
+  }
+);
 
 // PG database client/connection setup
 // const { Pool } = require("pg");
 // const dbParams = require("./lib/db.js");
 // const db = new Pool(dbParams);
-db.connect();
+// db.connect();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -81,10 +91,10 @@ const apiRoutes = require("./routes/api");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use(process.env.PG_HOST + "/credentials", credentialsRoutes(db));
-app.use(process.env.PG_HOST + "/users", usersRoutes(db));
-app.use(process.env.PG_HOST + "/categories", cetegoriesRoutes(db));
-app.use(process.env.PG_HOST + "/api", apiRoutes(db));
+app.use(process.env.DATABASE_URL + "/credentials", credentialsRoutes(db));
+app.use(process.env.DATABASE_URL + "/users", usersRoutes(db));
+app.use(process.env.DATABASE_URL + "/categories", cetegoriesRoutes(db));
+app.use(process.env.DATABASE_URL + "/api", apiRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 
