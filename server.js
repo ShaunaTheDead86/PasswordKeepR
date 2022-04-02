@@ -12,23 +12,23 @@ const cookieSession = require("cookie-session");
 
 const { Client } = require("pg");
 
-const client = new Client({
+const db = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
 });
 
-client.connect();
+db.connect();
 
-client.query(
+db.query(
   "SELECT table_schema,table_name FROM information_schema.tables;",
   (err, res) => {
     if (err) throw err;
     for (let row of res.rows) {
       console.log(JSON.stringify(row));
     }
-    client.end();
+    db.end();
   }
 );
 
@@ -91,10 +91,10 @@ const apiRoutes = require("./routes/api");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use(process.env.DATABASE_URL + "/credentials", credentialsRoutes(db));
-app.use(process.env.DATABASE_URL + "/users", usersRoutes(db));
-app.use(process.env.DATABASE_URL + "/categories", cetegoriesRoutes(db));
-app.use(process.env.DATABASE_URL + "/api", apiRoutes(db));
+app.use("/credentials", credentialsRoutes(db));
+app.use("/users", usersRoutes(db));
+app.use("/categories", cetegoriesRoutes(db));
+app.use("/api", apiRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 
