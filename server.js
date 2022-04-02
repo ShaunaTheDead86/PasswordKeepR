@@ -8,12 +8,24 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const cookieSession = require('cookie-session');
+const cookieSession = require("cookie-session");
+
+const Pool = require("pg").Pool;
+require("dotenv").config();
+const isProduction = process.env.NODE_ENV === "production";
+const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
+const pool = new Pool({
+  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+module.exports = pool;
 
 // PG database client/connection setup
-const { Pool } = require("pg");
-const dbParams = require("./lib/db.js");
-const db = new Pool(dbParams);
+// const { Pool } = require("pg");
+// const dbParams = require("./lib/db.js");
+// const db = new Pool(dbParams);
 db.connect();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -36,10 +48,15 @@ app.use(
 
 app.use(express.static("public"));
 
-app.use(cookieSession({
-  name: 'session',
-  keys: ["da097fa0-b5ef-4506-b8c3-28166cb4c4e8", "f0553cf8-a720-45d0-abba-e25dbc47eee6"]
-}));
+app.use(
+  cookieSession({
+    name: "session",
+    keys: [
+      "da097fa0-b5ef-4506-b8c3-28166cb4c4e8",
+      "f0553cf8-a720-45d0-abba-e25dbc47eee6",
+    ],
+  })
+);
 const currentUser = (req, res, next) => {
   if (req.session["user_id"]) {
     req.currentUser = req.session["user_id"];
@@ -78,7 +95,6 @@ app.use("/api", apiRoutes(db));
 app.get("/", (req, res) => {
   res.render("index");
 });
-
 
 app.listen(PORT, () => {
   console.log(`PasswordKeepR app listening on port ${PORT}`);
