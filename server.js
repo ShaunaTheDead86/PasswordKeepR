@@ -96,6 +96,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log(`PasswordKeepR app listening on port ${PORT}`);
 });
