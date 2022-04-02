@@ -81,10 +81,10 @@ const apiRoutes = require("./routes/api");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/credentials", credentialsRoutes(db));
-app.use("/users", usersRoutes(db));
-app.use("/categories", cetegoriesRoutes(db));
-app.use("/api", apiRoutes(db));
+app.use(process.env.PG_HOST + "/credentials", credentialsRoutes(db));
+app.use(process.env.PG_HOST + "/users", usersRoutes(db));
+app.use(process.env.PG_HOST + "/categories", cetegoriesRoutes(db));
+app.use(process.env.PG_HOST + "/api", apiRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 
