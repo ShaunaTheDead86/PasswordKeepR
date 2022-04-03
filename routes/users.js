@@ -5,13 +5,11 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const targetURL = "ec2-3-217-251-77.compute-1.amazonaws.com";
-
 const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-  router.get(targetURL + "/", (req, res) => {
+  router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then((data) => {
         const users = data.rows;

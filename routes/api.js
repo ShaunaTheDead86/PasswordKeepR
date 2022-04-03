@@ -3,10 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const { encrypt, decrypt } = require("../encryption/encryption");
 
-const targetURL = "ec2-3-217-251-77.compute-1.amazonaws.com";
-
 module.exports = (db) => {
-  router.get(targetURL + "/categories", (req, res) => {
+  router.get("/categories", (req, res) => {
     db.query(
       `SELECT *
     FROM categories;`
@@ -20,7 +18,7 @@ module.exports = (db) => {
       });
   });
 
-  router.get(targetURL + "/credentials", (req, res) => {
+  router.get("/credentials", (req, res) => {
     db.query(
       `SELECT *
     FROM credentials;`
@@ -40,7 +38,7 @@ module.exports = (db) => {
       });
   });
 
-  router.get(targetURL + "/credentials/id", (req, res) => {
+  router.get("/credentials/id", (req, res) => {
     const queryString = `SELECT *
     FROM credentials
     WHERE id = $1;`;
@@ -62,7 +60,7 @@ module.exports = (db) => {
       });
   });
 
-  router.get(targetURL + "/credentials/delete", (req, res) => {
+  router.get("/credentials/delete", (req, res) => {
     const queryString = `
     DELETE FROM credentials
     WHERE id = $1`;
@@ -77,7 +75,7 @@ module.exports = (db) => {
       });
   });
 
-  router.get(targetURL + "/categories/uncategorized", (req, res) => {
+  router.get("/categories/uncategorized", (req, res) => {
     db.query("SELECT * FROM categories WHERE name = 'Uncategorized'")
       .then((data) => {
         res.send(data.rows);
@@ -87,7 +85,7 @@ module.exports = (db) => {
       });
   });
 
-  router.post(targetURL + "/credentials/edit", (req, res) => {
+  router.post("/credentials/edit", (req, res) => {
     const queryString = `
     UPDATE credentials
     SET username = $1,
@@ -117,7 +115,7 @@ module.exports = (db) => {
     });
   });
 
-  router.post(targetURL + "/credentials/move", (req, res) => {
+  router.post("/credentials/move", (req, res) => {
     const queryString = `
     UPDATE credentials
     SET category_id = $1
@@ -140,7 +138,7 @@ module.exports = (db) => {
       });
   });
 
-  router.post(targetURL + "/categories/create", (req, res) => {
+  router.post("/categories/create", (req, res) => {
     const queryString = `INSERT INTO categories (name)
     VALUES ($1)`;
     const queryParams = [req.body.name];
@@ -154,7 +152,7 @@ module.exports = (db) => {
       });
   });
 
-  router.post(targetURL + "/categories/delete", (req, res) => {
+  router.post("/categories/delete", (req, res) => {
     const queryString = `
     DELETE FROM categories
     WHERE id = $1`;
@@ -169,7 +167,7 @@ module.exports = (db) => {
       });
   });
 
-  router.post(targetURL + "/categories/edit", (req, res) => {
+  router.post("/categories/edit", (req, res) => {
     const queryString = `
     UPDATE categories
     SET name = $1
@@ -185,7 +183,7 @@ module.exports = (db) => {
       });
   });
 
-  router.post(targetURL + "/login", (req, res) => {
+  router.post("/login", (req, res) => {
     const params = [req.body.username];
     db.query(
       `
@@ -223,7 +221,7 @@ module.exports = (db) => {
   };
 
   // search for specific website_name and its password
-  router.post(targetURL + "/credentials/search", (req, res) => {
+  router.post("/credentials/search", (req, res) => {
     const queryString = `
   SELECT id, name, password
   FROM credentials

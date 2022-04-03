@@ -5,14 +5,12 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const targetURL = "ec2-3-217-251-77.compute-1.amazonaws.com";
-
 const express = require("express");
 const router = express.Router();
 const { encrypt, decrypt } = require("../encryption/encryption");
 module.exports = (db) => {
   // GET /credentials - get all credentials
-  router.get(targetURL + "/", (req, res) => {
+  router.get("/", (req, res) => {
     db.query(`SELECT * FROM credentials;`)
       .then((data) => {
         const credentials = data.rows;
@@ -30,7 +28,7 @@ module.exports = (db) => {
   });
 
   // GET only IDs from /credentials
-  router.get(targetURL + "/id", (req, res) => {
+  router.get("/id", (req, res) => {
     db.query(`SELECT id FROM credentials;`)
       .then((data) => {
         const credentials = data.rows;
@@ -42,7 +40,7 @@ module.exports = (db) => {
   });
 
   // POST /credentials - create a new credential
-  router.post(targetURL + "/", (req, res) => {
+  router.post("/", (req, res) => {
     // get user_id and organization_id from session
     const userId = req.currentUser || 2;
     const orgId = req.currentOrg || 2;
