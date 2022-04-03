@@ -10,27 +10,13 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 
-const { Client } = require("pg");
-
-const db = new Client({
+const { Pool } = require("pg");
+const db = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
 });
-
-db.connect();
-
-db.query(
-  "SELECT table_schema,table_name FROM information_schema.tables;",
-  (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-    }
-    db.end();
-  }
-);
 
 // PG database client/connection setup
 // const { Pool } = require("pg");
@@ -104,6 +90,19 @@ app.use("/api", apiRoutes(db));
 
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+app.get("/db", async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query("SELECT * FROM test_table");
+    const results = { results: result ? result.rows : null };
+    res.render("pages/db", results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
 });
 
 app.listen(process.env.PORT || 8080, () => {
