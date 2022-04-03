@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
+const server = require("http").Server(app);
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
@@ -110,6 +111,7 @@ app.get("/db", async (req, res) => {
     const result = await client.query("SELECT * FROM users");
     const results = { results: result ? result.rows : null };
     res.render("pages/db", results);
+    1;
     client.release();
   } catch (err) {
     console.error(err);
@@ -117,6 +119,6 @@ app.get("/db", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () => {
+server.listen(PORT, () => {
   console.log(`PasswordKeepR app listening on port ${PORT}`);
 });
