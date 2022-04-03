@@ -10,12 +10,24 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 
-const { Pool } = require("pg");
+const { Pool, Client } = require("pg");
 const db = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
+});
+db.query("SELECT NOW()", (err, res) => {
+  console.log(err, res);
+  db.end();
+});
+const client = new Client({
+  connectionString,
+});
+client.connect();
+client.query("SELECT NOW()", (err, res) => {
+  console.log(err, res);
+  client.end();
 });
 
 // PG database client/connection setup
@@ -94,8 +106,8 @@ app.get("/", (req, res) => {
 
 app.get("/db", async (req, res) => {
   try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT * FROM test_table");
+    const client = await db.connect();
+    const result = await client.query("SELECT * FROM users");
     const results = { results: result ? result.rows : null };
     res.render("pages/db", results);
     client.release();
@@ -105,6 +117,6 @@ app.get("/db", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 8080, () => {
+app.listen(process.env.PORT, () => {
   console.log(`PasswordKeepR app listening on port ${PORT}`);
 });

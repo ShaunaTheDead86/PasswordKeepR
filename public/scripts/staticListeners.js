@@ -323,7 +323,7 @@ const loadStaticListeners = function () {
   $("#login-form").on("submit", (evt) => {
     evt.preventDefault();
     const params = $("#login-form").serialize();
-    $.post("/api/login", params).then((user) => {
+    $.post(process.env.DATABASE_URL + "/api/login", params).then((user) => {
       $("#login-button").hide();
       $("#login-email").text(user.email);
       $("#login-email").show();
