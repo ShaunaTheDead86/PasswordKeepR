@@ -101,11 +101,12 @@ app.use("/api", apiRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-app.get("/", (req, res) => {
+app.get(process.env.DATABASE_URL + "/", (req, res) => {
+  console.log("it worked!");
   res.render("index");
 });
 
-app.get("/db", async (req, res) => {
+app.get(process.env.DATABASE_URL + "/db", async (req, res) => {
   try {
     const client = await db.connect();
     const result = await client.query("SELECT * FROM users");
